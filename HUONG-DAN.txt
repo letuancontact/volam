@@ -1,0 +1,24 @@
+VÕ LÂM IDLE - HUYHUYY — HƯỚNG DẪN CHƠI
+=======================================
+
+Bản chia sẻ của Võ Lâm Idle (thiết kế và phát triển bởi Heo Búy), có đủ các chức năng tới Tống Kim:
+luyện công, Dã Tẩu, Sát thủ, Vượt Ải, Phong Lăng Độ, Phong Hỏa Liên Thành, Boss Hoàng Kim, Săn Nhím,
+Võ Lâm Minh Chủ, Rương Thần Bí, Phú Quý Cẩm Hạp, chợ trời, giao dịch, tổ đội, Phân thân, Tống Kim (bot như người chơi)…
+
+CÁCH CHƠI TRÊN MÁY TÍNH (Windows)
+1. Giải nén cả thư mục (đường dẫn nên ngắn, ví dụ D:\VoLamIdle).
+2. Bấm Tao_Tai_Khoan.bat -> nhập tên + mật khẩu. Tài khoản ĐẦU TIÊN là quản trị (bảng F10, công cụ thử phím `).
+3. Bấm Chay_Game.bat -> trình duyệt tự mở trang game (http://127.0.0.1:8101). Giữ cửa sổ đen mở trong lúc chơi.
+4. Đăng nhập, tạo nhân vật, vào game.
+
+CHƠI CÙNG BẠN BÈ CHUNG MẠNG LAN / WIFI
+- Bấm Chay_Game_LAN.bat thay cho Chay_Game.bat. Bạn bè mở trình duyệt, gõ địa chỉ hiện trong cửa sổ đen (http://<IP máy bạn>:8101).
+- Tạo tài khoản cho bạn bè bằng Tao_Tai_Khoan.bat (hoặc F10 -> Người chơi). Tài khoản thường lần đầu đăng nhập sẽ được yêu cầu đổi mật khẩu.
+
+GHI CHÚ
+- Dữ liệu (tài khoản, nhân vật) nằm ở thư mục du-lieu (tự tạo lần chạy đầu). Muốn chơi lại từ đầu: tắt máy chủ rồi xóa thư mục du-lieu.
+- Thư mục node có sẵn node.exe (Node.js, giấy phép MIT) — không cần cài thêm. Máy đã cài Node.js thì vẫn chạy bình thường.
+- Nên dùng trình duyệt Chrome / Edge bản mới.
+
+Nếu bạn yêu thích bản game của mình thì hãy chung tay chia sẻ cho anh em khác trong group để ai cũng có thể trải nghiệm.
+Cảm ơn anh chị em group Hội Quán rất nhiều!

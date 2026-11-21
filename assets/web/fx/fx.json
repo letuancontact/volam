@@ -1,0 +1,137 @@
+{
+ "format": "vl-fx-pack",
+ "version": 1,
+ "built": "2026-10-23T09:37:54.861Z",
+ "scale": 0.75,
+ "fx": {
+  "63": {
+   "name": "Công kích vật lý",
+   "from": "\\spr\\skill\\补充\\刀剑爆炸.spr",
+   "file": "63.png",
+   "w": 120,
+   "h": 120,
+   "n": 4,
+   "cx": 55,
+   "cy": 80,
+   "interval": 1,
+   "blend": "alpha",
+   "light": [
+    181,
+    203,
+    255
+   ],
+   "sound": null,
+   "soundMissing": "\\sound\\skill\\刀剑刺中声.wav",
+   "speed": 30,
+   "life": 3,
+   "height": 10,
+   "fly": null
+  },
+  "64": {
+   "name": "Công kích vật lý",
+   "from": "\\spr\\skill\\补充\\刀剑爆炸.spr",
+   "file": "64.png",
+   "w": 120,
+   "h": 120,
+   "n": 4,
+   "cx": 55,
+   "cy": 80,
+   "interval": 1,
+   "blend": "alpha",
+   "light": [
+    181,
+    203,
+    255
+   ],
+   "sound": "64.wav",
+   "soundFrom": "\\sound\\skill\\枪刺中声.wav",
+   "speed": 20,
+   "life": 6,
+   "height": 10,
+   "fly": null
+  },
+  "65": {
+   "name": "Công kích vật lý gần",
+   "from": "\\spr\\skill\\补充\\刀剑爆炸.spr",
+   "file": "65.png",
+   "w": 120,
+   "h": 120,
+   "n": 4,
+   "cx": 55,
+   "cy": 80,
+   "interval": 1,
+   "blend": "alpha",
+   "light": [
+    231,
+    227,
+    107
+   ],
+   "sound": "65.wav",
+   "soundFrom": "\\sound\\skill\\sound_k032.wav",
+   "speed": 16,
+   "life": 20,
+   "height": 10,
+   "fly": {
+    "from": "\\spr\\skill\\补充\\远程攻击.spr",
+    "file": "65_bay.png",
+    "w": 160,
+    "h": 120,
+    "n": 16,
+    "dirs": 16,
+    "cx": 82,
+    "cy": 98,
+    "interval": 5,
+    "blend": "alpha"
+   }
+  }
+ },
+ "weapon": {
+  "1": 63,
+  "2": 63,
+  "3": 63,
+  "4": 63,
+  "5": 63,
+  "6": 63,
+  "7": 63,
+  "8": 64,
+  "9": 64,
+  "10": 64,
+  "11": 64,
+  "12": 64,
+  "13": 64,
+  "14": 63,
+  "15": 63,
+  "16": 63,
+  "17": 63,
+  "18": 63,
+  "19": 63,
+  "20": 65,
+  "21": 63,
+  "22": 63,
+  "23": 63,
+  "24": 63,
+  "25": 64,
+  "26": 64,
+  "27": 64,
+  "28": 64,
+  "29": 63,
+  "30": 63,
+  "31": 63,
+  "32": 63
+ },
+ "skill": {
+  "1": {
+   "fx": 64,
+   "range": 100
+  },
+  "2": {
+   "fx": 65,
+   "range": 320
+  },
+  "53": {
+   "fx": 63,
+   "range": 75
+  }
+ },
+ "ranged": 65
+}

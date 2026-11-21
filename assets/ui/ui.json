@@ -1,0 +1,129 @@
+{
+ "format": "vl-ui-pack",
+ "version": 1,
+ "built": "2026-10-22T18:42:42.387Z",
+ "focus": {
+  "0m": {
+   "file": "tao_nv/kim_nam_focus.webp",
+   "frames": 11
+  },
+  "0f": {
+   "file": "tao_nv/kim_nu_focus.webp",
+   "frames": 10
+  },
+  "1m": {
+   "file": "tao_nv/moc_nam_focus.webp",
+   "frames": 11
+  },
+  "1f": {
+   "file": "tao_nv/moc_nu_focus.webp",
+   "frames": 8
+  },
+  "2m": {
+   "file": "tao_nv/thuy_nam_focus.webp",
+   "frames": 10
+  },
+  "2f": {
+   "file": "tao_nv/thuy_nu_focus.webp",
+   "frames": 11
+  },
+  "3m": {
+   "file": "tao_nv/hoa_nam_focus.webp",
+   "frames": 9
+  },
+  "3f": {
+   "file": "tao_nv/hoa_nu_focus.webp",
+   "frames": 11
+  },
+  "4m": {
+   "file": "tao_nv/tho_nam_focus.webp",
+   "frames": 11
+  },
+  "4f": {
+   "file": "tao_nv/tho_nu_focus.webp",
+   "frames": 11
+  }
+ },
+ "files": {
+  "chon_nv/nen_van_ngoc.webp": {
+   "md5": "31762014745263a5670b9669e6f55993",
+   "bytes": 339732,
+   "from": "bản 2 ui/chon_nv/nen_van_ngoc.webp"
+  },
+  "v3/nen_tao_nv.webp": {
+   "md5": "005825125f7e9fd798e599e18e3b7d5c",
+   "bytes": 168314,
+   "from": "bản 2 ui/v3/nen_tao_nv.webp"
+  },
+  "tao_nv/nen.webp": {
+   "md5": "f0e624459b5a177c6cdcf1c4fc2ad230",
+   "bytes": 349260,
+   "from": "bản 2 ui/tao_nv/nen.webp"
+  },
+  "tao_nv/kim_nam_focus.webp": {
+   "md5": "64eb9fdf70a3769a115feb17cd1008e0",
+   "bytes": 300126,
+   "from": "bản 2 ui/tao_nv/kim_nam_focus.webp"
+  },
+  "tao_nv/kim_nu_focus.webp": {
+   "md5": "a5ecc2369fe314193e22fab11a029a19",
+   "bytes": 240882,
+   "from": "bản 2 ui/tao_nv/kim_nu_focus.webp"
+  },
+  "tao_nv/moc_nam_focus.webp": {
+   "md5": "a69de0b8bb4e0f151d54be99d33affdf",
+   "bytes": 246226,
+   "from": "bản 2 ui/tao_nv/moc_nam_focus.webp"
+  },
+  "tao_nv/moc_nu_focus.webp": {
+   "md5": "edb9fcd394ecfb249e4700edb5dcc4b3",
+   "bytes": 128612,
+   "from": "bản 2 ui/tao_nv/moc_nu_focus.webp"
+  },
+  "tao_nv/thuy_nam_focus.webp": {
+   "md5": "8b5c043276485465f3f4412526d3f34c",
+   "bytes": 208544,
+   "from": "bản 2 ui/tao_nv/thuy_nam_focus.webp"
+  },
+  "tao_nv/thuy_nu_focus.webp": {
+   "md5": "68196e4d339afbc613419acd4e027c12",
+   "bytes": 293658,
+   "from": "bản 2 ui/tao_nv/thuy_nu_focus.webp"
+  },
+  "tao_nv/hoa_nam_focus.webp": {
+   "md5": "1be014f72d19fbd611583be861acc371",
+   "bytes": 220804,
+   "from": "bản 2 ui/tao_nv/hoa_nam_focus.webp"
+  },
+  "tao_nv/hoa_nu_focus.webp": {
+   "md5": "08e98a64a072b3810e9b0a99367baae4",
+   "bytes": 286878,
+   "from": "bản 2 ui/tao_nv/hoa_nu_focus.webp"
+  },
+  "tao_nv/tho_nam_focus.webp": {
+   "md5": "08768dc5a36fe737231b971eeda3f744",
+   "bytes": 216172,
+   "from": "bản 2 ui/tao_nv/tho_nam_focus.webp"
+  },
+  "tao_nv/tho_nu_focus.webp": {
+   "md5": "c440b451853dd6a988049d2eb76483bd",
+   "bytes": 178510,
+   "from": "bản 2 ui/tao_nv/tho_nu_focus.webp"
+  },
+  "fonts/ibm-plex-mono-400-latin.woff2": {
+   "md5": "4cc7b43985407beb081d7718e06b5551",
+   "bytes": 14812,
+   "from": "bản 2 fonts/ibm-plex-mono-400-latin.woff2"
+  },
+  "fonts/ibm-plex-mono-400-latin-ext.woff2": {
+   "md5": "6ce02d71b5de3b0d7a714fc3d76e6ee1",
+   "bytes": 13272,
+   "from": "bản 2 fonts/ibm-plex-mono-400-latin-ext.woff2"
+  },
+  "fonts/ibm-plex-mono-400-vietnamese.woff2": {
+   "md5": "37a5de1e96d2f51a3deed274330fbd32",
+   "bytes": 5816,
+   "from": "bản 2 fonts/ibm-plex-mono-400-vietnamese.woff2"
+  }
+ }
+}

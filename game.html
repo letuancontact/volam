@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Võ Lâm Idle - HuyHuyy</title>
+<meta name="author" content="Heo Búy"><meta name="copyright" content="© 2026 Heo Búy — Võ Lâm Idle - HuyHuyy"><!-- chữ ký bản gốc (anh 11/11 — src/game/an-ky.js) -->
+<link rel="stylesheet" href="src/game/game.css">
+<link rel="preload" as="image" href="assets/ui/dang-nhap/login.webp"><!-- ảnh nền màn đăng nhập: tải ngay lúc mở trang, khỏi hiện trễ -->
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<!-- đang tải -->
+<section id="s-load" class="screen on"><div class="box"><h1>Võ Lâm Idle - HuyHuyy</h1><p id="load-msg">Đang tải…</p><button id="load-lai" class="main" style="display:none;margin-top:10px">Tải lại</button></div></section>
+
+<!-- đăng nhập máy chủ chung (chay-game.js + may-chu/; tài khoản do quản trị tạo: Tao_Tai_Khoan.bat) -->
+<section id="s-login" class="screen">
+  <form class="box login" id="lg-form">
+    <h1>Võ Lâm Idle - HuyHuyy</h1>
+    <div class="lg-sv" id="lg-sv"></div>
+    <label>Tài khoản<input id="lg-name" name="username" autocomplete="username" maxlength="20" autocapitalize="off" spellcheck="false"></label>
+    <label>Mật khẩu<input id="lg-pass" name="password" type="password" autocomplete="current-password" maxlength="64"></label>
+    <div class="lg-err" id="lg-err"></div>
+    <div class="row end"><button class="main" type="submit" id="lg-ok">Đăng nhập</button></div>
+    <p class="lg-note">Chưa có tài khoản? Bấm <b>Tao_Tai_Khoan.bat</b> trong thư mục game để tạo (tài khoản đầu tiên là quản trị).</p>
+    <div class="lg-chiase">Nếu bạn yêu thích bản game của mình thì hãy chung tay chia sẻ cho anh em khác trong group để ai cũng có thể trải nghiệm. Cảm ơn anh chị em group Hội Quán rất nhiều!</div>
+  </form>
+</section>
+
+<!-- đổi mật khẩu lần đầu (anh 10/11 — tài khoản quản trị tạo / đặt lại mật khẩu: may-chu/bao-mat.js batDoiMk; main.js doiMkScreen) -->
+<section id="s-doimk" class="screen">
+  <form class="box login" id="dm-form">
+    <h1>Đổi mật khẩu</h1>
+    <div class="lg-sv">Tài khoản <b id="dm-tk"></b></div>
+    <input id="dm-ten" name="username" autocomplete="username" hidden>
+    <p class="lg-note dm-note">Tài khoản đang dùng mật khẩu do quản trị cấp. Hãy đặt mật khẩu riêng của bạn trước khi vào game: ít nhất 6 ký tự, khác tên tài khoản. Không chia sẻ mật khẩu cho người khác.</p>
+    <label>Mật khẩu quản trị cấp<input id="dm-cu" type="password" autocomplete="current-password" maxlength="64"></label>
+    <label>Mật khẩu mới<input id="dm-moi" type="password" autocomplete="new-password" maxlength="64"></label>
+    <label>Nhập lại mật khẩu mới<input id="dm-lai" type="password" autocomplete="new-password" maxlength="64"></label>
+    <div class="lg-err" id="dm-err"></div>
+    <div class="row end"><button class="ghost" type="button" id="dm-thoat">Đăng xuất</button><button class="main" type="submit" id="dm-ok">Đổi mật khẩu</button></div>
+  </form>
+</section>
+
+<!-- chọn nhân vật (mô phỏng màn chọn nhân vật của bản 2, js/csel.js) -->
+<section id="s-select" class="screen csel">
+  <div class="cs-top"><h1>Chọn Nhân Vật</h1><div class="cs-sub">Hùng Bá Thiên Hạ · Sơn Hà Xã Tắc</div>
+    <div class="cs-chiase">Nếu bạn yêu thích bản game của mình thì hãy chung tay chia sẻ cho anh em khác trong group để ai cũng có thể trải nghiệm. Cảm ơn anh chị em group Hội Quán rất nhiều!</div></div>
+  <div class="cs-row" id="cs-row"></div>
+  <div class="cs-panel" id="cs-panel"></div>
+</section>
+
+<!-- chọn server -->
+<section id="s-server" class="screen">
+  <div class="box wide">
+    <h1>Chọn máy chủ</h1>
+    <div class="cards" id="servers"></div>
+    <div class="row end"><button class="ghost" id="sv-back">Quay lại</button></div>
+  </div>
+</section>
+
+<!-- tạo nhân vật (theo bản 2 js/ui.js pickFaction: chọn giới + hệ + ngoại hiệu; nhập môn phái ở cấp 10) -->
+<section id="s-create" class="screen cc">
+  <div class="cc-top"><div class="cc-title">Hùng Bá Thiên Hạ</div><div class="cc-ver" id="cc-ver"></div></div>
+  <div class="cc-mid">
+    <div class="cc-char" data-sx="m"><div class="cc-vp"><i></i></div><div class="cc-tag">NAM NHÂN</div></div>
+    <div class="cc-pillar"><div class="cc-glow"></div><div id="cc-series"></div></div>
+    <div class="cc-char" data-sx="f"><div class="cc-vp"><i></i></div><div class="cc-tag">NỮ HIỆP</div></div>
+  </div>
+  <div class="cc-bot">
+    <div class="cc-desc"><div id="cc-detail"></div><div class="cc-warn" id="cc-warn"></div></div>
+    <div class="cc-bar">
+      <button id="cc-cancel">Hủy</button>
+      <div class="cc-name"><span>Ngoại Hiệu:</span><input id="cc-name" maxlength="14" autocomplete="off" placeholder="Nhập tên nhân vật (2 - 14 ký tự)..."></div>
+      <button id="cc-ok" class="ok">OK</button>
+    </div>
+    <div class="cc-err" id="cc-err"></div>
+  </div>
+</section>
+
+<!-- trong game: giao diện giống client PC, src/game/hud.js dựng vào đây -->
+<section id="hud" class="hud"></section>
+
+<script type="module" src="src/game/main.js"></script>
+</body>
+</html>

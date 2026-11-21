@@ -1,0 +1,2323 @@
+{
+ "format": "vl-hud-pack",
+ "version": 1,
+ "built": "2026-10-24T07:15:02.615Z",
+ "frame": {
+  "w": 1024,
+  "h": 768
+ },
+ "top": {
+  "file": "top.png",
+  "y": 0,
+  "h": 17
+ },
+ "bot": {
+  "file": "bot.png",
+  "y": 677,
+  "h": 91
+ },
+ "logo": {
+  "x": 15,
+  "y": 2,
+  "w": 120,
+  "h": 13,
+  "text": "Võ Lâm Truyền Kỳ",
+  "color": [
+   255,
+   217,
+   78
+  ],
+  "over": [
+   0,
+   255,
+   0
+  ],
+  "sel": [
+   205,
+   167,
+   28
+  ],
+  "tip": "Ngày tháng",
+  "net": [
+   {
+    "ping": 500,
+    "color": [
+     60,
+     255,
+     160
+    ],
+    "msg": "Hoạt động tốt"
+   },
+   {
+    "ping": 2000,
+    "color": [
+     255,
+     200,
+     0
+    ],
+    "msg": "Quá đông người"
+   },
+   {
+    "ping": null,
+    "color": [
+     255,
+     0,
+     0
+    ],
+    "msg": "Bị gián đoạn"
+   }
+  ]
+ },
+ "cursors": [
+  {
+   "file": "cursor/0.png",
+   "w": 32,
+   "h": 32,
+   "hx": 5,
+   "hy": 5,
+   "bpp": 8,
+   "from": "鼠标正常FOR2000.cur"
+  },
+  {
+   "file": "cursor/1.png",
+   "w": 32,
+   "h": 32,
+   "hx": 5,
+   "hy": 5,
+   "bpp": 8,
+   "from": "攻击FOR2000.cur"
+  },
+  {
+   "file": "cursor/2.png",
+   "w": 32,
+   "h": 32,
+   "hx": 8,
+   "hy": 21,
+   "bpp": 8,
+   "from": "NPC对话FOR2000.cur"
+  },
+  {
+   "file": "cursor/3.png",
+   "w": 32,
+   "h": 32,
+   "hx": 7,
+   "hy": 12,
+   "bpp": 8,
+   "from": "拣物品FOR2000.cur"
+  },
+  {
+   "file": "cursor/4.png",
+   "w": 32,
+   "h": 32,
+   "hx": 5,
+   "hy": 5,
+   "bpp": 8,
+   "from": "鼠标正常FOR2000.cur"
+  },
+  {
+   "file": "cursor/5.png",
+   "w": 32,
+   "h": 32,
+   "hx": 2,
+   "hy": 2,
+   "bpp": 8,
+   "from": "买物品FOR2000.cur"
+  },
+  {
+   "file": "cursor/6.png",
+   "w": 32,
+   "h": 32,
+   "hx": 2,
+   "hy": 2,
+   "bpp": 8,
+   "from": "卖物品FOR2000.cur"
+  },
+  {
+   "file": "cursor/7.png",
+   "w": 32,
+   "h": 32,
+   "hx": 2,
+   "hy": 2,
+   "bpp": 8,
+   "from": "修物品FOR2000.cur"
+  },
+  {
+   "file": "cursor/8.png",
+   "w": 32,
+   "h": 32,
+   "hx": 10,
+   "hy": 21,
+   "bpp": 8,
+   "from": "看objFOR2000.cur"
+  },
+  {
+   "file": "cursor/9.png",
+   "w": 32,
+   "h": 32,
+   "hx": 8,
+   "hy": 21,
+   "bpp": 8,
+   "from": "摆摊察看FOR2000.cur"
+  },
+  {
+   "file": "cursor/10.png",
+   "w": 32,
+   "h": 32,
+   "hx": 0,
+   "hy": 0,
+   "bpp": 8,
+   "from": "物品标价FOR2000.cur"
+  },
+  {
+   "file": "cursor/11.png",
+   "w": 32,
+   "h": 32,
+   "hx": 7,
+   "hy": 12,
+   "bpp": 8,
+   "from": "新任务界面.cur"
+  },
+  null,
+  {
+   "file": "cursor/13.png",
+   "w": 32,
+   "h": 32,
+   "hx": 2,
+   "hy": 2,
+   "bpp": 32,
+   "from": "查询图标FOR2000.cur"
+  },
+  {
+   "file": "cursor/14.png",
+   "w": 32,
+   "h": 32,
+   "hx": 0,
+   "hy": 0,
+   "bpp": 8,
+   "from": "绑定FOR2000.cur"
+  },
+  {
+   "file": "cursor/15.png",
+   "w": 32,
+   "h": 32,
+   "hx": 0,
+   "hy": 0,
+   "bpp": 8,
+   "from": "解除FOR2000.cur"
+  },
+  {
+   "file": "cursor/16.png",
+   "w": 32,
+   "h": 32,
+   "hx": 5,
+   "hy": 5,
+   "bpp": 8,
+   "from": "攻击FOR2000.cur"
+  }
+ ],
+ "npc": {
+  "series": [
+   {
+    "file": "npc/series0.png",
+    "w": 18,
+    "h": 18,
+    "from": "series0.spr"
+   },
+   {
+    "file": "npc/series1.png",
+    "w": 18,
+    "h": 18,
+    "from": "series1.spr"
+   },
+   {
+    "file": "npc/series2.png",
+    "w": 18,
+    "h": 18,
+    "from": "series2.spr"
+   },
+   {
+    "file": "npc/series3.png",
+    "w": 18,
+    "h": 18,
+    "from": "series3.spr"
+   },
+   {
+    "file": "npc/series4.png",
+    "w": 18,
+    "h": 18,
+    "from": "series4.spr"
+   }
+  ]
+ },
+ "hotkeys": [
+  {
+   "key": "Ctrl+`",
+   "cmd": "RequestScriptTable([[sevencity_war]])"
+  },
+  {
+   "key": "Ctrl+1",
+   "cmd": "RequestScriptTable([[bloodybattle]])"
+  },
+  {
+   "key": "LButton",
+   "cmd": "Mouse_Action()"
+  },
+  {
+   "key": "RButton",
+   "cmd": "Mouse_Force1()"
+  },
+  {
+   "key": "Shift+LButton",
+   "cmd": "Mouse_Force0()"
+  },
+  {
+   "key": "Shift+RButton",
+   "cmd": "Mouse_Force1()"
+  },
+  {
+   "key": "Ctrl+LButton",
+   "cmd": "Mouse_Say()"
+  },
+  {
+   "key": "Ctrl+RButton",
+   "cmd": "Mouse_Menu()"
+  },
+  {
+   "key": "Alt+LButton",
+   "cmd": "Mouse_PartnerAction()"
+  },
+  {
+   "key": "Alt+RButton",
+   "cmd": "Mouse_Emote_Menu()"
+  },
+  {
+   "key": "Esc",
+   "cmd": "Open([[system]])"
+  },
+  {
+   "key": "Tab",
+   "cmd": "Open([[map]])"
+  },
+  {
+   "key": "Enter",
+   "cmd": "Focus([[commandline]])"
+  },
+  {
+   "key": "Del",
+   "cmd": "ClearMessage()"
+  },
+  {
+   "key": "F1",
+   "cmd": "Open([[help]])"
+  },
+  {
+   "key": "F2",
+   "cmd": "Open([[options]])"
+  },
+  {
+   "key": "F3",
+   "cmd": "Open([[status]])"
+  },
+  {
+   "key": "F4",
+   "cmd": "Open([[items]])"
+  },
+  {
+   "key": "F5",
+   "cmd": "Open([[skills]])"
+  },
+  {
+   "key": "F6",
+   "cmd": "Open([[friend]])"
+  },
+  {
+   "key": "F11",
+   "cmd": "Open([[tasknote]])"
+  },
+  {
+   "key": "F12",
+   "cmd": "Open([[NewTask]])"
+  },
+  {
+   "key": "`",
+   "cmd": "Open([[battlereport]])"
+  },
+  {
+   "key": "Alt+`",
+   "cmd": "OpenFuLiBattleReportUi()"
+  },
+  {
+   "key": "Ctrl+R",
+   "cmd": "Replay([[rec]])"
+  },
+  {
+   "key": "Ctrl+S",
+   "cmd": "Replay([[endrec]])"
+  },
+  {
+   "key": "Ctrl+P",
+   "cmd": "Replay([[pauserec]])"
+  },
+  {
+   "key": "F8",
+   "cmd": "Switch([[showplayerlife]])"
+  },
+  {
+   "key": "F9",
+   "cmd": "Switch([[pk]])"
+  },
+  {
+   "key": "Ctrl+H",
+   "cmd": "Switch([[pk]])"
+  },
+  {
+   "key": "F7",
+   "cmd": "Switch([[showplayername]])"
+  },
+  {
+   "key": "PrintScreen",
+   "cmd": "PrintScreen()"
+  },
+  {
+   "key": "P",
+   "cmd": "Open([[team]])"
+  },
+  {
+   "key": "Q",
+   "cmd": "ShortcutSkill(0)"
+  },
+  {
+   "key": "W",
+   "cmd": "ShortcutSkill(1)"
+  },
+  {
+   "key": "E",
+   "cmd": "ShortcutSkill(2)"
+  },
+  {
+   "key": "A",
+   "cmd": "ShortcutSkill(3)"
+  },
+  {
+   "key": "S",
+   "cmd": "ShortcutSkill(4)"
+  },
+  {
+   "key": "D",
+   "cmd": "ShortcutSkill(5)"
+  },
+  {
+   "key": "Z",
+   "cmd": "ShortcutSkill(6)"
+  },
+  {
+   "key": "X",
+   "cmd": "ShortcutSkill(7)"
+  },
+  {
+   "key": "C",
+   "cmd": "ShortcutSkill(8)"
+  },
+  {
+   "key": "1",
+   "cmd": "ShortcutUseItem(0)"
+  },
+  {
+   "key": "2",
+   "cmd": "ShortcutUseItem(1)"
+  },
+  {
+   "key": "3",
+   "cmd": "ShortcutUseItem(2)"
+  },
+  {
+   "key": "4",
+   "cmd": "ShortcutUseItem(3)"
+  },
+  {
+   "key": "5",
+   "cmd": "ShortcutUseItem(4)"
+  },
+  {
+   "key": "6",
+   "cmd": "ShortcutUseItem(5)"
+  },
+  {
+   "key": "7",
+   "cmd": "ShortcutUseItem(6)"
+  },
+  {
+   "key": "8",
+   "cmd": "ShortcutUseItem(7)"
+  },
+  {
+   "key": "9",
+   "cmd": "ShortcutUseItem(8)"
+  },
+  {
+   "key": "R",
+   "cmd": "Switch([[run]])"
+  },
+  {
+   "key": "M",
+   "cmd": "Switch([[horse]])"
+  },
+  {
+   "key": "V",
+   "cmd": "Switch([[sit]])"
+  },
+  {
+   "key": "T",
+   "cmd": "Switch([[trade]])"
+  },
+  {
+   "key": "O",
+   "cmd": "Switch([[trade]])"
+  },
+  {
+   "key": "Alt+0",
+   "cmd": "SayPhrase(0)"
+  },
+  {
+   "key": "Alt+1",
+   "cmd": "SayPhrase(1)"
+  },
+  {
+   "key": "Alt+2",
+   "cmd": "SayPhrase(2)"
+  },
+  {
+   "key": "Alt+3",
+   "cmd": "SayPhrase(3)"
+  },
+  {
+   "key": "Alt+4",
+   "cmd": "SayPhrase(4)"
+  },
+  {
+   "key": "Alt+5",
+   "cmd": "SayPhrase(5)"
+  },
+  {
+   "key": "Alt+6",
+   "cmd": "SayPhrase(6)"
+  },
+  {
+   "key": "Alt+7",
+   "cmd": "SayPhrase(7)"
+  },
+  {
+   "key": "Alt+8",
+   "cmd": "SayPhrase(8)"
+  },
+  {
+   "key": "Alt+9",
+   "cmd": "SayPhrase(9)"
+  },
+  {
+   "key": "Alt+X",
+   "cmd": "ExitGame()"
+  },
+  {
+   "key": "Alt+Q",
+   "cmd": "Exit()"
+  },
+  {
+   "key": "NUM2",
+   "cmd": "MoveTo(0, 0)"
+  },
+  {
+   "key": "NUM1",
+   "cmd": "MoveTo(8, 0)"
+  },
+  {
+   "key": "NUM4",
+   "cmd": "MoveTo(16, 0)"
+  },
+  {
+   "key": "NUM7",
+   "cmd": "MoveTo(24, 0)"
+  },
+  {
+   "key": "NUM8",
+   "cmd": "MoveTo(32, 0)"
+  },
+  {
+   "key": "NUM9",
+   "cmd": "MoveTo(40, 0)"
+  },
+  {
+   "key": "NUM6",
+   "cmd": "MoveTo(48, 0)"
+  },
+  {
+   "key": "NUM3",
+   "cmd": "MoveTo(56, 0)"
+  },
+  {
+   "key": "Left",
+   "cmd": "TurnTo(0)"
+  },
+  {
+   "key": "Right",
+   "cmd": "TurnTo(1)"
+  },
+  {
+   "key": "Insert",
+   "cmd": "SwitchPrivateMsgMode()"
+  },
+  {
+   "key": "+",
+   "cmd": "Zoom([[in]])"
+  },
+  {
+   "key": "=",
+   "cmd": "Zoom([[in]])"
+  },
+  {
+   "key": "-",
+   "cmd": "Zoom([[out]])"
+  },
+  {
+   "key": "Alt+D",
+   "cmd": "Open([[PlayerNpc]])"
+  },
+  {
+   "key": "Alt+S",
+   "cmd": "Open([[MissleSame]])"
+  },
+  {
+   "key": "Alt+F",
+   "cmd": "Open([[VisiblePlayer]])"
+  },
+  {
+   "key": "Alt+Enter",
+   "cmd": "Open([[FullScreen]])"
+  },
+  {
+   "key": "Y",
+   "cmd": "Open([[Chara]])"
+  },
+  {
+   "key": "U",
+   "cmd": "Open([[Item]])"
+  },
+  {
+   "key": "I",
+   "cmd": "Open([[Skill]])"
+  },
+  {
+   "key": "L",
+   "cmd": "Open([[Talk]])"
+  },
+  {
+   "key": "F",
+   "cmd": "Open([[Attack]])"
+  },
+  {
+   "key": "G",
+   "cmd": "Open([[Follow]])"
+  },
+  {
+   "key": "B",
+   "cmd": "Open([[Call]])"
+  },
+  {
+   "key": "N",
+   "cmd": "Open([[Select]])"
+  },
+  {
+   "key": "Alt+C",
+   "cmd": "Open([[ChatRoomList]])"
+  },
+  {
+   "key": "Ctrl+B",
+   "cmd": "Open([[Tong]])"
+  },
+  {
+   "key": "Ctrl+V",
+   "cmd": "Open([[ItemEx]])"
+  },
+  {
+   "key": "Shift+1",
+   "cmd": "GMCommand_1()"
+  },
+  {
+   "key": "Shift+2",
+   "cmd": "GMCommand_2()"
+  },
+  {
+   "key": "Shift+3",
+   "cmd": "GMCommand_3()"
+  },
+  {
+   "key": "Shift+4",
+   "cmd": "GMCommand_4()"
+  },
+  {
+   "key": "Shift+5",
+   "cmd": "GMCommand_5()"
+  },
+  {
+   "key": "Shift+6",
+   "cmd": "GMCommand_6()"
+  },
+  {
+   "key": "Shift+7",
+   "cmd": "GMCommand_7()"
+  },
+  {
+   "key": "Shift+8",
+   "cmd": "GMCommand_8()"
+  },
+  {
+   "key": "Shift+9",
+   "cmd": "GMCommand_9()"
+  },
+  {
+   "key": "Shift+0",
+   "cmd": "GMCommand_0()"
+  },
+  {
+   "key": "Shift+`",
+   "cmd": "Open([[BossFightReport]])"
+  }
+ ],
+ "phrases": [
+  "Các hạ ở đâu?:S",
+  "Theo tại hạ đến đây!:K",
+  "Mọi người hãy cùng lên, thêm người thì thêm sức!:F",
+  "Nguy hiểm, chạy lẹ!:$",
+  "Giúp tại hạ tăng máu nhanh đi!:M",
+  "Có ai lập tổ đội không? Tại hạ đang cô đơn quá!^o^",
+  "Bà con cô bác ơi, hàng nóng hổi đây!.:E",
+  "Các hạ là người ở đâu, cấp bao nhiêu rồi?:o",
+  "Huhu, các huynh tỷ cho đệ xin ít tiền đi!:) ",
+  "Tại hạ là người mới, xin các huynh tỷ chiếu cố!:I"
+ ],
+ "level": {
+  "x": 289,
+  "y": 2,
+  "w": 19,
+  "h": 13
+ },
+ "rank": {
+  "x": 775,
+  "y": 2,
+  "w": 28,
+  "h": 13
+ },
+ "bars": [
+  {
+   "x": 311,
+   "y": 3,
+   "w": 106,
+   "h": 11,
+   "key": "stamina",
+   "n": "Thể lực",
+   "color": [
+    64,
+    200,
+    72
+   ]
+  },
+  {
+   "x": 421,
+   "y": 3,
+   "w": 106,
+   "h": 11,
+   "key": "life",
+   "n": "Sinh lực",
+   "color": [
+    214,
+    40,
+    40
+   ]
+  },
+  {
+   "x": 531,
+   "y": 3,
+   "w": 106,
+   "h": 11,
+   "key": "mana",
+   "n": "Nội lực",
+   "color": [
+    48,
+    96,
+    230
+   ]
+  },
+  {
+   "x": 641,
+   "y": 3,
+   "w": 106,
+   "h": 11,
+   "key": "exp",
+   "n": "Kinh nghiệm",
+   "color": [
+    200,
+    160,
+    40
+   ]
+  }
+ ],
+ "items": [
+  {
+   "x": 136,
+   "y": 719,
+   "w": 36,
+   "h": 36
+  },
+  {
+   "x": 174,
+   "y": 719,
+   "w": 36,
+   "h": 36
+  },
+  {
+   "x": 212,
+   "y": 719,
+   "w": 36,
+   "h": 36
+  },
+  {
+   "x": 250,
+   "y": 719,
+   "w": 36,
+   "h": 36
+  },
+  {
+   "x": 288,
+   "y": 719,
+   "w": 36,
+   "h": 36
+  },
+  {
+   "x": 326,
+   "y": 719,
+   "w": 36,
+   "h": 36
+  },
+  {
+   "x": 366,
+   "y": 719,
+   "w": 36,
+   "h": 36
+  },
+  {
+   "x": 402,
+   "y": 719,
+   "w": 36,
+   "h": 36
+  },
+  {
+   "x": 440,
+   "y": 719,
+   "w": 36,
+   "h": 36
+  }
+ ],
+ "skills": {
+  "left": {
+   "x": 492,
+   "y": 697,
+   "w": 36,
+   "h": 36
+  },
+  "right": {
+   "x": 529,
+   "y": 697,
+   "w": 36,
+   "h": 36
+  }
+ },
+ "input": {
+  "x": 163,
+  "y": 693,
+  "w": 248,
+  "h": 15,
+  "color": [
+   254,
+   255,
+   160
+  ],
+  "max": 80
+ },
+ "channel": {
+  "x": 134,
+  "y": 687,
+  "w": 20,
+  "h": 20,
+  "color": [
+   255,
+   217,
+   78
+  ]
+ },
+ "buttons": {
+  "Friend": {
+   "x": 735,
+   "y": 728,
+   "file": "btn/friend.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 21,
+   "ih": 23,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Hảo hữu",
+   "cls": null,
+   "from": "玩家信息主界面.ini",
+   "img": "\\spr\\UI3\\主界面\\人际关系按钮.spr"
+  },
+  "Options": {
+   "x": 859,
+   "y": 728,
+   "file": "btn/options.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 21,
+   "ih": 23,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Tùy chỉnh",
+   "cls": null,
+   "from": "玩家信息主界面.ini",
+   "img": "\\spr\\UI3\\主界面\\系统按钮.spr"
+  },
+  "SendBtn": {
+   "x": 439,
+   "y": 690,
+   "file": "btn/sendbtn.png",
+   "w": 20,
+   "h": 20,
+   "frames": 3,
+   "iw": 21,
+   "ih": 20,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "",
+   "cls": null,
+   "from": "玩家信息主界面.ini",
+   "img": "\\Spr\\Ui3\\主界面\\主界面按钮-聊天发送.spr"
+  },
+  "Face": {
+   "x": 416,
+   "y": 690,
+   "file": "btn/face.png",
+   "w": 20,
+   "h": 20,
+   "frames": 2,
+   "iw": 20,
+   "ih": 20,
+   "up": 0,
+   "down": 0,
+   "over": 0,
+   "check": false,
+   "tip": "biểu đạt tình cảm",
+   "cls": null,
+   "from": "玩家信息主界面.ini",
+   "img": "\\Spr\\Ui3\\表情\\01.spr"
+  },
+  "Market": {
+   "x": 876,
+   "y": 680,
+   "file": "btn/market.png",
+   "w": 75,
+   "h": 48,
+   "frames": 3,
+   "iw": 74,
+   "ih": 61,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Kỳ Trân Các",
+   "cls": null,
+   "from": "玩家信息主界面.ini",
+   "img": "\\spr\\UI3\\1024\\Market.spr"
+  },
+  "InputBack": {
+   "x": 134,
+   "y": 688,
+   "file": "btn/inputback.png",
+   "w": 329,
+   "h": 28,
+   "frames": 2,
+   "iw": 329,
+   "ih": 28,
+   "up": 0,
+   "down": null,
+   "over": null,
+   "check": false,
+   "tip": "",
+   "cls": null,
+   "from": "玩家信息主界面.ini",
+   "img": "\\Spr\\UI3\\主界面\\聊天输入条.spr"
+  },
+  "Sit": {
+   "x": 656,
+   "y": 675,
+   "file": "btn/sit.png",
+   "w": 31,
+   "h": 31,
+   "frames": 3,
+   "iw": 31,
+   "ih": 31,
+   "up": 0,
+   "down": 1,
+   "over": null,
+   "check": true,
+   "tip": "Ngồi",
+   "cls": "Player_Sit",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\打坐按钮.spr"
+  },
+  "Status": {
+   "x": 580,
+   "y": 728,
+   "file": "btn/status.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 28,
+   "ih": 28,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Nhân vật",
+   "cls": "Player_Status",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\人物属性按钮_0.spr"
+  },
+  "Items": {
+   "x": 611,
+   "y": 728,
+   "file": "btn/items.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 28,
+   "ih": 28,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Đồ dùng",
+   "cls": "Player_Items",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\背包按钮.spr"
+  },
+  "ItemEx": {
+   "x": 642,
+   "y": 728,
+   "file": "btn/itemex.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 28,
+   "ih": 28,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Túi hành trang",
+   "cls": "Player_ItemEx",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\子母袋按钮.spr"
+  },
+  "Horse": {
+   "x": 719,
+   "y": 675,
+   "file": "btn/horse.png",
+   "w": 31,
+   "h": 31,
+   "frames": 2,
+   "iw": 31,
+   "ih": 31,
+   "up": 1,
+   "down": 0,
+   "over": null,
+   "check": true,
+   "tip": "Lên xuống ngựa",
+   "cls": "Player_Horse",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\骑马按钮.spr"
+  },
+  "Skills": {
+   "x": 673,
+   "y": 728,
+   "file": "btn/skills.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 28,
+   "ih": 28,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Võ công",
+   "cls": "Player_Skills",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\技能按钮.spr"
+  },
+  "Exchange": {
+   "x": 750,
+   "y": 675,
+   "file": "btn/exchange.png",
+   "w": 31,
+   "h": 31,
+   "frames": 2,
+   "iw": 31,
+   "ih": 31,
+   "up": 0,
+   "down": 1,
+   "over": null,
+   "check": true,
+   "tip": "Đóng mở giao dịch",
+   "cls": "Player_Exchange",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\交易按钮.spr"
+  },
+  "Team": {
+   "x": 766,
+   "y": 728,
+   "file": "btn/team.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 28,
+   "ih": 28,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Quản lý đội ngũ",
+   "cls": "Player_Team",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\队伍按钮.spr"
+  },
+  "PK": {
+   "x": 815,
+   "y": 675,
+   "file": "btn/pk.png",
+   "w": 31,
+   "h": 31,
+   "frames": 3,
+   "iw": 31,
+   "ih": 31,
+   "up": 0,
+   "down": 1,
+   "over": null,
+   "check": true,
+   "tip": "Đóng mở PK",
+   "cls": "Player_PK",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\PK按钮.spr"
+  },
+  "Faction": {
+   "x": 797,
+   "y": 728,
+   "file": "btn/faction.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 28,
+   "ih": 28,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Bang phái",
+   "cls": "Player_Faction",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\帮会按钮.spr"
+  },
+  "Rec": {
+   "x": 783,
+   "y": 675,
+   "file": "btn/rec.png",
+   "w": 31,
+   "h": 31,
+   "frames": 3,
+   "iw": 31,
+   "ih": 31,
+   "up": 0,
+   "down": null,
+   "over": null,
+   "check": false,
+   "tip": "",
+   "cls": "Player_Recorder",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\摄像机按钮.spr"
+  },
+  "ChatRoom": {
+   "x": 828,
+   "y": 728,
+   "file": "btn/chatroom.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 28,
+   "ih": 28,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Phòng",
+   "cls": "Player_ChatRoom",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\聊天室按钮.spr"
+  },
+  "Task": {
+   "x": 704,
+   "y": 728,
+   "file": "btn/task.png",
+   "w": 28,
+   "h": 28,
+   "frames": 3,
+   "iw": 28,
+   "ih": 28,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Nhiệm vụ",
+   "cls": "Player_Task",
+   "from": "工具控制条.ini",
+   "img": "\\spr\\UI3\\主界面\\任务按钮.spr"
+  },
+  "ChoTroi": {
+   "x": 687,
+   "y": 675,
+   "file": "btn/chotroi.png",
+   "w": 31,
+   "h": 31,
+   "frames": 3,
+   "iw": 31,
+   "ih": 31,
+   "up": 0,
+   "down": 1,
+   "over": 2,
+   "check": false,
+   "tip": "Chợ Trời — xem hàng các sạp, mua ngay",
+   "cls": "S1_ChoTroi",
+   "from": "cong-cu/dung-nut-cho-troi.mjs (chỗ nút Run của 工具控制条.ini)"
+  }
+ },
+ "chat": {
+  "list": {
+   "x": 15,
+   "y": 485,
+   "w": 280,
+   "h": 140,
+   "color": [
+    255,
+    249,
+    148
+   ],
+   "max": 120,
+   "font": 12
+  },
+  "sys": {
+   "x": 15,
+   "y": 640,
+   "w": 280,
+   "h": 42,
+   "color": [
+    255,
+    249,
+    148
+   ],
+   "max": 120,
+   "font": 13
+  },
+  "tabs": {
+   "x": 15,
+   "y": 625,
+   "dx": 60,
+   "w": 60,
+   "h": 12,
+   "color": [
+    50,
+    220,
+    173
+   ],
+   "border": [
+    73,
+    73,
+    73
+   ],
+   "sel": [
+    182,
+    182,
+    182
+   ],
+   "selBorder": [
+    91,
+    91,
+    91
+   ],
+   "over": [
+    255,
+    255,
+    255
+   ],
+   "overBorder": [
+    230,
+    100,
+    0
+   ],
+   "special": [
+    230,
+    220,
+    53
+   ],
+   "list": [
+    {
+     "label": "Tất cả",
+     "type": 4,
+     "mask": 0
+    },
+    {
+     "label": "Mật",
+     "type": 2,
+     "mask": 0
+    },
+    {
+     "label": "Phòng",
+     "type": 1,
+     "mask": 64
+    },
+    {
+     "label": "Bang hội",
+     "type": 1,
+     "mask": 36
+    },
+    {
+     "label": "Môn phái",
+     "type": 1,
+     "mask": 2
+    },
+    {
+     "label": "Khác",
+     "type": 3,
+     "mask": 49
+    }
+   ]
+  },
+  "strip": {
+   "top": {
+    "x": 0,
+    "y": 485,
+    "w": 15,
+    "h": 16,
+    "file": "btn/chat_top.png",
+    "frames": 1,
+    "up": 0,
+    "down": null,
+    "over": null,
+    "check": false,
+    "tip": ""
+   },
+   "bottom": {
+    "x": 0,
+    "y": 610,
+    "w": 15,
+    "h": 16,
+    "file": "btn/chat_bottom.png",
+    "frames": 1,
+    "up": 0,
+    "down": null,
+    "over": null,
+    "check": false,
+    "tip": ""
+   },
+   "shadow": {
+    "x": 0,
+    "y": 596,
+    "w": 15,
+    "h": 16,
+    "file": "btn/chat_shadow.png",
+    "frames": 1,
+    "up": 0,
+    "down": 0,
+    "over": null,
+    "check": true,
+    "tip": ""
+   },
+   "mid": {
+    "x": 0,
+    "y": 500,
+    "w": 15,
+    "h": 13,
+    "file": "btn/chat_mid.png",
+    "frames": 1
+   },
+   "sysOpen": {
+    "x": 0,
+    "y": 668,
+    "w": 15,
+    "h": 14,
+    "file": "btn/sys_open.png",
+    "frames": 2,
+    "up": 0,
+    "down": 1,
+    "over": null,
+    "check": true,
+    "tip": ""
+   },
+   "sysUp": {
+    "x": 0,
+    "y": 640,
+    "w": 15,
+    "h": 14,
+    "file": "btn/sys_up.png",
+    "frames": 3,
+    "up": 0,
+    "down": 1,
+    "over": 2,
+    "check": false,
+    "tip": ""
+   },
+   "sysDown": {
+    "x": 0,
+    "y": 654,
+    "w": 15,
+    "h": 14,
+    "file": "btn/sys_down.png",
+    "frames": 3,
+    "up": 0,
+    "down": 1,
+    "over": 2,
+    "check": false,
+    "tip": ""
+   }
+  },
+  "self": {
+   "color": [
+    255,
+    226,
+    168
+   ],
+   "border": [
+    204,
+    88,
+    0
+   ],
+   "img": {
+    "file": "btn/chat_self.png",
+    "w": 23,
+    "h": 13,
+    "frames": 1
+   }
+  },
+  "friend": {
+   "color": [
+    255,
+    202,
+    255
+   ],
+   "border": [
+    167,
+    0,
+    146
+   ],
+   "img": {
+    "file": "btn/chat_friend.png",
+    "w": 23,
+    "h": 13,
+    "frames": 1
+   },
+   "menuImg": {
+    "file": "btn/chat_friend_menu.png",
+    "w": 21,
+    "h": 21,
+    "frames": 1
+   }
+  },
+  "stranger": {
+   "color": [
+    252,
+    151,
+    255
+   ],
+   "border": [
+    80,
+    17,
+    117
+   ],
+   "img": {
+    "file": "btn/chat_stranger.png",
+    "w": 23,
+    "h": 13,
+    "frames": 1
+   },
+   "menuImg": {
+    "file": "btn/chat_stranger_menu.png",
+    "w": 21,
+    "h": 21,
+    "frames": 1
+   }
+  },
+  "nameColor": [
+   220,
+   220,
+   220
+  ],
+  "nameBorder": [
+   0,
+   0,
+   0
+  ],
+  "defaultChannel": "CH_SYSTEM",
+  "defaultSendName": "Nhắc nhở",
+  "channels": {
+   "CH_NEARBY": {
+    "idx": 0,
+    "short": [
+     "chơi"
+    ],
+    "format": "NEARBY",
+    "menu": "Người chơi phụ cận",
+    "color": [
+     255,
+     255,
+     255
+    ],
+    "border": [
+     49,
+     21,
+     0
+    ],
+    "interval": 2000,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_nearby_menu.png",
+     "w": 21,
+     "h": 21,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_nearby_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_TEAM": {
+    "idx": 1,
+    "short": [
+     "đội",
+     "T"
+    ],
+    "format": "TEAM",
+    "menu": "Tần số đội ngũ",
+    "color": [
+     64,
+     190,
+     255
+    ],
+    "border": [
+     11,
+     0,
+     134
+    ],
+    "interval": 800,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_team_menu.png",
+     "w": 21,
+     "h": 21,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_team_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_WORLD": {
+    "idx": 2,
+    "short": [
+     "Công",
+     "SJ"
+    ],
+    "format": "WORLD",
+    "menu": "Tần số thế giới",
+    "color": [
+     146,
+     255,
+     143
+    ],
+    "border": [
+     0,
+     45,
+     0
+    ],
+    "interval": 60000,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_world_menu.png",
+     "w": 21,
+     "h": 21,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_world_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_FACTION": {
+    "idx": 3,
+    "short": [
+     "phái"
+    ],
+    "format": "\\F<Faction#>",
+    "menu": "Tần số môn phái",
+    "color": [
+     225,
+     210,
+     165
+    ],
+    "border": [
+     45,
+     40,
+     15
+    ],
+    "interval": 10000,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_faction_menu.png",
+     "w": 21,
+     "h": 21,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_faction_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_SYSTEM": {
+    "idx": 4,
+    "short": [
+     "GM",
+     "Hệ thống",
+     "Nhắc nhở"
+    ],
+    "format": "GM",
+    "menu": "Tần số hệ thống",
+    "color": [
+     255,
+     0,
+     0
+    ],
+    "border": null,
+    "interval": 15000,
+    "num": 0,
+    "menuImg": {
+     "file": "btn/ch_system_menu.png",
+     "w": 21,
+     "h": 21,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_system_text.png",
+     "w": 13,
+     "h": 12,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_CITY": {
+    "idx": 5,
+    "short": [
+     "C",
+     "Thành thị",
+     "CS"
+    ],
+    "format": "CITY",
+    "menu": "Tần số thành thị",
+    "color": [
+     169,
+     255,
+     224
+    ],
+    "border": [
+     19,
+     19,
+     19
+    ],
+    "interval": 20000,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_city_menu.png",
+     "w": 21,
+     "h": 21,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_city_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_TONG": {
+    "idx": 6,
+    "short": [
+     "bang"
+    ],
+    "format": "\\O<Tong#>",
+    "menu": "Kênh bang hội",
+    "color": [
+     255,
+     244,
+     0
+    ],
+    "border": [
+     73,
+     0,
+     0
+    ],
+    "interval": 10000,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_tong_menu.png",
+     "w": 20,
+     "h": 20,
+     "frames": 3
+    },
+    "textImg": {
+     "file": "btn/ch_tong_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_TONGUNION": {
+    "idx": 7,
+    "short": [
+     "minh"
+    ],
+    "format": "\\U<TongUnion#>",
+    "menu": "Tần số liên minh bang hội",
+    "color": [
+     0,
+     255,
+     255
+    ],
+    "border": [
+     22,
+     22,
+     22
+    ],
+    "interval": 10000,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_tongunion_menu.png",
+     "w": 20,
+     "h": 20,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_tongunion_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_CHATROOM": {
+    "idx": 8,
+    "short": [
+     "Phòng"
+    ],
+    "format": "CHATROOM",
+    "menu": "Tần số tán gẫu",
+    "color": [
+     255,
+     255,
+     255
+    ],
+    "border": [
+     50,
+     10,
+     200
+    ],
+    "interval": 2000,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_chatroom_menu.png",
+     "w": 20,
+     "h": 20,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_chatroom_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_SONG": {
+    "idx": 12,
+    "short": [
+     "Tống"
+    ],
+    "format": "",
+    "menu": "Kênh Tống",
+    "color": [
+     255,
+     182,
+     124
+    ],
+    "border": [
+     87,
+     57,
+     8
+    ],
+    "interval": 2000,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_song_menu.png",
+     "w": 20,
+     "h": 20,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_song_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   },
+   "CH_JIN": {
+    "idx": 13,
+    "short": [
+     "Kim"
+    ],
+    "format": "",
+    "menu": "Kênh Kim",
+    "color": [
+     255,
+     245,
+     66
+    ],
+    "border": [
+     87,
+     57,
+     8
+    ],
+    "interval": 2000,
+    "num": 2,
+    "menuImg": {
+     "file": "btn/ch_jin_menu.png",
+     "w": 20,
+     "h": 20,
+     "frames": 1
+    },
+    "textImg": {
+     "file": "btn/ch_jin_text.png",
+     "w": 23,
+     "h": 13,
+     "frames": 1
+    },
+    "menuBk": [
+     32,
+     32,
+     32
+    ]
+   }
+  }
+ },
+ "minimap": {
+  "x": 892,
+  "y": 0,
+  "w": 130,
+  "h": 144,
+  "rect": {
+   "x": 893,
+   "y": 1,
+   "w": 128,
+   "h": 128
+  },
+  "name": {
+   "x": 894,
+   "y": 1,
+   "w": 112,
+   "h": 14,
+   "color": [
+    0,
+    255,
+    0
+   ],
+   "align": 2
+  },
+  "pos": {
+   "x": 865,
+   "y": 129,
+   "w": 110,
+   "h": 14,
+   "color": [
+    0,
+    255,
+    0
+   ],
+   "over": [
+    255,
+    255,
+    0
+   ],
+   "tip": "Nhấn chuột tìm đường"
+  },
+  "shadow": {
+   "x": 892,
+   "y": 0,
+   "w": 128,
+   "h": 14,
+   "color": [
+    38,
+    25,
+    13
+   ],
+   "alpha": 120
+  },
+  "line": [
+   100,
+   255,
+   0
+  ],
+  "buttons": {
+   "BtnFlag": {
+    "x": 965,
+    "y": 129,
+    "w": 14,
+    "h": 14,
+    "file": "btn/mm_btnflag.png",
+    "frames": 3,
+    "up": 0,
+    "down": 1,
+    "over": 2,
+    "tip": "cắm cờ lên"
+   },
+   "SwitchBtn": {
+    "x": 979,
+    "y": 129,
+    "w": 14,
+    "h": 14,
+    "file": "btn/mm_switchbtn.png",
+    "frames": 3,
+    "up": 0,
+    "down": 1,
+    "over": 2,
+    "tip": "phóng to bản đồ"
+   },
+   "WorldMapBtn": {
+    "x": 993,
+    "y": 129,
+    "w": 14,
+    "h": 14,
+    "file": "btn/mm_worldmapbtn.png",
+    "frames": 3,
+    "up": 0,
+    "down": 1,
+    "over": 2,
+    "tip": "hiển thị bản đồ thế giới"
+   },
+   "CaveMapBtn": {
+    "x": 1007,
+    "y": 129,
+    "w": 14,
+    "h": 14,
+    "file": "btn/mm_cavemapbtn.png",
+    "frames": 3,
+    "up": 0,
+    "down": 1,
+    "over": 2,
+    "tip": "Hiển thị bản đồ sơn động."
+   }
+  },
+  "scale": 0.08333333333333333,
+  "maps": {
+   "2": {
+    "file": "minimap/2.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "3": {
+    "file": "minimap/3.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "7": {
+    "file": "minimap/7.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "19": {
+    "file": "minimap/19.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "21": {
+    "file": "minimap/21.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "41": {
+    "file": "minimap/41.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "42": {
+    "file": "minimap/42.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "43": {
+    "file": "minimap/43.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "56": {
+    "file": "minimap/56.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "68": {
+    "file": "minimap/68.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "70": {
+    "file": "minimap/70.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "74": {
+    "file": "minimap/74.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "75": {
+    "file": "minimap/75.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "90": {
+    "file": "minimap/90.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "92": {
+    "file": "minimap/92b.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "93": {
+    "file": "minimap/93.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "122": {
+    "file": "minimap/122.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "123": {
+    "file": "minimap/123.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "140": {
+    "file": "minimap/140.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "145": {
+    "file": "minimap/145.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "167": {
+    "file": "minimap/167.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "web"
+   },
+   "179": {
+    "file": "minimap/179.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "193": {
+    "file": "minimap/193.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "195": {
+    "file": "minimap/195.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "201": {
+    "file": "minimap/201.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "205": {
+    "file": "minimap/205.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "224": {
+    "file": "minimap/224.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "225": {
+    "file": "minimap/225.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "226": {
+    "file": "minimap/226.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "227": {
+    "file": "minimap/227.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "319": {
+    "file": "minimap/319.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "320": {
+    "file": "minimap/320.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "321": {
+    "file": "minimap/321.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "322": {
+    "file": "minimap/322.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "336": {
+    "file": "minimap/336.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "337": {
+    "file": "minimap/337.jpg",
+    "w": 256,
+    "h": 256,
+    "from": "web"
+   },
+   "340": {
+    "file": "minimap/340.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "341": {
+    "file": "minimap/341.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   },
+   "342": {
+    "file": "minimap/342.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "web"
+   },
+   "397": {
+    "file": "minimap/397.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "web"
+   },
+   "pbtodoi": {
+    "file": "minimap/pbtodoi.jpg",
+    "w": 101,
+    "h": 61,
+    "from": "web"
+   },
+   "tk": {
+    "file": "minimap/tk.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "web"
+   },
+   "town": {
+    "file": "minimap/town.jpg",
+    "w": 224,
+    "h": 224,
+    "from": "client"
+   }
+  }
+ },
+ "fonts": [
+  {
+   "family": "VK Sans Serif 13",
+   "file": "font/vk-sans-serif-13.ttf",
+   "px": 13,
+   "ascent": 11,
+   "points": 8,
+   "glyphs": 189,
+   "name": "VK Sans Serif"
+  },
+  {
+   "family": "VK Sans Serif 16",
+   "file": "font/vk-sans-serif-16.ttf",
+   "px": 16,
+   "ascent": 13,
+   "points": 10,
+   "glyphs": 189,
+   "name": "VK Sans Serif"
+  },
+  {
+   "family": "JX ASF 12",
+   "file": "font/jx-asf-12.ttf",
+   "px": 12,
+   "ascent": 10,
+   "advance": 6,
+   "glyphs": 192,
+   "name": "\\font\\vn\\gbk_fs12.fnt",
+   "asf": true
+  },
+  {
+   "family": "JX ASF 14",
+   "file": "font/jx-asf-14.ttf",
+   "px": 14,
+   "ascent": 12,
+   "advance": 7,
+   "glyphs": 192,
+   "name": "\\font\\vn\\gbk_fs14.fnt",
+   "asf": true
+  },
+  {
+   "family": "JX ASF 16",
+   "file": "font/jx-asf-16.ttf",
+   "px": 16,
+   "ascent": 14,
+   "advance": 8,
+   "glyphs": 192,
+   "name": "\\font\\vn\\gbk_fs16.fnt",
+   "asf": true
+  }
+ ],
+ "asf": {
+  "10": null,
+  "12": "JX ASF 12",
+  "13": "JX ASF 12",
+  "14": "JX ASF 14",
+  "16": "JX ASF 16"
+ }
+}

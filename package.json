@@ -1,0 +1,5 @@
+{
+  "name": "volam-idle",
+  "version": "1.0.0",
+  "scripts": { "start": "node chay-game.js" }
+}

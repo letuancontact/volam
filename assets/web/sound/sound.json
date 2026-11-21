@@ -1,0 +1,1020 @@
+{
+ "format": "vl-sound-pack",
+ "version": 2,
+ "built": "2026-10-24T07:33:51.357Z",
+ "note": "đường dẫn tính từ thư mục này; snd/ music/ = mp3 game idle (chép nguyên file có dùng), client/ = file client PC",
+ "music": {
+  "2": {
+   "file": "music/music210.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "3": {
+   "file": "music/music211.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "7": {
+   "file": "music/music211.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "19": {
+   "file": "music/music201.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "21": {
+   "file": "music/music200.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "41": {
+   "file": "music/music230.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "42": {
+   "file": "client/music403.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "43": {
+   "file": "music/music231.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "56": {
+   "file": "music/music170.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "68": {
+   "file": "client/music300.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "70": {
+   "file": "music/music240.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "74": {
+   "file": "client/music241.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "75": {
+   "file": "music/music401.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "90": {
+   "file": "music/music220.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "92": {
+   "file": "music/music221.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "93": {
+   "file": "music/music401.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "122": {
+   "file": "music/music231.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "123": {
+   "file": "client/music241.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "140": {
+   "file": "music/music401.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "145": {
+   "file": "client/music402.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "167": {
+   "file": "music/music211.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "179": {
+   "file": "music/music211.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "193": {
+   "file": "client/music310.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "195": {
+   "file": "music/music221.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset"
+  },
+  "201": {
+   "file": "client/music400.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 西北南区, cùng loại hang"
+  },
+  "205": {
+   "file": "music/music130.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 中原南区, cùng loại hang"
+  },
+  "224": {
+   "file": "client/music500.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 西北北区, cùng loại mặt đất"
+  },
+  "225": {
+   "file": "music/music401.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 西北北区, cùng loại hang"
+  },
+  "226": {
+   "file": "music/music401.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 西北北区, cùng loại hang"
+  },
+  "227": {
+   "file": "music/music401.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 西北北区, cùng loại hang"
+  },
+  "319": {
+   "file": "client/music310.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng loại mặt đất (không tính bản đồ đặc biệt 特殊用地 — chiến trường dùng chung nhạc)"
+  },
+  "320": {
+   "file": "client/music310.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng loại mặt đất (không tính bản đồ đặc biệt 特殊用地 — chiến trường dùng chung nhạc)"
+  },
+  "321": {
+   "file": "client/music310.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng loại mặt đất (không tính bản đồ đặc biệt 特殊用地 — chiến trường dùng chung nhạc)"
+  },
+  "322": {
+   "file": "client/music310.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng loại mặt đất (không tính bản đồ đặc biệt 特殊用地 — chiến trường dùng chung nhạc)"
+  },
+  "336": {
+   "file": "music/music211.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 中原北区, cùng loại mặt đất"
+  },
+  "337": {
+   "file": "music/music211.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 中原北区, cùng loại mặt đất"
+  },
+  "340": {
+   "file": "music/music401.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 西北北区, cùng loại hang"
+  },
+  "341": {
+   "file": "client/music310.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng loại mặt đất (không tính bản đồ đặc biệt 特殊用地 — chiến trường dùng chung nhạc)"
+  },
+  "342": {
+   "file": "music/music240.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 江南区, cùng loại mặt đất"
+  },
+  "397": {
+   "file": "client/music001.mp3",
+   "vol": 93,
+   "how": "nhạc phổ biến nhất của bản đồ cùng vùng 特殊用地, cùng loại mặt đất"
+  },
+  "pbtodoi": {
+   "file": "client/music001.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset (quy về bản đồ client 380)"
+  },
+  "tk": {
+   "file": "client/music001.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset (quy về bản đồ client 380)"
+  },
+  "town": {
+   "file": "music/music130.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset (quy về bản đồ client 37)"
+  },
+  "c53": {
+   "file": "client/music150.mp3",
+   "vol": 93,
+   "how": "bảng nhạc client musicset (quy về bản đồ client 53)"
+  }
+ },
+ "npc": {
+  "enemy003": {
+   "die": "snd/sound_e003_die.mp3",
+   "attack1": "snd/sound_e003_at.mp3",
+   "attack2": "snd/sound_e003_at.mp3",
+   "magic": "snd/sound_e003_at.mp3"
+  },
+  "enemy021": {
+   "die": "snd/sound_e021_die.mp3",
+   "attack1": "snd/sound_e021_at.mp3",
+   "attack2": "snd/sound_e021_at.mp3",
+   "magic": "snd/sound_e021_at.mp3"
+  },
+  "enemy023": {
+   "die": "snd/sound_e023_die.mp3",
+   "attack1": "snd/sound_e023_at.mp3",
+   "attack2": "snd/sound_e023_at.mp3",
+   "magic": "snd/sound_e023_at.mp3"
+  },
+  "enemy024": {
+   "die": "snd/sound_e024_die.mp3",
+   "attack1": "snd/sound_e024_at.mp3",
+   "attack2": "snd/sound_e024_at.mp3",
+   "magic": "snd/sound_e024_at.mp3"
+  },
+  "enemy028": {
+   "die": "snd/sound_e028_die.mp3",
+   "attack1": "snd/sound_e028_at.mp3",
+   "attack2": "snd/sound_e028_at.mp3",
+   "magic": "snd/sound_e028_at.mp3"
+  },
+  "enemy029": {
+   "die": "snd/sound_e029_die.mp3",
+   "attack1": "snd/sound_e029_at.mp3",
+   "attack2": "snd/sound_e029_at.mp3",
+   "magic": "snd/sound_e029_at.mp3"
+  },
+  "enemy031": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  },
+  "enemy036": {
+   "die": "snd/sound_e036_die.mp3",
+   "attack1": "snd/sound_e036_at.mp3",
+   "attack2": "snd/sound_e036_at.mp3",
+   "magic": "snd/sound_e036_at.mp3"
+  },
+  "enemy122": {
+   "die": "snd/sound_e122_die.mp3",
+   "attack1": "snd/sound_e122_at.mp3",
+   "attack2": "snd/sound_e122_at.mp3",
+   "magic": "snd/sound_e122_at.mp3"
+  },
+  "enemy123": {
+   "die": "snd/sound_e123_die.mp3",
+   "attack1": "snd/sound_e123_at.mp3",
+   "attack2": "snd/sound_e123_at.mp3",
+   "magic": "snd/sound_e123_at.mp3"
+  },
+  "enemy124": {
+   "die": "snd/sound_e124_die.mp3",
+   "attack1": "snd/sound_e124_at.mp3",
+   "attack2": "snd/sound_e124_at.mp3",
+   "magic": "snd/sound_e124_at.mp3"
+  },
+  "enemy125": {
+   "die": "snd/sound_e125_die.mp3",
+   "attack1": "snd/sound_e125_at.mp3",
+   "attack2": "snd/sound_e125_at.mp3",
+   "magic": "snd/sound_e125_at.mp3"
+  },
+  "enemy126": {
+   "die": "snd/sound_e126_die.mp3",
+   "attack1": "snd/sound_e126_at.mp3",
+   "attack2": "snd/sound_e126_at.mp3",
+   "magic": "snd/sound_e126_at.mp3"
+  },
+  "enemy127": {
+   "die": "snd/sound_e127_die.mp3",
+   "attack1": "snd/sound_e127_at.mp3",
+   "attack2": "snd/sound_e127_at.mp3",
+   "magic": "snd/sound_e127_at.mp3"
+  },
+  "enemy128": {
+   "die": "snd/sound_e128_die.mp3",
+   "attack1": "snd/sound_e128_at.mp3",
+   "attack2": "snd/sound_e128_at.mp3",
+   "magic": "snd/sound_e128_at.mp3"
+  },
+  "enemy129": {
+   "die": "snd/sound_e129_die.mp3",
+   "attack1": "snd/sound_e129_at.mp3",
+   "attack2": "snd/sound_e129_at.mp3",
+   "magic": "snd/sound_e129_at.mp3"
+  },
+  "enemy130": {
+   "die": "snd/sound_e130_die.mp3",
+   "attack1": "snd/sound_e130_at.mp3",
+   "attack2": "snd/sound_e130_at.mp3",
+   "magic": "snd/sound_e130_at.mp3"
+  },
+  "enemy131": {
+   "die": "snd/sound_e131_die.mp3",
+   "attack1": "snd/sound_e131_at.mp3",
+   "attack2": "snd/sound_e131_at.mp3",
+   "magic": "snd/sound_e131_at.mp3"
+  },
+  "enemy132": {
+   "die": "snd/sound_e132_die.mp3",
+   "attack1": "snd/sound_e132_at.mp3",
+   "attack2": "snd/sound_e132_at.mp3",
+   "magic": "snd/sound_e132_at.mp3"
+  },
+  "enemy133": {
+   "die": "snd/sound_e133_die.mp3",
+   "attack1": "snd/sound_e133_at.mp3",
+   "attack2": "snd/sound_e133_at.mp3",
+   "magic": "snd/sound_e133_at.mp3"
+  },
+  "enemy134": {
+   "die": "snd/sound_e134_die.mp3",
+   "attack1": "snd/sound_e134_at.mp3",
+   "attack2": "snd/sound_e134_at.mp3",
+   "magic": "snd/sound_e134_at.mp3"
+  },
+  "enemy135": {
+   "die": "snd/sound_e135_die.mp3",
+   "attack1": "snd/sound_e135_at.mp3",
+   "attack2": "snd/sound_e135_at.mp3",
+   "magic": "snd/sound_e135_at.mp3"
+  },
+  "enemy136": {
+   "die": "snd/sound_e136_die.mp3",
+   "attack1": "snd/sound_e136_at.mp3",
+   "attack2": "snd/sound_e136_at.mp3",
+   "magic": "snd/sound_e136_at.mp3"
+  },
+  "enemy137": {
+   "die": "snd/sound_e137_die.mp3",
+   "attack1": "snd/sound_e137_at.mp3",
+   "attack2": "snd/sound_e137_at.mp3",
+   "magic": "snd/sound_e137_at.mp3"
+  },
+  "enemy138": {
+   "die": "snd/sound_e138_die.mp3",
+   "attack1": "snd/sound_e138_at.mp3",
+   "attack2": "snd/sound_e138_at.mp3",
+   "magic": "snd/sound_e138_at.mp3"
+  },
+  "enemy139": {
+   "die": "snd/sound_e139_die.mp3",
+   "attack1": "snd/sound_e139_at.mp3",
+   "attack2": "snd/sound_e139_at.mp3",
+   "magic": "snd/sound_e139_at.mp3"
+  },
+  "enemy140": {
+   "die": "snd/sound_e140_die.mp3",
+   "attack1": "snd/sound_e140_at.mp3",
+   "attack2": "snd/sound_e140_at.mp3",
+   "magic": "snd/sound_e140_at.mp3"
+  },
+  "enemy141": {
+   "die": "snd/sound_e141_die.mp3",
+   "attack1": "snd/sound_e141_at.mp3",
+   "attack2": "snd/sound_e141_at.mp3",
+   "magic": "snd/sound_e141_at.mp3"
+  },
+  "enemy142": {
+   "die": "snd/sound_e142_die.mp3",
+   "attack1": "snd/sound_e142_at.mp3",
+   "attack2": "snd/sound_e142_at.mp3",
+   "magic": "snd/sound_e142_at.mp3"
+  },
+  "enemy143": {
+   "die": "snd/sound_e143_die.mp3",
+   "attack1": "snd/sound_e143_at.mp3",
+   "attack2": "snd/sound_e143_at.mp3",
+   "magic": "snd/sound_e143_at.mp3"
+  },
+  "enemy144": {
+   "die": "snd/sound_e144_die.mp3",
+   "attack1": "snd/sound_e144_at.mp3",
+   "attack2": "snd/sound_e144_at.mp3",
+   "magic": "snd/sound_e144_at.mp3"
+  },
+  "enemy146": {
+   "die": "snd/sound_e146_die.mp3",
+   "attack1": "snd/sound_e146_at.mp3",
+   "attack2": "snd/sound_e146_at.mp3",
+   "magic": "snd/sound_e146_at.mp3"
+  },
+  "enemy147": {
+   "die": "snd/sound_e147_die.mp3",
+   "attack1": "snd/sound_e147_at.mp3",
+   "attack2": "snd/sound_e147_at.mp3",
+   "magic": "snd/sound_e147_at.mp3"
+  },
+  "enemy148": {
+   "die": "snd/sound_e148_die.mp3",
+   "attack1": "snd/sound_e148_at.mp3",
+   "attack2": "snd/sound_e148_at.mp3",
+   "magic": "snd/sound_e148_at.mp3"
+  },
+  "enemy188": {
+   "die": "snd/sound_e003_die.mp3"
+  },
+  "enemy189": {
+   "die": "snd/sound_e003_die.mp3"
+  },
+  "ani001": {
+   "die": "snd/sound_a001_die.mp3",
+   "attack1": "snd/sound_a001_at.mp3",
+   "attack2": "snd/sound_a001_at.mp3",
+   "magic": "snd/sound_a001_at.mp3"
+  },
+  "ani002": {
+   "die": "snd/sound_a002_die.mp3",
+   "attack1": "snd/sound_a002_at.mp3",
+   "attack2": "snd/sound_a002_at.mp3",
+   "magic": "snd/sound_a002_at.mp3"
+  },
+  "ani003": {
+   "die": "snd/sound_a003_die.mp3",
+   "attack1": "snd/sound_a003_at.mp3",
+   "attack2": "snd/sound_a003_at.mp3",
+   "magic": "snd/sound_a003_at.mp3"
+  },
+  "ani005": {
+   "die": "snd/sound_a005_die.mp3",
+   "attack1": "snd/sound_a005_at.mp3",
+   "attack2": "snd/sound_a005_at.mp3",
+   "magic": "snd/sound_a005_at.mp3"
+  },
+  "ani006": {
+   "die": "snd/sound_a006_die.mp3",
+   "attack1": "snd/sound_a006_at.mp3",
+   "attack2": "snd/sound_a006_at.mp3",
+   "magic": "snd/sound_a006_at.mp3"
+  },
+  "ani009": {
+   "die": "snd/sound_a009_die.mp3",
+   "attack1": "snd/sound_a009_at.mp3",
+   "attack2": "snd/sound_a009_at.mp3",
+   "magic": "snd/sound_a009_at.mp3"
+  },
+  "ani010": {
+   "die": "snd/sound_a010_die.mp3",
+   "attack1": "snd/sound_a010_at.mp3",
+   "attack2": "snd/sound_a010_at.mp3",
+   "magic": "snd/sound_a010_at.mp3"
+  },
+  "ani011": {
+   "die": "snd/sound_a011_die.mp3",
+   "attack1": "snd/sound_a011_at.mp3",
+   "attack2": "snd/sound_a011_at.mp3",
+   "magic": "snd/sound_a011_at.mp3"
+  },
+  "ani012": {
+   "die": "snd/sound_a012_die.mp3",
+   "attack1": "snd/sound_a012_at.mp3",
+   "attack2": "snd/sound_a012_at.mp3",
+   "magic": "snd/sound_a012_at.mp3"
+  },
+  "ani013": {
+   "die": "snd/sound_a013_die.mp3",
+   "attack1": "snd/sound_a013_at.mp3",
+   "attack2": "snd/sound_a013_at.mp3",
+   "magic": "snd/sound_a013_at.mp3"
+  },
+  "ani015": {
+   "die": "snd/sound_a015_die.mp3",
+   "attack1": "snd/sound_a015_at.mp3",
+   "attack2": "snd/sound_a015_at.mp3",
+   "magic": "snd/sound_a015_at.mp3"
+  },
+  "ani018": {
+   "die": "snd/sound_a018_die.mp3",
+   "attack1": "snd/sound_a018_at.mp3",
+   "attack2": "snd/sound_a018_at.mp3",
+   "magic": "snd/sound_a018_at.mp3"
+  },
+  "ani019": {
+   "die": "snd/sound_a019_die.mp3",
+   "attack1": "snd/sound_a019_at.mp3",
+   "attack2": "snd/sound_a019_at.mp3",
+   "magic": "snd/sound_a019_at.mp3"
+  },
+  "ani021": {
+   "die": "snd/sound_a021_die.mp3",
+   "attack1": "snd/sound_a021_at.mp3",
+   "attack2": "snd/sound_a021_at.mp3",
+   "magic": "snd/sound_a021_at.mp3"
+  },
+  "ani024": {
+   "die": "snd/sound_a024_die.mp3",
+   "attack1": "snd/sound_a024_at.mp3",
+   "attack2": "snd/sound_a024_at.mp3",
+   "magic": "snd/sound_a024_at.mp3"
+  },
+  "ani025": {
+   "die": "snd/sound_a025_die.mp3",
+   "attack1": "snd/sound_a025_at.mp3",
+   "attack2": "snd/sound_a025_at.mp3",
+   "magic": "snd/sound_a025_at.mp3"
+  },
+  "ani026": {
+   "die": "snd/sound_a026_die.mp3",
+   "attack1": "snd/sound_a026_at.mp3",
+   "attack2": "snd/sound_a026_at.mp3",
+   "magic": "snd/sound_a026_at.mp3"
+  },
+  "ani029": {
+   "die": "snd/sound_a029_die.mp3",
+   "attack1": "snd/sound_a029_at.mp3",
+   "attack2": "snd/sound_a029_at.mp3",
+   "magic": "snd/sound_a029_at.mp3"
+  },
+  "ani033": {
+   "die": "snd/sound_a033_die.mp3",
+   "attack1": "snd/sound_a033_at.mp3",
+   "attack2": "snd/sound_a033_at.mp3",
+   "magic": "snd/sound_a033_at.mp3"
+  },
+  "ani036": {
+   "die": "snd/sound_a036_die.mp3",
+   "attack1": "snd/sound_a036_at.mp3",
+   "attack2": "snd/sound_a036_at.mp3",
+   "magic": "snd/sound_a036_at.mp3"
+  },
+  "ani037": {
+   "die": "snd/sound_a037_die.mp3",
+   "attack1": "snd/sound_a037_at.mp3",
+   "attack2": "snd/sound_a037_at.mp3",
+   "magic": "snd/sound_a037_at.mp3"
+  },
+  "ani038": {
+   "die": "snd/sound_a038_die.mp3",
+   "attack1": "snd/sound_a038_at.mp3",
+   "attack2": "snd/sound_a038_at.mp3",
+   "magic": "snd/sound_a038_at.mp3"
+  },
+  "ani039": {
+   "die": "snd/sound_a039_die.mp3",
+   "attack1": "snd/sound_a039_at.mp3",
+   "attack2": "snd/sound_a039_at.mp3",
+   "magic": "snd/sound_a039_at.mp3"
+  },
+  "ani040": {
+   "die": "snd/sound_a040_die.mp3",
+   "attack1": "snd/sound_a040_at.mp3",
+   "attack2": "snd/sound_a040_at.mp3",
+   "magic": "snd/sound_a040_at.mp3"
+  },
+  "ani041": {
+   "die": "snd/sound_a041_die.mp3",
+   "attack1": "snd/sound_a041_at.mp3",
+   "attack2": "snd/sound_a041_at.mp3",
+   "magic": "snd/sound_a041_at.mp3"
+  },
+  "ani042": {
+   "die": "snd/sound_a042_die.mp3",
+   "attack1": "snd/sound_a042_at.mp3",
+   "attack2": "snd/sound_a042_at.mp3",
+   "magic": "snd/sound_a042_at.mp3"
+  },
+  "ani043": {
+   "die": "snd/sound_a043_die.mp3",
+   "attack1": "snd/sound_a043_at.mp3",
+   "attack2": "snd/sound_a043_at.mp3",
+   "magic": "snd/sound_a043_at.mp3"
+  },
+  "ani045": {
+   "die": "snd/sound_a045_die.mp3",
+   "attack1": "snd/sound_a045_at.mp3",
+   "attack2": "snd/sound_a045_at.mp3",
+   "magic": "snd/sound_a045_at.mp3"
+  },
+  "ani046": {
+   "die": "snd/sound_a046_die.mp3",
+   "attack1": "snd/sound_a046_at.mp3",
+   "attack2": "snd/sound_a046_at.mp3",
+   "magic": "snd/sound_a046_at.mp3"
+  },
+  "ani047": {
+   "die": "snd/sound_a047_die.mp3",
+   "attack1": "snd/sound_a047_at.mp3",
+   "attack2": "snd/sound_a047_at.mp3",
+   "magic": "snd/sound_a047_at.mp3"
+  },
+  "ani048": {
+   "die": "snd/sound_a048_die.mp3",
+   "attack1": "snd/sound_a048_at.mp3",
+   "attack2": "snd/sound_a048_at.mp3",
+   "magic": "snd/sound_a048_at.mp3"
+  },
+  "ani049": {
+   "die": "snd/sound_a049_die.mp3",
+   "attack1": "snd/sound_a049_at.mp3",
+   "attack2": "snd/sound_a049_at.mp3",
+   "magic": "snd/sound_a049_at.mp3"
+  },
+  "ani051": {
+   "die": "snd/sound_a051_die.mp3",
+   "attack1": "snd/sound_a051_at.mp3",
+   "attack2": "snd/sound_a051_at.mp3",
+   "magic": "snd/sound_a051_at.mp3"
+  },
+  "ani052": {
+   "die": "snd/sound_a052_die.mp3",
+   "attack1": "snd/sound_a052_at.mp3",
+   "attack2": "snd/sound_a052_at.mp3",
+   "magic": "snd/sound_a052_at.mp3"
+  },
+  "ani053": {
+   "die": "snd/sound_a053_die.mp3",
+   "attack1": "snd/sound_a053_at.mp3",
+   "attack2": "snd/sound_a053_at.mp3",
+   "magic": "snd/sound_a053_at.mp3"
+  },
+  "ani054": {
+   "die": "snd/sound_a054_die.mp3",
+   "attack1": "snd/sound_a054_at.mp3",
+   "attack2": "snd/sound_a054_at.mp3",
+   "magic": "snd/sound_a054_at.mp3"
+  },
+  "ani055": {
+   "die": "snd/sound_a055_die.mp3",
+   "attack1": "snd/sound_a055_at.mp3",
+   "attack2": "snd/sound_a055_at.mp3",
+   "magic": "snd/sound_a055_at.mp3"
+  },
+  "ani058": {
+   "die": "snd/sound_a058_die.mp3",
+   "attack1": "snd/sound_a058_at.mp3",
+   "attack2": "snd/sound_a058_at.mp3",
+   "magic": "snd/sound_a058_at.mp3"
+  },
+  "ani059": {
+   "die": "snd/sound_a059_die.mp3",
+   "attack1": "snd/sound_a059_at.mp3",
+   "attack2": "snd/sound_a059_at.mp3",
+   "magic": "snd/sound_a059_at.mp3"
+  },
+  "ani060": {
+   "die": "snd/sound_a060_die.mp3",
+   "attack1": "snd/sound_a060_at.mp3",
+   "attack2": "snd/sound_a060_at.mp3",
+   "magic": "snd/sound_a060_at.mp3"
+  },
+  "ani061": {
+   "die": "snd/sound_a061_die.mp3",
+   "attack1": "snd/sound_a061_at.mp3",
+   "attack2": "snd/sound_a061_at.mp3",
+   "magic": "snd/sound_a061_at.mp3"
+  },
+  "ani063": {
+   "die": "snd/sound_a063_die.mp3",
+   "attack1": "snd/sound_a063_at.mp3",
+   "attack2": "snd/sound_a063_at.mp3",
+   "magic": "snd/sound_a063_at.mp3"
+  },
+  "ani065": {
+   "die": "snd/sound_a065_die.mp3",
+   "attack1": "snd/sound_a065_at.mp3",
+   "attack2": "snd/sound_a065_at.mp3",
+   "magic": "snd/sound_a065_at.mp3"
+  },
+  "ani066": {
+   "die": "snd/sound_a066_die.mp3",
+   "attack1": "snd/sound_a066_at.mp3",
+   "attack2": "snd/sound_a066_at.mp3",
+   "magic": "snd/sound_a066_at.mp3"
+  },
+  "ani067": {
+   "die": "snd/sound_a067_die.mp3",
+   "attack1": "snd/sound_a067_at.mp3",
+   "attack2": "snd/sound_a067_at.mp3",
+   "magic": "snd/sound_a067_at.mp3"
+  },
+  "enemy199": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  },
+  "enemy200": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  },
+  "enemy201": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  },
+  "enemy202": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  },
+  "enemy203": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  },
+  "enemy204": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  },
+  "enemy205": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  }
+ },
+ "npcFallback": {
+  "enemy": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  },
+  "ani": {
+   "die": "snd/sound_a001_die.mp3",
+   "attack1": "snd/sound_a001_at.mp3",
+   "attack2": "snd/sound_a001_at.mp3",
+   "magic": "snd/sound_a001_at.mp3"
+  },
+  "boss": {
+   "die": "snd/sound_e031_die.mp3",
+   "attack1": "snd/sound_e031_at.mp3",
+   "attack2": "snd/sound_e031_at.mp3",
+   "magic": "snd/sound_e031_at.mp3"
+  },
+  "critter": {
+   "die": "snd/sound_a001_die.mp3",
+   "attack1": "snd/sound_a001_at.mp3",
+   "attack2": "snd/sound_a001_at.mp3",
+   "magic": "snd/sound_a001_at.mp3"
+  }
+ },
+ "missile": {
+  "1": [
+   "client/skill/sound_k029.wav",
+   "client/x/1d13ace6a137.wav"
+  ]
+ },
+ "ui": {
+  "dropCloth": "snd/sound_i004.mp3",
+  "dropWeapon": "snd/sound_i005.mp3",
+  "dropOther": "snd/sound_i008.mp3",
+  "equipWeapon": "snd/sound_i009.mp3",
+  "equipCloth": "snd/sound_i010.mp3",
+  "levelup": "snd/sound_i016.mp3",
+  "learn": "snd/sound_i017.mp3",
+  "use": "snd/sound_i013.mp3",
+  "click": "snd/sound_i001.mp3",
+  "open": "snd/sound_i014.mp3"
+ },
+ "missing": [
+  "sound_a001_bat.wav",
+  "sound_a001_pst.wav",
+  "sound_a002_bat.wav",
+  "sound_a002_pst.wav",
+  "sound_a003_bat.wav",
+  "sound_a003_pst.wav",
+  "sound_a005_bat.wav",
+  "sound_a005_pst.wav",
+  "sound_a006_bat.wav",
+  "sound_a006_pst.wav",
+  "sound_a009_bat.wav",
+  "sound_a009_pst.wav",
+  "sound_a010_bat.wav",
+  "sound_a010_pst.wav",
+  "sound_a011_bat.wav",
+  "sound_a011_pst.wav",
+  "sound_a012_bat.wav",
+  "sound_a012_pst.wav",
+  "sound_a013_bat.wav",
+  "sound_a013_pst.wav",
+  "sound_a015_bat.wav",
+  "sound_a015_pst.wav",
+  "sound_a018_bat.wav",
+  "sound_a018_pst.wav",
+  "sound_a019_bat.wav",
+  "sound_a019_pst.wav",
+  "sound_a021_bat.wav",
+  "sound_a021_pst.wav",
+  "sound_a024_bat.wav",
+  "sound_a024_pst.wav",
+  "sound_a025_bat.wav",
+  "sound_a025_pst.wav",
+  "sound_a026_bat.wav",
+  "sound_a026_pst.wav",
+  "sound_a029_bat.wav",
+  "sound_a029_pst.wav",
+  "sound_a033_bat.wav",
+  "sound_a033_pst.wav",
+  "sound_a036_bat.wav",
+  "sound_a036_pst.wav",
+  "sound_a037_bat.wav",
+  "sound_a037_pst.wav",
+  "sound_a038_bat.wav",
+  "sound_a038_pst.wav",
+  "sound_a039_bat.wav",
+  "sound_a039_pst.wav",
+  "sound_a040_bat.wav",
+  "sound_a040_pst.wav",
+  "sound_a041_bat.wav",
+  "sound_a041_pst.wav",
+  "sound_a042_bat.wav",
+  "sound_a042_pst.wav",
+  "sound_a043_bat.wav",
+  "sound_a043_pst.wav",
+  "sound_a045_bat.wav",
+  "sound_a045_pst.wav",
+  "sound_a046_bat.wav",
+  "sound_a046_pst.wav",
+  "sound_a047_bat.wav",
+  "sound_a047_pst.wav",
+  "sound_a048_bat.wav",
+  "sound_a048_pst.wav",
+  "sound_a049_bat.wav",
+  "sound_a049_pst.wav",
+  "sound_a050_at.wav",
+  "sound_a050_bat.wav",
+  "sound_a050_die.wav",
+  "sound_a050_pst.wav",
+  "sound_a051_bat.wav",
+  "sound_a051_pst.wav",
+  "sound_a052_bat.wav",
+  "sound_a052_pst.wav",
+  "sound_a053_bat.wav",
+  "sound_a053_pst.wav",
+  "sound_a054_bat.wav",
+  "sound_a054_pst.wav",
+  "sound_a055_bat.wav",
+  "sound_a055_pst.wav",
+  "sound_a056_at.wav",
+  "sound_a056_bat.wav",
+  "sound_a056_die.wav",
+  "sound_a056_pst.wav",
+  "sound_a058_bat.wav",
+  "sound_a058_pst.wav",
+  "sound_a059_bat.wav",
+  "sound_a059_pst.wav",
+  "sound_a060_bat.wav",
+  "sound_a060_pst.wav",
+  "sound_a061_bat.wav",
+  "sound_a061_pst.wav",
+  "sound_a063_bat.wav",
+  "sound_a063_pst.wav",
+  "sound_a065_bat.wav",
+  "sound_a065_pst.wav",
+  "sound_a066_bat.wav",
+  "sound_a066_pst.wav",
+  "sound_a067_bat.wav",
+  "sound_a067_pst.wav",
+  "sound_c016_pst.wav",
+  "sound_c018_pst.wav",
+  "sound_c019_pst.wav",
+  "sound_c021_pst.wav",
+  "sound_c022_pst.wav",
+  "sound_c023_pst.wav",
+  "sound_c024_pst.wav",
+  "sound_c025_pst.wav",
+  "sound_c026_pst.wav",
+  "sound_c027_pst.wav",
+  "sound_c029_pst.wav",
+  "sound_e003_bat.wav",
+  "sound_e004_at.wav",
+  "sound_e004_bat.wav",
+  "sound_e004_die.wav",
+  "sound_e005_at.wav",
+  "sound_e005_bat.wav",
+  "sound_e005_die.wav",
+  "sound_e006_at.wav",
+  "sound_e006_bat.wav",
+  "sound_e006_die.wav",
+  "sound_e007_at.wav",
+  "sound_e007_bat.wav",
+  "sound_e007_die.wav",
+  "sound_e015_at.wav",
+  "sound_e015_bat.wav",
+  "sound_e015_die.wav",
+  "sound_e016_at.wav",
+  "sound_e016_bat.wav",
+  "sound_e016_die.wav",
+  "sound_e017_at.wav",
+  "sound_e017_bat.wav",
+  "sound_e017_die.wav",
+  "sound_e021_bat.wav",
+  "sound_e022_at.wav",
+  "sound_e022_bat.wav",
+  "sound_e022_die.wav",
+  "sound_e023_bat.wav",
+  "sound_e024_bat.wav",
+  "sound_e026_at.wav",
+  "sound_e026_bat.wav",
+  "sound_e026_die.wav",
+  "sound_e028_bat.wav",
+  "sound_e029_bat.wav",
+  "sound_e031_bat.wav",
+  "sound_e034_at.wav",
+  "sound_e034_bat.wav",
+  "sound_e034_die.wav",
+  "sound_e036_bat.wav",
+  "sound_e121_at.wav",
+  "sound_e121_bat.wav",
+  "sound_e121_die.wav",
+  "sound_e122_bat.wav",
+  "sound_e123_bat.wav",
+  "sound_e124_bat.wav",
+  "sound_e125_bat.wav",
+  "sound_e126_bat.wav",
+  "sound_e127_bat.wav",
+  "sound_e128_bat.wav",
+  "sound_e129_bat.wav",
+  "sound_e130_bat.wav",
+  "sound_e131_bat.wav",
+  "sound_e132_bat.wav",
+  "sound_e133_bat.wav",
+  "sound_e134_bat.wav",
+  "sound_e135_bat.wav",
+  "sound_e136_bat.wav",
+  "sound_e137_bat.wav",
+  "sound_e138_bat.wav",
+  "sound_e139_bat.wav",
+  "sound_e140_bat.wav",
+  "sound_e141_bat.wav",
+  "sound_e142_bat.wav",
+  "sound_e143_bat.wav",
+  "sound_e144_bat.wav",
+  "sound_e145_at.wav",
+  "sound_e145_bat.wav",
+  "sound_e145_die.wav",
+  "sound_e146_bat.wav",
+  "sound_e147_bat.wav",
+  "sound_e148_bat.wav",
+  "sound_e149_at.wav",
+  "sound_e149_bat.wav",
+  "sound_e149_die.wav",
+  "sound_e150_at.wav",
+  "sound_e150_bat.wav",
+  "sound_e150_die.wav",
+  "sound_e157_at.wav",
+  "sound_e157_bat.wav",
+  "sound_e157_die.wav",
+  "sound_e171_at.wav",
+  "sound_e171_bat.wav",
+  "sound_e171_die.wav",
+  "sound_e172_at.wav",
+  "sound_e172_bat.wav",
+  "sound_e172_die.wav",
+  "sound_e173_at.wav",
+  "sound_e173_bat.wav",
+  "sound_e173_die.wav",
+  "sound_e174_at.wav",
+  "sound_e174_bat.wav",
+  "sound_e174_die.wav",
+  "sound_e176_at.wav",
+  "sound_e176_bat.wav",
+  "sound_e176_die.wav",
+  "sound_e177_at.wav",
+  "sound_e177_bat.wav",
+  "sound_e177_die.wav",
+  "sound_e178_bat.wav",
+  "sound_e179_bat.wav",
+  "sound_e180_bat.wav",
+  "sound_e186_at.wav",
+  "sound_e186_die.wav",
+  "sound_e186_wlk.wav",
+  "sound_e187_at.wav",
+  "sound_e188_st.wav",
+  "sound_e189_st.wav",
+  "sound_p004_pst.wav",
+  "sound_p006_pst.wav",
+  "sound_p049_pst.wav",
+  "sound_p052_pst.wav",
+  "sound_p099_pst.wav",
+  "sound_p100_pst.wav",
+  "sound_p103_pst.wav"
+ ]
+}

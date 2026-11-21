@@ -1,0 +1,129 @@
+{
+ "_ghiChu": "dung-chien-bao.mjs — số của client: ui\\ui3\\宋金快报.ini (bảng kết thúc) và 即时战报界面.ini (chiến báo tức thời)",
+ "ketQua": {
+  "w": 250,
+  "h": 428,
+  "o": {
+   "w": 112,
+   "h": 17
+  },
+  "dong": {
+   "x": 64,
+   "y": 394,
+   "w": 120,
+   "h": 30,
+   "n": 3
+  },
+  "tenX": 22,
+  "giaTriX": 136,
+  "y0": 39,
+  "cach": 22,
+  "mauTen": [
+   200,
+   200,
+   120
+  ],
+  "mauGiaTri": [
+   228,
+   225,
+   150
+  ],
+  "dong14": [
+   "Phe thắng trong chiến trường Tống Kim",
+   "Tống Kim Phong Vân",
+   "Người pk nhiều nhất",
+   "NPC Thiên Địch",
+   "Tống binh có giá trị nhất",
+   "Kim binh có giá trị nhất",
+   "Tống binh được đồng tình nhất",
+   "Kim binh được đồng tình nhất",
+   "tích phân cao nhất trận này",
+   "Điểm thưởng của từng người",
+   "Tích phân của phe mình",
+   "Điểm thắng lợi đạt được",
+   "Điểm cuối cùng",
+   "Đồng điểm"
+  ]
+ },
+ "chienBao": {
+  "w": 750,
+  "h": 350,
+  "bong": [
+   0,
+   30,
+   19
+  ],
+  "bongA": 60,
+  "mau": {
+   "tieuDe": [
+    235,
+    231,
+    148
+   ],
+   "le": [
+    255,
+    255,
+    255
+   ],
+   "chan": [
+    255,
+    255,
+    80
+   ],
+   "top10": [
+    235,
+    231,
+    148
+   ],
+   "vach": [
+    0,
+    255,
+    255
+   ]
+  },
+  "y": {
+   "TopInfoPos": 3,
+   "LinePos1": 17,
+   "SelfInfoPos": 19,
+   "SelfGradePos": 158,
+   "LinePos2": 172,
+   "TopTenPos": 174
+  },
+  "cotTren": {
+   "BattleWar": 28,
+   "Level": 8,
+   "WinCondition": 24,
+   "Proportion": 16,
+   "LeftTime": 12
+  },
+  "cotMinh": {
+   "ReportItem": 18,
+   "ObjNum": 36,
+   "Grade": 14,
+   "Title": 12
+  },
+  "cotTop": {
+   "PlayerName": 10,
+   "Grade": 8,
+   "KillNpc": 8,
+   "PkPlayer": 8,
+   "MaxKill": 12,
+   "OneOnOne": 12,
+   "GetItem": 8,
+   "GetFlag": 10,
+   "Death": 8
+  },
+  "ten": {
+   "1": "Tích lũy",
+   "2": "Người chơi PK",
+   "3": "Giết NPC",
+   "4": "tử vong",
+   "5": "Đoạt cờ",
+   "13": "Liên trảm cao nhất",
+   "14": "Liên trảm hiện tại",
+   "15": "Hoàn thành mục tiêu",
+   "16": "Chiến thắng đơn đấu",
+   "17": "Lấy bảo vật"
+  }
+ }
+}
