@@ -1,4 +1,4 @@
-// Máy chủ GÓI Võ Lâm Idle - HuyHuyy: phát file game (may-chu/tep.js) + API tài khoản / lưu nhân vật (may-chu/api.js), dữ liệu ở du-lieu/.
+// Máy chủ GÓI Võ Lâm: phát file game (may-chu/tep.js) + API tài khoản / lưu nhân vật (may-chu/api.js), dữ liệu ở du-lieu/.
 // Mặc định chỉ nghe trên máy mình (127.0.0.1): người chơi ở nơi khác vào qua đường hầm (README — Cloudflare Tunnel), --lan: nghe cả
 // mạng LAN. Chạy: node chay-game.js [cổng] [--lan] [--no-open]   (mặc định 8101) — hoặc bấm Chay_Game.bat.
 // Tạo tài khoản: Tao_Tai_Khoan.bat hoặc node quan-tri.js (tài khoản đầu tiên là quản trị).
@@ -70,7 +70,7 @@ server.on("error", (e) => { console.error(e.code === "EADDRINUSE" ? `Cổng ${PO
 TN.batDau(); // quét assets/ sẵn (không chặn) -> lần hỏi đầu trả ngay
 server.listen(PORT, HOST, () => {
   const url = `http://localhost:${PORT}/`;
-  console.log(`Máy chủ Võ Lâm Idle - HuyHuyy: ${url}  (giữ cửa sổ này trong lúc chơi; đóng = tắt)`);
+  console.log(`Máy chủ Võ Lâm: ${url}  (giữ cửa sổ này trong lúc chơi; đóng = tắt)`);
   if (LAN) for (const l of Object.values(os.networkInterfaces())) for (const a of l || []) if (a.family === "IPv4" && !a.internal) console.log(`  Mạng LAN: http://${a.address}:${PORT}/`);
   const n = D.dsTk().length;
   console.log(n ? `${n} tài khoản. Thêm tài khoản: Tao_Tai_Khoan.bat` : "Chưa có tài khoản nào — bấm Tao_Tai_Khoan.bat để tạo (tài khoản đầu tiên là quản trị).");
