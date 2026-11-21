@@ -12,8 +12,11 @@ const MAU_LIST = [
 ];
 const CO_MAP_BANG = [586, 590, 593].some((id) => {
   const z = ZONES.get(id);
-  return z && z.bang && (fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "z", `${id}.jpg`)) ||
-    fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "z", `${id}.png`)));
+  if (!z || !z.bang) return false;
+  const k = String(z.map || id);
+  return fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "full", k)) ||
+    fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "z", k + ".jpg")) ||
+    fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "z", k + ".png"));
 });
 
 const CF = {
@@ -37,12 +40,12 @@ function khuCua(B) {
   return {
     z: coZ ? zId : null,
     tenKhu: coZ ? ((ZONES.get(zId) || {}).n || "Khu vực bang hội") : "",
-    ly: coZ ? "" : "Bản đồ Khu vực bang hội chưa có trong gói tài nguyên bản đồ — bạn vẫn dùng được đầy đủ Tế Đàn và Lễ phẩm phường tại Người hướng dẫn bang hội.",
+    ly: coZ ? "" : "Bản đồ Khu vực bang hội chưa sẵn sàng",
     cap: B.cap | 0 || 1,
     tp: Object.fromEntries(Object.entries(B.tp || {}).map(([k, v]) => [k, v ? (v.cap | 0) : 0])),
     lanhDia: B.khu || null,
     chonDuoc: !!(coZ && !B.khu && (B.cap | 0) >= 2),
-    lyChon: !coZ ? "Chưa có tệp bản đồ khu vực bang hội" : B.khu ? "Bổn bang đã chọn lãnh địa rồi" : "Cần đạt Đẳng cấp kiến thiết cấp 2 để chọn lãnh địa",
+    lyChon: !coZ ? "Bản đồ Khu vực bang hội chưa sẵn sàng" : B.khu ? "Bổn bang đã chọn lãnh địa rồi" : "Cần đạt Đẳng cấp kiến thiết cấp 2 để chọn lãnh địa",
     mau: MAU_LIST,
     xaPhu: CF.xaPhu
   };
