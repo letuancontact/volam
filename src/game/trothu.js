@@ -11,6 +11,7 @@
 
 import { ItemDB, KICH, SINH, laVatTk } from "./itemdb.js";
 import { LOC_DONG, chuanNhat, BOSS_TAM } from "./auto.js";
+import { getUiTheme, setUiTheme } from "./ui-theme.js";
 
 // anh 26/10 "gom các nhóm cùng mục đích, bỏ giải thích lằng nhằng"; anh 28/10 lần 4: thêm thẻ Nhặt đồ (tự nhặt + lọc dòng + không nhặt), "treo
 // máy có thể để qua cùng với cái tự đánh" -> bãi treo máy sang thẻ Đánh quái (cùng tổ đội), thẻ Treo máy còn lại việc về thành -> "Về thành".
@@ -692,6 +693,15 @@ export class TroThu {
       };
       out.push(kn(20, "20 khung / giây (mặc định)"), kn(10, "10 khung / giây (nhẹ máy nhất)"), kn(0, "Như cửa sổ đang dùng"));
     }
+    // Chuyển đổi giao diện Kiếm hiệp hiện đại / Cổ điển (mặc định: Hiện đại, nhớ theo máy)
+    out.push(this._h("Giao diện", "Kiếm hiệp hiện đại (mặc định): khung kính tối viền vàng kim sắc nét cho cả máy tính và điện thoại. Cổ điển: giao diện Võ Lâm PC gốc. Nhớ ở máy này"));
+    const curUi = getUiTheme();
+    const uiChon = (v, chu) => {
+      const el = document.createElement("i"); el.className = "tt-o" + (curUi === v ? " on" : ""); el.dataset.click = 1;
+      el.onclick = () => { setUiTheme(v); P.audio.ui("click"); this.render(); };
+      return this._row(el, chu);
+    };
+    out.push(uiChon("modern", "Kiếm hiệp hiện đại (mặc định)"), uiChon("classic", "Cổ điển (Võ Lâm PC gốc)"));
     out.push(this._h("Hiển thị"));
     const set = { name: S.showName !== false ? 1 : 0, life: S.showLife ? 1 : 0 };
     out.push(this._row(this._c(A.hien, "tenVat"), "Tên vật phẩm trên đất"));
