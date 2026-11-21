@@ -7,20 +7,22 @@ const TG = () => require("./the-gioi");
 
 const ZONES = (DO.NOI && DO.NOI.ZONES) || new Map();
 const MAU_LIST = [
-  { z: 590, ten: "Kinh S?", n: "Kinh S?" },
+  { z: 590, ten: "Kinh Sư", n: "Kinh Sư" },
   { z: 593, ten: "Giang Nam", n: "Giang Nam" }
 ];
-const MAP_MAU_BANG = { 586: "c242", 590: "c325", 593: "c337" };
+const KHU_IDS = new Set([586, 590, 593]);
 
 function coMapZone(id) {
   const zid = id | 0;
   const z = ZONES.get(zid);
-  const k = String((z && z.map) || MAP_MAU_BANG[zid] || ("c" + zid));
-  return fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "full", k)) ||
-    fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "z", k + ".jpg")) ||
-    fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "z", k + ".png")) ||
-    fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "z", zid + ".jpg")) ||
-    fs.existsSync(path.join(__dirname, "..", "assets", "web", "map", "z", zid + ".png"));
+  const k = String((z && z.map) || ("c" + zid));
+  const so = k.replace(/^c/i, "");
+  const base = path.join(__dirname, "..", "assets", "web", "map");
+  return fs.existsSync(path.join(base, "full", so)) ||
+    fs.existsSync(path.join(base, "full", k)) ||
+    fs.existsSync(path.join(base, "full", String(zid))) ||
+    fs.existsSync(path.join(base, "z", k + ".jpg")) ||
+    fs.existsSync(path.join(base, "z", zid + ".jpg"));
 }
 
 function coMapBang() {
@@ -33,7 +35,7 @@ const CF = {
 };
 
 function loi(msg, code = 400) { const e = new Error(msg); e.code = code; throw e; }
-function laKhu(z) { const zid = z | 0; const o = ZONES.get(zid); return !!(o && o.bang) || Object.prototype.hasOwnProperty.call(MAP_MAU_BANG, zid); }
+function laKhu(z) { const zid = z | 0; const o = ZONES.get(zid); return !!(o && o.bang) || KHU_IDS.has(zid); }
 function cungBan(tkA, tkB, z) {
   if (!laKhu(z)) return true;
   const a = TG().bangCua ? TG().bangCua(tkA) : null;
@@ -44,18 +46,17 @@ function cungBan(tkA, tkB, z) {
 function khuCua(B) {
   if (!B) return null;
   const zId = (B.khu && B.khu.mau) || 586;
-  const sanSang = coMapBang();
-  const coZ = laKhu(zId) && (coMapZone(zId) || sanSang);
+  const coZ = laKhu(zId) && coMapZone(zId);
   const zObj = ZONES.get(zId | 0);
   return {
     z: coZ ? zId : null,
-    tenKhu: coZ ? ((zObj && zObj.n) || (zId === 590 ? "Khu v?c bang h?i Kinh S?" : zId === 593 ? "Khu v?c bang h?i Giang Nam" : "Khu v?c bang h?i chung")) : "",
-    ly: coZ ? "" : "B?n ?? Khu v?c bang h?i ch?a s?n s?ng",
+    tenKhu: coZ ? ((zObj && zObj.n) || (zId === 590 ? "Khu vực bang hội Kinh Sư" : zId === 593 ? "Khu vực bang hội Giang Nam" : "Khu vực bang hội chung")) : "",
+    ly: coZ ? "" : "Bản đồ Khu vực bang hội chưa sẵn sàng",
     cap: B.cap | 0 || 1,
     tp: Object.fromEntries(Object.entries(B.tp || {}).map(([k, v]) => [k, v ? (v.cap | 0) : 0])),
     lanhDia: B.khu || null,
     chonDuoc: !!(coZ && !B.khu && (B.cap | 0) >= 2),
-    lyChon: !coZ ? "B?n ?? Khu v?c bang h?i ch?a s?n s?ng" : B.khu ? "B?n bang ?? ch?n l?nh ??a r?i" : "C?n ??t ??ng c?p ki?n thi?t c?p 2 ?? ch?n l?nh ??a",
+    lyChon: !coZ ? "Bản đồ Khu vực bang hội chưa sẵn sàng" : B.khu ? "Bổn bang đã chọn lãnh địa rồi" : "Cần đạt Đẳng cấp kiến thiết cấp 2 để chọn lãnh địa",
     mau: MAU_LIST,
     xaPhu: CF.xaPhu
   };
@@ -67,50 +68,52 @@ function lam(tk, h, o, b) {
   const B = cur && cur.B, m = cur && cur.m;
 
   if (viec === "xem") {
-    if (!B) return { khu: null, ly: "B?n hi?n gi? kh?ng thu?c bang h?i n?o!" };
+    if (!B) return { khu: null, ly: "Bạn hiện giờ không thuộc bang hội nào!" };
     return { khu: khuCua(B) };
   }
 
   if (viec === "dangNhap") {
-    if (!B || !coMapBang()) return { khu: B ? khuCua(B) : null, tin: ["Kh?ng th? v?o khu v?c bang h?i ? tr? v? Ba L?ng huy?n"] };
+    if (!B || !coMapBang()) return { khu: B ? khuCua(B) : null, tin: ["Không thể vào khu vực bang hội — trở về Ba Lăng huyện"] };
     const k = khuCua(B);
-    return { khu: k, vao: { z: k.z } };
+    const zObj = ZONES.get(k.z | 0);
+    return { khu: k, vao: { z: k.z, ...(zObj && Array.isArray(zObj.vao) ? { at: zObj.vao } : {}) } };
   }
 
   if (viec === "vao") {
-    if (!B) loi("B?n hi?n gi? kh?ng thu?c bang h?i n?o!");
+    if (!B) loi("Bạn hiện giờ không thuộc bang hội nào!");
     const k = khuCua(B);
     if (!k.z) loi(k.ly);
-    return { khu: k, di: { z: k.z } };
+    const zObj = ZONES.get(k.z | 0);
+    return { khu: k, di: { z: k.z, ...(zObj && Array.isArray(zObj.vao) ? { at: zObj.vao } : {}) } };
   }
 
   if (viec === "xaPhu") {
     const den = b && (b.den | 0);
-    if (![53, 37].includes(den)) loi("?i?m ??n kh?ng h?p l?");
+    if (![53, 37].includes(den)) loi("Điểm đến không hợp lệ");
     const gia = CF.xaPhu.gia | 0;
-    if (gia > 0 && (h.gold | 0) < gia) loi(`T? bang h?i ??n c?c ??i th?nh th? c?n ${gia} l??ng, ng??i mang kh?ng ?? ti?n`);
+    if (gia > 0 && (h.gold | 0) < gia) loi(`Từ bang hội đến các đại thành thị cần ${gia} lượng, ngươi mang không đủ tiền`);
     if (gia > 0) h.gold -= gia;
     return { doi: gia > 0, di: { z: den } };
   }
 
   if (viec === "chonMau") {
-    if (!B || !m || m.cv !== "chu") loi("Ch? Bang ch? m?i ch?n ???c l?nh ??a bang h?i");
+    if (!B || !m || m.cv !== "chu") loi("Chỉ Bang chủ mới chọn được lãnh địa bang hội");
     const k = khuCua(B);
-    if (!k.chonDuoc) loi(k.lyChon || "Ch?a ch?n ???c l?nh ??a");
+    if (!k.chonDuoc) loi(k.lyChon || "Chưa chọn được lãnh địa");
     const mau = MAU_LIST.find((x) => x.z === (b.mau | 0));
-    if (!mau) loi("M?u l?nh ??a kh?ng h?p l?");
+    if (!mau) loi("Mẫu lãnh địa không hợp lệ");
     BH().datKhu(B.id, { mau: mau.z, ten: mau.ten, luc: Date.now(), ai: h.name });
-    return { khu: khuCua(B), msg: `?? ch?n ${mau.ten} l?m l?nh ??a c?a bang h?i ${B.ten}!` };
+    return { khu: khuCua(B), msg: `Đã chọn ${mau.ten} làm lãnh địa của bang hội ${B.ten}!` };
   }
 
-  loi("Thao t?c khu v?c bang ch?a h? tr?: " + viec);
+  loi("Thao tác khu vực bang chưa hỗ trợ: " + viec);
 }
 
 function nhip(tkTen, o, h, zoneId) {
   if (!laKhu(zoneId)) return null;
   const cur = BH().cuaNv(tkTen, o, h && h.name);
   if (cur && coMapBang()) return null;
-  return { z: 53, tin: "B?n kh?ng c?n ? trong khu v?c bang h?i ? ??a v? Ba L?ng huy?n", khu: null };
+  return { z: 53, tin: "Bạn không còn ở trong khu vực bang hội — đưa về Ba Lăng huyện", khu: null };
 }
 
 function quanTri(qt, b) {
@@ -119,7 +122,7 @@ function quanTri(qt, b) {
   if (b && b.lam === "doiMau") {
     const mau = MAU_LIST.find((x) => x.z === (b.mau | 0));
     BH().datKhu(B.id, mau ? { mau: mau.z, ten: mau.ten, luc: Date.now(), ai: qt && qt.ten || "admin" } : null);
-    return { msg: "?? c?p nh?t l?nh ??a bang h?i", khu: khuCua(B) };
+    return { msg: "Đã cập nhật lãnh địa bang hội", khu: khuCua(B) };
   }
   return { khu: khuCua(B) };
 }

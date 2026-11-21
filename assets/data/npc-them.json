@@ -345,11 +345,19 @@
     ],
     "586": [
       {
+        "res": "passerby061_3",
+        "name": "Xa phu",
+        "x": 54789,
+        "y": 105931,
+        "kind": "talk",
+        "bhVai": "xaPhu"
+      },
+      {
         "tpl": 226,
         "res": "passerby036_1",
         "name": "Tế Tửu",
-        "x": 51058,
-        "y": 102925,
+        "x": 53120,
+        "y": 103957,
         "kind": "talk",
         "bhVai": "teDan"
       },
@@ -357,43 +365,43 @@
         "tpl": 455,
         "res": "passerby192",
         "name": "Tổng quản Lễ phẩm phường",
-        "x": 51278,
-        "y": 103005,
+        "x": 53403,
+        "y": 104171,
         "kind": "talk",
         "bhVai": "tongQuan:lePham"
       },
       {
         "res": "passerby198",
         "name": "Rương chứa đồ",
-        "x": 50838,
-        "y": 103005,
+        "x": 52843,
+        "y": 104171,
         "kind": "talk",
         "viec": "ruong"
       },
       {
-        "res": "passerby061_3",
-        "name": "Xa phu",
-        "x": 51178,
-        "y": 103185,
-        "kind": "talk",
-        "bhVai": "xaPhu"
-      },
-      {
         "res": "passerby153",
         "name": "Cột biểu tượng bang",
-        "x": 50938,
-        "y": 102745,
+        "x": 53120,
+        "y": 103531,
         "kind": "talk",
         "bhVai": "cot"
       }
     ],
     "590": [
       {
+        "res": "passerby061_3",
+        "name": "Xa phu",
+        "x": 54789,
+        "y": 105931,
+        "kind": "talk",
+        "bhVai": "xaPhu"
+      },
+      {
         "tpl": 226,
         "res": "passerby036_1",
         "name": "Tế Tửu",
-        "x": 51600,
-        "y": 102400,
+        "x": 53120,
+        "y": 103957,
         "kind": "talk",
         "bhVai": "teDan"
       },
@@ -401,43 +409,43 @@
         "tpl": 455,
         "res": "passerby192",
         "name": "Tổng quản Lễ phẩm phường",
-        "x": 51820,
-        "y": 102480,
+        "x": 53403,
+        "y": 104171,
         "kind": "talk",
         "bhVai": "tongQuan:lePham"
       },
       {
         "res": "passerby198",
         "name": "Rương chứa đồ",
-        "x": 51380,
-        "y": 102480,
+        "x": 52843,
+        "y": 104171,
         "kind": "talk",
         "viec": "ruong"
       },
       {
-        "res": "passerby061_3",
-        "name": "Xa phu",
-        "x": 51720,
-        "y": 102660,
-        "kind": "talk",
-        "bhVai": "xaPhu"
-      },
-      {
         "res": "passerby153",
         "name": "Cột biểu tượng bang",
-        "x": 51480,
-        "y": 102220,
+        "x": 53120,
+        "y": 103531,
         "kind": "talk",
         "bhVai": "cot"
       }
     ],
     "593": [
       {
+        "res": "passerby061_3",
+        "name": "Xa phu",
+        "x": 54789,
+        "y": 105931,
+        "kind": "talk",
+        "bhVai": "xaPhu"
+      },
+      {
         "tpl": 226,
         "res": "passerby036_1",
         "name": "Tế Tửu",
-        "x": 53152,
-        "y": 103072,
+        "x": 53120,
+        "y": 103957,
         "kind": "talk",
         "bhVai": "teDan"
       },
@@ -445,32 +453,24 @@
         "tpl": 455,
         "res": "passerby192",
         "name": "Tổng quản Lễ phẩm phường",
-        "x": 53372,
-        "y": 103152,
+        "x": 53403,
+        "y": 104171,
         "kind": "talk",
         "bhVai": "tongQuan:lePham"
       },
       {
         "res": "passerby198",
         "name": "Rương chứa đồ",
-        "x": 52932,
-        "y": 103152,
+        "x": 52843,
+        "y": 104171,
         "kind": "talk",
         "viec": "ruong"
       },
       {
-        "res": "passerby061_3",
-        "name": "Xa phu",
-        "x": 53272,
-        "y": 103332,
-        "kind": "talk",
-        "bhVai": "xaPhu"
-      },
-      {
         "res": "passerby153",
         "name": "Cột biểu tượng bang",
-        "x": 53032,
-        "y": 102892,
+        "x": 53120,
+        "y": 103531,
         "kind": "talk",
         "bhVai": "cot"
       }
