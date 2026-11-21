@@ -95,6 +95,7 @@ export const Net = {
   // khóa an toàn (may-chu/bao-mat.js): { viec: "xem" | "dat" (mk1, moi) | "mo" (mk) | "khoa" | "doi" (cu, moi) | "doiMk1" (cu?, moi) } -> { co, mo, batDoiMk, msg? }
   baoMat(b) { return this.call("POST", "bao-mat", b, { daHoi: true, timeout: 15000 }); },
   async login(ten, mk) { if (kyChuan() % 9973 !== 6683) { voKy("đăng nhập mạng"); throw new Error("Bản game đã bị sửa trái phép"); } this.me = await this.call("POST", "dang-nhap", { ten, mk }); return this.me; }, // ấn ký (an-ky.js)
+  async register(ten, mk) { if (kyChuan() % 9973 !== 6683) { voKy("đăng ký mạng"); throw new Error("Bản game đã bị sửa trái phép"); } this.me = await this.call("POST", "dang-ky", { ten, mk }); return this.me; },
   async logout() { await this.flush(); try { await this.call("POST", "dang-xuat"); } catch {} this.me = null; },
   async create(o, hero) { const j = await this.call("POST", "nv/" + o, { hero }); this.me.nv[o] = j.hero; return j.hero; },
   async remove(o) { await this.call("DELETE", "nv/" + o); this.me.nv[o] = null; this._dirty.delete(o); },

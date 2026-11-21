@@ -336,12 +336,40 @@ function loginScreen(err = "") {
   $("#lg-sv").textContent = (SERVERS.find((s) => s.id === P.only) || {}).n || "";
   if ($("#lg-ungho")) $("#lg-ungho").remove(); // trang chủ: Ủng hộ duy trì máy chủ (anh 13/11)
   if ($("#cs-ungho")) $("#cs-ungho").remove(); // màn Chọn nhân vật (anh 13/11 tối — game tự đăng nhập lại nên ít người thấy trang đăng nhập)
+  let cheDoDk = false;
+  const row2 = $("#lg-pass2-row"), inp2 = $("#lg-pass2"), nutMode = $("#lg-mode"), note = $("#lg-note");
+  const datCheDo = (dk) => {
+    cheDoDk = !!dk;
+    $("#lg-err").textContent = "";
+    $("#lg-ok").textContent = cheDoDk ? "Tạo tài khoản" : "Đăng nhập";
+    if (nutMode) nutMode.textContent = cheDoDk ? "Quay lại đăng nhập" : "Đăng ký";
+    if (row2) row2.style.display = cheDoDk ? "" : "none";
+    if (inp2) inp2.value = "";
+    $("#lg-pass").autocomplete = cheDoDk ? "new-password" : "current-password";
+    if (note) note.innerHTML = cheDoDk
+      ? "Tên tài khoản <b>3–20 ký tự</b> (chữ thường không dấu, số, dấu _). Mật khẩu ít nhất <b>6 ký tự</b>."
+      : "Chưa có tài khoản? Bấm <b>Đăng ký</b> để tạo tài khoản mới ngay (3–20 ký tự chữ thường, số, dấu _).";
+  };
+  if (nutMode) nutMode.onclick = () => { if (P.audio) P.audio.ui("click"); datCheDo(!cheDoDk); $("#lg-name").focus(); };
+  datCheDo(false);
   $("#lg-form").onsubmit = async (e) => {
     e.preventDefault();
     const ten = $("#lg-name").value.trim(), mk = $("#lg-pass").value;
     if (!ten || !mk) { $("#lg-err").textContent = "Nhập tên tài khoản và mật khẩu"; return; }
+    if (cheDoDk) {
+      if (!/^[a-z0-9_]{3,20}$/i.test(ten)) { $("#lg-err").textContent = "Tên tài khoản 3–20 ký tự: chữ thường không dấu, số, dấu _"; return; }
+      if (mk.length < 6) { $("#lg-err").textContent = "Mật khẩu cần ít nhất 6 ký tự"; return; }
+      if (mk.toLowerCase() === ten.toLowerCase()) { $("#lg-err").textContent = "Mật khẩu không được giống tên tài khoản"; return; }
+      if (inp2 && mk !== inp2.value) { $("#lg-err").textContent = "Mật khẩu nhập lại không khớp"; return; }
+    }
     $("#lg-ok").disabled = true; $("#lg-err").textContent = "";
-    try { await Net.login(ten, mk); $("#lg-pass").value = ""; if (P.audio) P.audio.ui("click"); vaoSauDangNhap(); } // chưa tải kho (lượt 61): tải rồi mới vào
+    try {
+      if (cheDoDk) await Net.register(ten, mk);
+      else await Net.login(ten, mk);
+      $("#lg-pass").value = ""; if (inp2) inp2.value = "";
+      if (P.audio) P.audio.ui("click");
+      vaoSauDangNhap();
+    }
     catch (er) { $("#lg-err").textContent = er.message; }
     finally { $("#lg-ok").disabled = false; }
   };

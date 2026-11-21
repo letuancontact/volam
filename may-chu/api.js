@@ -291,6 +291,36 @@ function dangNhap(req, res, b) {
   guiJson(res, 200, thongTin(tk), { "Set-Cookie": [datCookie(req, tk.ten + "." + tk.phien, COOKIE_AGE), KTN.cap(req, tk.ten)] });
 }
 
+// Tự đăng ký tài khoản (mở cho người chơi)
+const dkHan = new Map();
+function dangKy(req, res, b) {
+  const ten = D.tenTk(b.ten), mk = String(b.mk || ""), ip = diaChi(req), t = Date.now();
+  if (BT.con()) return loi(res, 503, BT.cau(), "bao-tri");
+  if (!ten || !mk) return loi(res, 400, "Nhập tên tài khoản và mật khẩu");
+  if (mk.length < 6) return loi(res, 400, "Mật khẩu cần ít nhất 6 ký tự");
+  if (mk.toLowerCase() === ten) return loi(res, 400, "Mật khẩu không được giống tên tài khoản");
+  const h = dkHan.get(ip);
+  if (h && t - h.t < 600000 && h.n >= 5) return loi(res, 429, "Đăng ký quá nhanh, thử lại sau 10 phút");
+  let tk;
+  try {
+    tk = D.taoTk(ten, mk, false);
+  } catch (e) {
+    return loi(res, 400, (e && e.message) || "Không tạo được tài khoản");
+  }
+  dkHan.set(ip, { n: h && t - h.t < 600000 ? h.n + 1 : 1, t: h && t - h.t < 600000 ? h.t : t });
+  NK.ghi("vao", tk.ten, null, "Đăng ký tài khoản mới", { ip });
+  if (!tk.admin && !DY.duoc(tk.ten)) return loi(res, 403, "Đã tạo tài khoản " + tk.ten + " — " + DY.cau(), "chua-duyet");
+  tk.phien = crypto.randomBytes(24).toString("base64url");
+  tk.vao = t;
+  tk.ip = ip;
+  tk.ips = [ip];
+  D.ghiTk(tk);
+  online.set(tk.ten, t); trongGame.delete(tk.ten);
+  KTN.traLai(tk.ten);
+  guiJson(res, 200, thongTin(tk), { "Set-Cookie": [datCookie(req, tk.ten + "." + tk.phien, COOKIE_AGE), KTN.cap(req, tk.ten)] });
+}
+// Hết tự đăng ký tài khoản
+
 function taoNv(res, tk, o, b, trang) {
   if (tk.nv[o]) return loi(res, 409, "Ô này đã có nhân vật");
   const h = b.hero; if (!h || typeof h !== "object" || Array.isArray(h)) return loi(res, 400, "Thiếu nhân vật");
@@ -578,6 +608,7 @@ async function xuLyApi(req, res, p) {
   try {
     const m = req.method, body = m === "POST" || m === "PUT" ? await docBody(req) : {};
     if (p === "/api/dang-nhap" && m === "POST") return dangNhap(req, res, body);
+    if (p === "/api/dang-ky" && m === "POST") return dangKy(req, res, body);
     const tk = tkPhien(req);
     if (p === "/api/anh-cho" && m === "GET") return guiJson(res, 200, { anh: anhCho() });
     // công khai (màn đăng nhập): KHÔNG kèm bảng luật (lượt 61 — bản sao đọc số cân bằng qua đây); luật gửi lúc đăng nhập / /api/toi (thongTin sv)
