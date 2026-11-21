@@ -4019,7 +4019,7 @@ function menuNguoi(o, cx, cy) {
   m.className = "jx-menu jx-nguoi";
   const sap = sapCuaTen(o.name); // đang bày bán ở bãi này: Xem sạp (chợ trời)
   // "Mời vào bang" (anh 14/11 — Bang hội đợt 1): chỉ khi mình có quyền chiêu mộ (bang chủ / trưởng lão / đội trưởng); bot Tống Kim cũng có dòng này (trả lời như cự tuyệt)
-  const moiBang = false; // bản chia sẻ: không có bang hội
+  const moiBang = !!(bhMinhCur && ["chu", "lao", "doi"].includes(bhMinhCur.cv));
   const ld = !!world && laLd(world.zone); // lôi đài (anh 15/11): không Giao dịch / Tổ đội / Mời vào bang trong sân
   const tt = false; // bản chia sẻ: không có tỉ thí
   m.innerHTML = `<div class="dau">${esc(o.name)}${o.lvl ? ` · cấp ${o.lvl}` : ""}</div>${sap ? `<div data-v="sap">Xem sạp</div>` : ""}${ld ? "" : `<div data-v="gd">Giao dịch${o.gd === 1 ? "" : o.gd === 2 ? " <small>(đang giao dịch)</small>" : " <small>(chưa mở giao dịch)</small>"}</div><div data-v="doi">Tổ đội</div>`}${tt ? `<div data-v="tt">Tỉ thí</div>` : ""}${moiBang && !ld ? `<div data-v="bang">Mời vào bang${o.bh ? " <small>(đã có bang)</small>" : ""}</div>` : ""}${o.tkb ? "" : `<div data-v="mat">Nhắn tin mật</div>`}<div data-v="xem">Xem thông tin</div>`;

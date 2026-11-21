@@ -117,7 +117,7 @@ export class GameWindows {
   constructor(W, api) {
     this.W = W; this.api = api; this.itTip = null;
     this._status(); this._items(); this._itemex(); this._skills(); this._task(); this._system(); this._options(); this._other();
-    this._portrait(); this._market(); this._cart(); this._team(); this._chatroom(); this._friend(); this._shop(); this._trade();
+    this._portrait(); this._market(); this._cart(); this._team(); this._faction(); this._chatroom(); this._friend(); this._shop(); this._trade();
     this._store(); this._money(); this._loginprize(); this._hoi(); this._xephang(); this._banPhim(); this._mk("datmk"); this._mk("doimk"); this._soLuong(); this._nhapChu(); this._tumau(); this._giao(); this._kham(); this._giaoDich(); this._thuong(); this._giupDo(); this._tin(); this._tipChu();
     // chợ trời — bày bán kiểu client (anh 02/11 — src/game/chotroi.js): nút Lời rao / Định giá / Rao bán của Hành trang, khung RAO BÁN, bảng Chợ Trời
     this.cho = new ChoTroi(this);
@@ -129,7 +129,6 @@ export class GameWindows {
   // nút thanh dưới -> cửa sổ (nút Tùy chỉnh = 系统按钮 của client mở bảng hệ thống như phím Esc)
   toggle(btn) {
     if (btn === "ItemEx") { this.toggleTuMau(); return true; }
-    if (btn === "Faction") { this.api.msg("Bang hội: không có trong bản Võ Lâm Idle - HuyHuyy"); return true; } // bản chia sẻ: bang hội (làm sau Tống Kim) đã gỡ // túi tử mẫu (khung "Mở rộng rương" giờ mở từ nút Mở rộng của rương)
     const key = { Status: "status", Items: "items", Skills: "skills", Task: "task", Options: "system", Market: "market", Team: "team", Faction: "faction", ChatRoom: "chatroom", Friend: "friend" }[btn];
     if (!key) return false;
     this.W.get(key).toggle();
@@ -614,6 +613,542 @@ export class GameWindows {
     this.teamFill = (d) => { this.doiTt = d; if (w.visible) draw(); };
     draw();
   }
+  // ---------- Bang phái (_faction - khôi phục) ----------
+  _faction() {
+    const w = this.W.get("faction"), api = this.api;
+    if (!w) return;
+    const CV_TEN = { chu: "Bang chủ", lao: "Trưởng Lão", doi: "Đội trưởng", de: "Đệ tử", an: "Ẩn sỹ" };
+    const PHE_TEN = { 1: "Chính phái", 2: "Tà phái", 3: "Trung lập" };
+    const QUYEN_DS = [
+      ["BtnDepose", "1001", "Bổ nhiệm / Chiêu mộ"],
+      ["BtnChangeCamp", "1002", "Đổi phe bang hội"],
+      ["BtnChangeTitle", "1003", "Đổi danh hiệu"],
+      ["BtnKickOut", "1004", "Trục xuất thành viên"],
+      ["BtnRecordEvent", "1005", "Sửa công cáo / Ký lục"],
+      ["BtnUpgradeBuildLevel", "2001", "Tăng cấp bang hội"],
+      ["BtnFundManagement", "2002", "Quản lý ngân quỹ"],
+      ["BtnWorkshopManagement", "2003", "Quản lý tác phường"],
+      ["BtnMapManagement", "2004", "Quản lý khu vực bang"],
+      ["BtnWeekGoalManagement", "2005", "Mục tiêu tuần / Tế Đàn"]
+    ];
+    const TP_DS = [
+      { k: "leVat", ten: "Khu Lễ vật" },
+      { k: "binhGiap", ten: "Binh giáp phường" },
+      { k: "thienCong", ten: "Thiên công phường" },
+      { k: "diDung", ten: "Dị dung phường" },
+      { k: "thienY", ten: "Thiên ý phường" },
+      { k: "thiLuyen", ten: "Thí luyện phường" },
+      { k: "hoatDong", ten: "Hoạt động phường" }
+    ];
+    const st = {
+      bh: null, ds: null, coBh: null, trang: "base", tvTrang: 0, tvOn: false,
+      chon: null, tpChon: "leVat", subFun: 1, recTab: "announce", sua: false,
+      cm: null, cmSua: false, q: null, qSua: false, dsLuc: 0, loi: "",
+      oz: 0, ozChon: null, donChon: null, xin: new Set(), cho: 0
+    };
+    this._bh = st;
+    BH_CONG = () => ((st.bh && st.bh.toi && st.bh.toi.cong) | 0);
+
+    const B = () => st.bh;
+    const goi = (viec, them = {}) => api.bh({ viec, ...them }, { im: true }).then((j) => {
+      if (j && j.loi && !j.boQua) this.bao(esc(j.loi));
+      return j;
+    });
+    const tai = (luc) => {
+      const co = !!(api.bhMinh && api.bhMinh());
+      if (!luc && st.dsLuc && performance.now() - st.dsLuc < 1500) return;
+      st.dsLuc = performance.now();
+      api.bh({ viec: co ? "xem" : "ds" }, { im: true }).then(() => ve());
+    };
+    const taiDs = () => api.bh({ viec: "ds" }, { im: true }).then(() => ve());
+
+    // Hộp nhập chữ / số dùng lại khung bhDanhHieu sẵn có trong win.json
+    const nhapO = (tieuDe, giaTri, cb) => {
+      const d = this.W.get("bhDanhHieu"); if (!d) return;
+      d.set("Target", tieuDe);
+      const box = d.node("EditTitle");
+      let inp = box && box.querySelector("input");
+      if (box && !inp) {
+        box.innerHTML = "";
+        inp = document.createElement("input");
+        Object.assign(inp.style, { width: "100%", height: "100%", boxSizing: "border-box", background: "#1b140d", color: "#ffe9a8", border: "1px solid #6b532e", padding: "1px 4px" });
+        box.appendChild(inp);
+      }
+      if (inp) inp.value = giaTri == null ? "" : String(giaTri);
+      d.on("Cancel", () => d.hide());
+      d.on("Confirm", () => { const v = (inp && inp.value || "").trim(); d.hide(); if (cb) cb(v); });
+      d.show();
+      if (inp) { inp.focus(); inp.select(); }
+    };
+
+    const makeBox = (pg, key, styleExtra = {}) => {
+      const el = w.node(key, pg);
+      if (!el) return null;
+      el.innerHTML = "";
+      Object.assign(el.style, {
+        overflowY: "auto", overflowX: "hidden", color: "#f6e7c1",
+        fontSize: "12px", lineHeight: "17px", padding: "2px 4px", boxSizing: "border-box",
+        ...styleExtra
+      });
+      return el;
+    };
+    const makeInput = (pg, key, multi = false) => {
+      const el = w.node(key, pg);
+      if (!el) return null;
+      el.innerHTML = "";
+      const inp = document.createElement(multi ? "textarea" : "input");
+      Object.assign(inp.style, {
+        width: "100%", height: "100%", boxSizing: "border-box",
+        background: "rgba(18,14,10,0.75)", color: "#ffe9a8",
+        border: "1px solid #6b532e", font: "inherit", padding: "2px 4px", resize: "none"
+      });
+      el.appendChild(inp);
+      return inp;
+    };
+
+    const tvBoxes = {};
+    for (const pg of ["base", "workshop", "funuse", "right"]) {
+      tvBoxes[pg] = makeBox(pg, "MemberList");
+      w.on("BtnOnlinePriority", () => { st.tvOn = !st.tvOn; st.tvTrang = 0; ve(); }, pg);
+      w.on("BtnPrevPage", () => { if (st.tvTrang > 0) { st.tvTrang--; ve(); } }, pg);
+      w.on("BtnNextPage", () => { st.tvTrang++; ve(); }, pg);
+    }
+
+    const inpJiyu = makeInput("zhaomu", "Jiyu", true);
+    const inpAutoLv = makeInput("zhaomu", "AutoAcceptLevel", false);
+    const boxApply = makeBox("zhaomu", "ApplyerList");
+    const boxRec = makeBox("record", "RecordList_List") || makeBox("record", "RecordList");
+    const inpCc = makeInput("record", "AnnounceEditor", true);
+    const boxWarn = makeBox("workshop", "WarnInfo");
+
+    const addSmallBtn = (parent, text, rightPx, bottomPx, fn) => {
+      if (!parent) return null;
+      const b = document.createElement("button");
+      b.type = "button"; b.textContent = text;
+      Object.assign(b.style, {
+        position: "absolute", right: rightPx + "px", bottom: bottomPx + "px", zIndex: 5,
+        background: "#4a2c14", color: "#ffe28a", border: "1px solid #b5893e",
+        padding: "2px 8px", fontSize: "12px", cursor: "pointer", borderRadius: "2px"
+      });
+      b.onclick = (e) => { e.stopPropagation(); fn(); };
+      parent.appendChild(b);
+      return b;
+    };
+    addSmallBtn(w.pages.record && w.pages.record.el, "Mở Tế Đàn", 12, 12, () => api.teDan && api.teDan());
+    addSmallBtn(w.pages.workshop && w.pages.workshop.el, "Sử dụng Lễ phẩm", 12, 12, () => {
+      if (st.tpChon === "leVat") api.leVat && api.leVat();
+      else this.bao("Tác phường này đợt sau mới mở");
+    });
+
+    const TAB_MAP = {
+      base: "BtnBaseInfo", zhaomu: "BtnZhaoMu", otherzhaomu: "BtnOtherZhaoMu",
+      workshop: "BtnWorkshop", funuse: "BtnFunUse", right: "BtnRightManage", record: "BtnTongRecord"
+    };
+    for (const [pg, btn] of Object.entries(TAB_MAP)) {
+      w.on(btn, () => {
+        if (pg !== "otherzhaomu" && !B()) { st.trang = "otherzhaomu"; taiDs(); return; }
+        st.trang = pg;
+        if (pg === "otherzhaomu") taiDs();
+        ve();
+      });
+    }
+    w.on("BtnRefresh", () => tai(true));
+    w.on("BtnTongList", () => this._bhDs());
+    w.on("BtnEnterMap", () => api.khuVao && api.khuVao());
+    w.on("BtnTongHelp", () => this.bao("Gặp <color=yellow>Người hướng dẫn bang hội<color> tại Ba Lăng huyện hoặc Biện Kinh để lập bang, mở Tế Đàn và Lễ phẩm phường.<enter>Phím tắt: <color=yellow>Ctrl+B<color> mở khung Bang phái · <color=yellow>Ctrl+chuột phải<color> người chơi để mời vào bang."));
+
+    // --- Trang Chiêu mộ (zhaomu) ---
+    w.on("Save", () => {
+      goi("chieuMo", { bat: 1, text: (inpJiyu && inpJiyu.value || "").trim(), cap: +(inpAutoLv && inpAutoLv.value) || 0, phai: "" });
+    }, "zhaomu");
+    w.on("AcceptApply", () => { if (st.donChon) goi("duyet", { ten: st.donChon, dong: 1 }); }, "zhaomu");
+    w.on("RefuseApply", () => { if (st.donChon) goi("duyet", { ten: st.donChon, dong: 0 }); }, "zhaomu");
+
+    // --- Trang Bang khác (otherzhaomu) ---
+    for (let i = 1; i <= 4; i++) {
+      w.on("ApplyBtn" + i, () => {
+        const list = st.ds || [], item = list[st.oz * 4 + (i - 1)];
+        if (!item) return;
+        goi("xinVao", { id: item.id }).then((j) => { if (j && !j.loi) { st.xin.add(String(item.id)); ve(); } });
+      }, "otherzhaomu");
+      w.on("LookBtn" + i, () => {
+        const list = st.ds || [], item = list[st.oz * 4 + (i - 1)];
+        if (!item) return;
+        this.bao(`Bang hội: <color=yellow>${esc(item.ten)}<color><enter>Bang chủ: ${esc(item.chu)} · Phe: ${esc(item.tenPhe || PHE_TEN[item.phe] || "Trung lập")}<enter>Đẳng cấp: ${item.cap} · Thành viên: ${item.soTv}/${item.maxTv}<enter>Lời chiêu mộ: ${esc((item.cm && item.cm.text) || "Không có")}`);
+      }, "otherzhaomu");
+    }
+    w.on("LastPage", () => { if (st.oz > 0) { st.oz--; ve(); } }, "otherzhaomu");
+    w.on("NextPage", () => { const maxP = Math.max(0, Math.ceil(((st.ds || []).length) / 4) - 1); if (st.oz < maxP) { st.oz++; ve(); } }, "otherzhaomu");
+
+    // --- Trang Tác phường (workshop) ---
+    w.on("BtnLearnWorkshop", () => goi("tpMoDong", { tp: st.tpChon }), "workshop");
+    w.on("BtnOpenWorkshop", () => goi("tpMoDong", { tp: st.tpChon }), "workshop");
+    w.on("BtnCloseWorkshop", () => goi("tpMoDong", { tp: st.tpChon }), "workshop");
+    w.on("BtnUpgradeWorkshop", () => goi("tpLenCap", { tp: st.tpChon }), "workshop");
+    w.on("BtnSetUseLevelWorkshop", () => {
+      const b = B(), t = b && b.tp && b.tp[st.tpChon];
+      if (!t || (t.cap | 0) < 1) return this.bao("Tác phường chưa thành lập");
+      nhapO(`Cấp sử dụng ${t.ten} (1–${t.cap})`, t.sd || 1, (v) => {
+        const c = parseInt(v, 10);
+        if (c >= 1 && c <= t.cap) goi("tpCapSd", { tp: st.tpChon, cap: c });
+      });
+    }, "workshop");
+
+    // --- Trang Chức năng (funuse) ---
+    const chonTv = () => {
+      const b = B(); if (!b) return null;
+      const m = (b.tv || []).find((x) => x.ten === st.chon);
+      if (!m) this.bao("Hãy chọn một thành viên ở danh sách bên phải trước");
+      return m;
+    };
+    const hoiSoVan = (tieu, fn) => nhapO(tieu, "10", (v) => {
+      const so = parseInt(v, 10);
+      if (so > 0) fn(so);
+    });
+    for (let i = 1; i <= 4; i++) w.on("BtnSubPage" + i, () => { st.subFun = i; ve(); }, "funuse");
+    w.on("BtnUpgradeBuildLevel", () => {
+      const b = B(); if (!b) return;
+      this.hoi(`Tăng đẳng cấp kiến thiết bang lên cấp ${(b.cap | 0) + 1}?`).then((ok) => ok && goi("lenCapBang"));
+    }, "funuse");
+    w.on("BtnStoreTongMoney", () => hoiSoVan("Quyên góp vào ngân quỹ (vạn):", (van) => goi("quyenTien", { van })), "funuse");
+    w.on("BtnStoreBuildFund", () => hoiSoVan("Nạp vào ngân quỹ (vạn):", (van) => goi("napQuy", { van })), "funuse");
+    w.on("BtnTransformMoney", () => hoiSoVan("Chuyển ngân quỹ -> kiến thiết:", (van) => goi("chuyenKt", { van })), "funuse");
+    w.on("BtnAssignTongOffer", () => hoiSoVan("Phát quỹ dự trữ (điểm):", (van) => goi("phatDuTru", { van })), "funuse");
+    w.on("BtnAssignTongMoney", () => hoiSoVan("Phát ngân quỹ (vạn):", (van) => goi("phatQuy", { van })), "funuse");
+    w.on("BtnDepose", () => { const m = chonTv(); if (m) this._bhBoNhiem(B(), m); }, "funuse");
+    w.on("BtnDemise", () => {
+      const m = chonTv(); if (!m) return;
+      this.hoi(`Truyền vị Bang chủ cho <color=yellow>${esc(m.ten)}<color>?`).then((ok) => ok && goi("chuyenVi", { ten: m.ten }));
+    }, "funuse");
+    w.on("BtnKickOut", () => {
+      const m = chonTv(); if (!m) return;
+      this.hoi(`Trục xuất <color=yellow>${esc(m.ten)}<color> khỏi bang hội?`).then((ok) => ok && goi("duoi", { ten: m.ten }));
+    }, "funuse");
+    w.on("BtnChangeTitle", () => { const m = chonTv(); if (m) this._bhDanhHieu(B(), m); }, "funuse");
+    w.on("BtnChangeMaleTitle", () => {
+      const b = B(); if (!b) return;
+      nhapO("Danh hiệu chung nam:", (b.dhChung && b.dhChung.nam) || "Đệ tử", (v) => {
+        goi("danhHieuChung", { nam: v || "Đệ tử", nu: (b.dhChung && b.dhChung.nu) || "Đệ tử" });
+      });
+    }, "funuse");
+    w.on("BtnChangeFemaleTitle", () => {
+      const b = B(); if (!b) return;
+      nhapO("Danh hiệu chung nữ:", (b.dhChung && b.dhChung.nu) || "Đệ tử", (v) => {
+        goi("danhHieuChung", { nam: (b.dhChung && b.dhChung.nam) || "Đệ tử", nu: v || "Đệ tử" });
+      });
+    }, "funuse");
+    w.on("BtnChangeCamp", (_, ev) => {
+      document.querySelector(".jx-menu")?.remove();
+      const menu = document.createElement("div");
+      menu.className = "jx-menu";
+      menu.style.cssText = `position:fixed;left:${(ev && ev.clientX) || 400}px;top:${(ev && ev.clientY) || 300}px;z-index:9999;`;
+      menu.innerHTML = `<div class="dau">Đổi phe bang hội</div><div data-p="1">Chính phái</div><div data-p="2">Tà phái</div><div data-p="3">Trung lập</div>`;
+      const dong = () => { menu.remove(); document.removeEventListener("mousedown", ngoai); };
+      const ngoai = (e) => { if (!menu.contains(e.target)) dong(); };
+      menu.onclick = (e) => {
+        const d = e.target.closest("[data-p]"); if (!d) return;
+        const phe = +d.dataset.p; dong();
+        this.hoi(`Đổi phe bang hội sang <color=yellow>${PHE_TEN[phe]}<color>?`).then((ok) => ok && goi("doiPhe", { phe }));
+      };
+      document.body.appendChild(menu);
+      setTimeout(() => document.addEventListener("mousedown", ngoai), 0);
+    }, "funuse");
+    w.on("BtnCreateTongMap", () => api.khuTaoBanDo && api.khuTaoBanDo(), "funuse");
+    w.on("BtnConfigureTongMap", () => api.khuThietLap && api.khuThietLap(), "funuse");
+    w.on("BtnLeaveTong", () => {
+      const b = B(); if (!b) return;
+      const laChu = b.toi && b.toi.cv === "chu";
+      const cau = laChu ? `Bạn muốn giải tán bang hội <color=yellow>${esc(b.ten)}<color>? Mọi thành viên sẽ rời bang.` : `Bạn muốn rời khỏi bang hội <color=yellow>${esc(b.ten)}<color>?`;
+      this.hoi(cau).then((ok) => ok && goi(laChu ? "giaiTan" : "roi"));
+    }, "funuse");
+    w.on("BtnRecruit", () => { st.trang = "zhaomu"; ve(); }, "funuse");
+    w.on("BtnHelp", () => api.teDan && api.teDan(), "funuse");
+
+    // --- Trang Quyền hạn (right) ---
+    for (const [btnName, ma] of QUYEN_DS) {
+      w.on(btnName, () => {
+        const b = B(); if (!b) return;
+        st.q = { ...(st.q || b.quyen || {}) };
+        st.q[ma] = st.q[ma] ? 0 : 1;
+        st.qSua = true;
+        ve();
+      }, "right");
+    }
+    w.on("BtnSelectAll", () => {
+      st.q = {}; for (const [, ma] of QUYEN_DS) st.q[ma] = 1; st.qSua = true; ve();
+    }, "right");
+    w.on("BtnDistribute", () => {
+      const b = B(); if (!b) return;
+      goi("quyen", { quyen: st.q || b.quyen || {} }).then((j) => { if (j && !j.loi) { st.qSua = false; ve(); } });
+    }, "right");
+
+    // --- Trang Ký lục / Công cáo (record) ---
+    w.on("BtnAnnounce", () => { st.recTab = "announce"; ve(); }, "record");
+    w.on("BtnWeekDaily", () => { st.recTab = "week"; ve(); }, "record");
+    w.on("BtnTongAffair", () => { st.recTab = "affair"; ve(); }, "record");
+    w.on("BtnTongHistory", () => { st.recTab = "affair"; ve(); }, "record");
+    w.on("BtnEditAnnounce", () => {
+      const text = (inpCc && inpCc.value || "").trim();
+      goi("congCao", { text });
+    }, "record");
+    w.on("BtnLeaveWord", () => api.teDan && api.teDan(), "record");
+
+    const veTvList = (pg, b) => {
+      const box = tvBoxes[pg]; if (!box) return;
+      const ds = ((b && b.tv) || []).filter((x) => !st.tvOn || x.on);
+      const PER = 12, maxP = Math.max(0, Math.ceil(ds.length / PER) - 1);
+      st.tvTrang = Math.max(0, Math.min(maxP, st.tvTrang));
+      w.check("BtnOnlinePriority", st.tvOn, pg);
+      w.set("TitlePage", `${st.tvTrang + 1}/${maxP + 1}`, pg);
+      const sub = ds.slice(st.tvTrang * PER, st.tvTrang * PER + PER);
+      box.innerHTML = sub.map((x) => {
+        const sel = st.chon === x.ten ? "background:rgba(196,144,52,0.35);" : "";
+        const col = x.on ? "#ffe89e" : "#9c9484";
+        return `<div data-ten="${esc(x.ten)}" style="display:flex;justify-content:space-between;padding:1px 3px;cursor:pointer;color:${col};${sel}"><span>${esc(x.ten)}</span><span>${esc(x.dh || CV_TEN[x.cv] || "")} · ${x.cong | 0}</span></div>`;
+      }).join("") || '<div style="color:#888;padding:4px">Chưa có thành viên</div>';
+      box.onclick = (e) => {
+        const row = e.target.closest("[data-ten]"); if (!row) return;
+        st.chon = row.dataset.ten; ve();
+      };
+    };
+
+    const ve = () => {
+      const b = B();
+      if (!b && st.trang !== "otherzhaomu") st.trang = "otherzhaomu";
+      w.page(st.trang);
+      for (const [pg, btn] of Object.entries(TAB_MAP)) {
+        w.check(btn, st.trang === pg);
+        w.disable(btn, pg !== "otherzhaomu" && !b);
+      }
+      w.disable("BtnEnterMap", !b);
+
+      if (st.trang === "otherzhaomu") {
+        const ds = st.ds || [];
+        for (let i = 1; i <= 4; i++) {
+          const item = ds[st.oz * 4 + (i - 1)];
+          w.set("Name" + i, item ? item.ten : "", "otherzhaomu");
+          w.set("Info" + i, item ? `Bang chủ: ${item.chu} · Cấp ${item.cap} · ${item.soTv}/${item.maxTv} TV` : "", "otherzhaomu");
+          w.set("QingXiang" + i, item ? (item.tenPhe || PHE_TEN[item.phe] || "Trung lập") : "", "otherzhaomu");
+          w.set("HuoDong" + i, item && item.cm && item.cm.cap ? `Yêu cầu cấp ${item.cm.cap}+` : (item ? "Tự do" : ""), "otherzhaomu");
+          w.set("JiYu" + i, item && item.cm ? (item.cm.text || "") : "", "otherzhaomu");
+          w.hideItem("LookBtn" + i, !item, "otherzhaomu");
+          w.hideItem("ApplyBtn" + i, !item || !!b, "otherzhaomu");
+        }
+        return;
+      }
+      if (!b) return;
+
+      if (st.trang === "base") {
+        w.set("TxtTongName", b.ten, "base");
+        w.set("TxtMaster", b.chu, "base");
+        w.set("TxtLeague", "Không", "base");
+        w.set("TxtCamp", b.tenPhe || PHE_TEN[b.phe] || "Trung lập", "base");
+        w.set("TxtBuildLevel", String(b.cap | 0), "base");
+        w.set("TxtMemberNum", `${(b.tv || []).length}`, "base");
+        w.set("TxtTongLevel", String(b.cap | 0), "base");
+        w.set("TxtServiceFee", `${fmt((b.phi && b.phi.ngay) | 0)} vạn`, "base");
+        w.set("TxtStandFund", `${fmt(b.duTru | 0)}`, "base");
+        w.set("TxtTongCapital", `${fmt(b.quy | 0)} vạn`, "base");
+        w.set("TxtBuildFund", `${fmt(b.kt | 0)} vạn`, "base");
+        w.set("TxtBattleFund", `${fmt(b.cb | 0)}`, "base");
+        w.set("TxtTotalOffer", fmt(b.tongCong | 0), "base");
+        w.set("TxtStoredBuildFund", fmt(b.duTru | 0), "base");
+        w.set("TxtPersonalOffer", fmt((b.toi && b.toi.cong) | 0), "base");
+        w.set("TxtWeeklyOffer", fmt((b.toi && b.toi.congTuan) | 0), "base");
+        w.set("TxtHelp", b.congCao || "Chưa có công cáo bang hội", "base");
+        veTvList("base", b);
+      }
+
+      if (st.trang === "zhaomu") {
+        if (inpJiyu && document.activeElement !== inpJiyu) inpJiyu.value = (b.cm && b.cm.text) || "";
+        if (inpAutoLv && document.activeElement !== inpAutoLv) inpAutoLv.value = String((b.cm && b.cm.cap) | 0);
+        if (boxApply) {
+          const ds = b.don || [];
+          boxApply.innerHTML = ds.map((d) => {
+            const sel = st.donChon === d.ten ? "background:rgba(196,144,52,0.35);" : "";
+            return `<div data-don="${esc(d.ten)}" style="padding:2px 4px;cursor:pointer;${sel}">${esc(d.ten)} · cấp ${d.cap | 0} ${esc(d.phai || "")}</div>`;
+          }).join("") || '<div style="color:#888;padding:4px">Chưa có đơn xin gia nhập</div>';
+          boxApply.onclick = (e) => { const r = e.target.closest("[data-don]"); if (r) { st.donChon = r.dataset.don; ve(); } };
+        }
+      }
+
+      if (st.trang === "workshop") {
+        const tps = b.tp || {};
+        const soMo = Object.values(tps).filter((x) => x && x.cap > 0).length;
+        w.set("TxtWorkshopNum", `${soMo}/7`, "workshop");
+        w.set("TxtMaxRank", String((b.cap | 0) * 2 + 1), "workshop");
+        w.set("TxtServiceFee", `${fmt((b.phi && b.phi.ngay) | 0)} vạn`, "workshop");
+        if (boxWarn) {
+          boxWarn.innerHTML = TP_DS.map((d) => {
+            const t = tps[d.k] || { cap: 0, sd: 0, mo: 0 };
+            const sel = st.tpChon === d.k ? "background:rgba(196,144,52,0.35);color:#fff;" : "";
+            const tt = t.cap < 1 ? "Chưa xây" : (t.mo ? `Đang mở (cấp ${t.sd}/${t.cap})` : `Đang đóng (cấp ${t.cap})`);
+            return `<div data-tp="${d.k}" style="display:flex;justify-content:space-between;padding:2px 4px;cursor:pointer;${sel}"><span>${d.ten}</span><span>${tt}</span></div>`;
+          }).join("");
+          boxWarn.onclick = (e) => { const r = e.target.closest("[data-tp]"); if (r) { st.tpChon = r.dataset.tp; ve(); } };
+        }
+        veTvList("workshop", b);
+      }
+
+      if (st.trang === "funuse") {
+        w.set("TxtTongName", b.ten, "funuse");
+        w.set("TxtTongUnion", "Không", "funuse");
+        w.set("TxtBuildLevel", String(b.cap | 0), "funuse");
+        w.set("TxtTotalOffer", fmt(b.tongCong | 0), "funuse");
+        w.set("TxtTongMoney", `${fmt(b.quy | 0)} vạn`, "funuse");
+        w.set("TxtBuildFund", `${fmt(b.kt | 0)} vạn`, "funuse");
+        w.set("TxtBattleFund", `${fmt(b.cb | 0)}`, "funuse");
+        w.set("TxtStoredBuildFund", fmt(b.duTru | 0), "funuse");
+        w.set("TxtPersonalOffer", fmt((b.toi && b.toi.cong) | 0), "funuse");
+        w.set("TxtTongMoney2", `${fmt(b.quy | 0)} vạn`, "funuse");
+        w.set("TxtBuildFund2", `${fmt(b.kt | 0)} vạn`, "funuse");
+        for (let i = 1; i <= 4; i++) w.check("BtnSubPage" + i, st.subFun === i, "funuse");
+        const p1 = ["BtnRecruit", "BtnForceToRetire", "BtnDemise", "BtnKickOut", "BtnDepose", "Btn_DispenseOffer", "BtnChangeMaleTitle", "BtnChangeFemaleTitle", "BtnChangeTitle", "BtnChangeCamp"];
+        const p2 = ["BtnCreateTongMap", "BtnConfigureTongMap", "BtnTongStunt", "BtnTongChallenge", "BtnTongDetect"];
+        const p3 = ["BtnCreateUnion", "BtnApplyJionUnion", "BtnAcceptUnionReq", "BtnLeaveUnion", "BtnKickUnionTong", "BtnAppointMinister", "BtnFireMinister"];
+        for (const k of p1) w.hideItem(k, st.subFun !== 1, "funuse");
+        for (const k of p2) w.hideItem(k, st.subFun !== 2, "funuse");
+        for (const k of p3) w.hideItem(k, st.subFun !== 3, "funuse");
+        veTvList("funuse", b);
+      }
+
+      if (st.trang === "right") {
+        const q = st.qSua && st.q ? st.q : (b.quyen || {});
+        for (const [btnName, ma] of QUYEN_DS) w.check(btnName, !!q[ma], "right");
+        veTvList("right", b);
+      }
+
+      if (st.trang === "record") {
+        w.check("BtnAnnounce", st.recTab === "announce", "record");
+        w.check("BtnWeekDaily", st.recTab === "week", "record");
+        w.check("BtnTongAffair", st.recTab === "affair", "record");
+        if (inpCc && document.activeElement !== inpCc) inpCc.value = b.congCao || "";
+        if (boxRec) {
+          if (st.recTab === "week" && b.mt) {
+            boxRec.innerHTML = `<div style="padding:6px;line-height:19px">
+              <div><b style="color:#ffd86b">Mục tiêu tuần:</b> ${esc(b.mt.ten)} (Độ khó cấp ${b.mt.doKho})</div>
+              <div>Tiến độ bang hội: <b style="color:#9eff9e">${fmt(b.mt.tienDo)} / ${fmt(b.mt.can)}</b></div>
+              <div>Tiến độ cá nhân: <b style="color:#ffe28a">${fmt(b.mt.toi)}</b> · Thưởng: ${fmt(b.mt.thuong)} điểm cống hiến</div>
+              <div style="margin-top:6px;color:#cbb892">Bấm nút <b>Mở Tế Đàn</b> góc dưới để điểm danh hàng ngày và lĩnh thưởng mục tiêu tuần.</div>
+            </div>`;
+          } else if (st.recTab === "affair") {
+            boxRec.innerHTML = (b.suKien || []).map((x) => {
+              const d = new Date(x.luc || Date.now());
+              const t = `${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`;
+              return `<div style="padding:2px 4px;border-bottom:1px solid rgba(255,255,255,0.06)">[${t}] ${esc(x.t)}</div>`;
+            }).join("") || '<div style="color:#888;padding:4px">Chưa có sự kiện bang hội</div>';
+          } else {
+            boxRec.innerHTML = `<div style="padding:6px;white-space:pre-wrap">${esc(b.congCao || "Chưa có công cáo bang hội")}</div>`;
+          }
+        }
+      }
+    };
+
+    w.cb.show = () => { tai(true); ve(); };
+    this._bhTai = tai;
+    this._bhVe = ve;
+
+    this._bhDs = () => {
+      const d = this.W.get("bhDs"); if (!d) return;
+      let trang = 0;
+      const drawDs = () => {
+        const ds = st.ds || [], PER = 12, maxP = Math.max(0, Math.ceil(ds.length / PER) - 1);
+        trang = Math.max(0, Math.min(maxP, trang));
+        const el = d.node("MemberList");
+        if (el) {
+          Object.assign(el.style, { overflowY: "auto", color: "#f6e7c1", fontSize: "12px", lineHeight: "18px", padding: "3px" });
+          el.innerHTML = ds.slice(trang * PER, trang * PER + PER).map((x, idx) =>
+            `<div style="display:flex;justify-content:space-between;padding:1px 3px"><span>${trang * PER + idx + 1}. ${esc(x.ten)} (Cấp ${x.cap})</span><span>${esc(x.chu)} · ${x.soTv} TV</span></div>`
+          ).join("") || '<div style="color:#888;padding:6px">Chưa có bang hội nào</div>';
+        }
+      };
+      d.on("BtnPrevPage", () => { trang--; drawDs(); });
+      d.on("BtnNextPage", () => { trang++; drawDs(); });
+      d.show();
+      taiDs().then(drawDs);
+    };
+
+    this._bhBoNhiem = (b, m) => {
+      const d = this.W.get("bhBoNhiem"); if (!d || !m) return;
+      let cv = m.cv === "chu" ? "lao" : m.cv;
+      d.set("PlayerName", m.ten);
+      d.set("ErrorBox", "");
+      const sync = () => {
+        d.check("BtnDirector", cv === "lao");
+        d.check("BtnManager", cv === "doi");
+        d.check("BtnMember", cv === "de");
+      };
+      d.on("BtnDirector", () => { cv = "lao"; sync(); });
+      d.on("BtnManager", () => { cv = "doi"; sync(); });
+      d.on("BtnMember", () => { cv = "de"; sync(); });
+      d.on("BtnCancel", () => d.hide());
+      d.on("BtnConfirm", () => {
+        goi("boNhiem", { ten: m.ten, cv }).then((j) => { if (j && !j.loi) d.hide(); });
+      });
+      sync();
+      d.show();
+    };
+
+    this._bhDanhHieu = (b, m) => {
+      if (!m) return;
+      nhapO(m.ten, m.dh || "", (dh) => goi("danhHieu", { ten: m.ten, dh }));
+    };
+
+    this.moTaoBang = (xong, qt) => {
+      const d = this.W.get("bhTao"); if (!d) return;
+      let phe = 1;
+      const box = d.node("EditTongName");
+      let inp = box && box.querySelector("input");
+      if (box && !inp) {
+        box.innerHTML = "";
+        inp = document.createElement("input");
+        Object.assign(inp.style, { width: "100%", height: "100%", boxSizing: "border-box", background: "#1b140d", color: "#ffe9a8", border: "1px solid #6b532e", padding: "1px 4px" });
+        box.appendChild(inp);
+      }
+      if (inp) inp.value = "";
+      d.set("ErrorBox", "");
+      const syncPhe = () => {
+        d.check("BtnOrder", phe === 1);
+        d.check("BtnChaos", phe === 2);
+        d.check("BtnNatural", phe === 3);
+      };
+      d.on("BtnOrder", () => { phe = 1; syncPhe(); });
+      d.on("BtnChaos", () => { phe = 2; syncPhe(); });
+      d.on("BtnNatural", () => { phe = 3; syncPhe(); });
+      d.on("BtnCancel", () => d.hide());
+      d.on("BtnDone", () => {
+        const ten = (inp && inp.value || "").trim();
+        if (ten.length < 2 || ten.length > 16) { d.set("ErrorBox", "Tên bang hội từ 2–16 ký tự"); return; }
+        api.bh({ viec: "lap", ten, phe, ...(qt ? { qt: 1 } : {}) }, { im: true }).then((j) => {
+          if (!j || j.loi) { d.set("ErrorBox", (j && j.loi) || "Không lập được bang"); return; }
+          d.hide();
+          if (xong) xong(j);
+        });
+      });
+      syncPhe();
+      d.show();
+      if (inp) inp.focus();
+    };
+
+    this.moLePham = () => {
+      const b = B(), lv = b && b.leVat, ds = lv && lv.shop;
+      if (!ds || !ds.length) return this.bao("Hiện chưa có lễ phẩm để đổi");
+      this.openShop(ds, "bh");
+    };
+  }
+  bangFill(bh, ds, cho) {
+    const st = this._bh; if (!st) return;
+    if (bh !== undefined) st.bh = bh || null;
+    if (Array.isArray(ds)) st.ds = ds;
+    if (cho != null) st.cho = cho | 0;
+    const w = this.W.get("faction");
+    if (w && w.visible && this._bhVe) this._bhVe();
+    if (this.shopTien === "bh" && this.W.get("shop").visible && st.bh && st.bh.leVat && st.bh.leVat.shop) {
+      this.openShop(st.bh.leVat.shop, "bh", { giu: true });
+    }
+  }
+  bangTai() { const w = this.W.get("faction"); if (w && w.visible && this._bhTai) this._bhTai(true); }
+  // ---------- Hết Bang phái ----------
   // thoát nhân vật (main.js bhThoat): quên dữ liệu bang của nhân vật cũ
   bangXoa() {
     const st = this._bh; if (!st) return;
