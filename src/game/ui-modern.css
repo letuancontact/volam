@@ -1,29 +1,48 @@
 /* ==========================================================================
-   VÕ LÂM IDLE — GIAO DIỆN KIẾM HIỆP HIỆN ĐẠI (PC & MOBILE)
-   Kích hoạt qua lớp body.ui-modern (chuyển đổi trong Trợ Thủ -> Khác)
+   VÕ LÂM IDLE — GIAO DIỆN KIẾM HIỆP HIỆN ĐẠI v2 (NÚT ĐÁNH + NÚT CHỨC NĂNG PC & MOBILE)
+   Mặc định bật qua body.ui-modern | Chuyển đổi Hiện đại / Cổ điển trong Trợ Thủ -> Khác
    ========================================================================== */
 
 :root.ui-modern {
-  --m-bg: rgba(11, 15, 22, 0.86);
-  --m-bg-deep: rgba(7, 10, 16, 0.94);
-  --m-bg-soft: rgba(16, 22, 33, 0.78);
-  --m-gold: #dfb85c;
-  --m-gold-hi: #ffe598;
-  --m-gold-dim: rgba(223, 184, 92, 0.38);
-  --m-gold-line: rgba(223, 184, 92, 0.62);
-  --m-shadow: 0 8px 24px rgba(0, 0, 0, 0.58);
-  --m-inner: inset 0 1px 0 rgba(255, 236, 178, 0.16);
+  --m-bg: rgba(11, 15, 22, 0.88);
+  --m-bg-deep: rgba(7, 10, 16, 0.95);
+  --m-gold: #e4bd63;
+  --m-gold-hi: #ffe8a3;
+  --m-gold-dim: rgba(228, 189, 99, 0.42);
+  --m-gold-line: rgba(228, 189, 99, 0.68);
+  --m-crimson: #ff5b57;
+  --m-emerald: #4de698;
+  --m-sky: #6bc2ff;
+  --m-amber: #ffbd59;
+  --m-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --m-inner: inset 0 1px 0 rgba(255, 238, 184, 0.2);
+}
+
+/* Ẩn lớp icon hiện đại khi người chơi chuyển về Cổ điển */
+body:not(.ui-modern) .ui-m-btn,
+body:not(.ui-modern) .ui-m-ic,
+body:not(.ui-modern) .ui-m-hk,
+body:not(.ui-modern) .ui-m-sk,
+body:not(.ui-modern) .ui-m-sktag {
+  display: none !important;
+}
+
+/* Các phần tử trang trí không bao giờ chặn thao tác bấm/kéo */
+.ui-m-btn, .ui-m-ic, .ui-m-hk, .ui-m-sk, .ui-m-sktag, .ui-m-svg {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 /* ==================== PC: DẢI TRÊN (CHỈ SỐ NHÂN VẬT) ==================== */
 body.ui-modern:not(.dt) #jxhud .jx-top {
   height: 30px !important;
   background-image: none !important;
-  background: linear-gradient(180deg, rgba(19, 25, 36, 0.94) 0%, rgba(10, 14, 21, 0.9) 100%) !important;
+  background: linear-gradient(180deg, rgba(20, 26, 38, 0.94) 0%, rgba(9, 13, 20, 0.9) 100%) !important;
   border: 1px solid var(--m-gold-dim);
   border-top: 0;
   border-radius: 0 0 14px 14px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55), inset 0 -1px 0 rgba(255, 229, 152, 0.22);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.56), inset 0 -1px 0 rgba(255, 232, 163, 0.24);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -33,8 +52,7 @@ body.ui-modern:not(.dt) #jxhud .jx-top .jx-logo {
   height: 18px !important;
   line-height: 18px !important;
   font-weight: 600;
-  letter-spacing: 0.2px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.95);
+  text-shadow: 0 1px 3px #000;
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-top .jx-lv,
@@ -45,18 +63,10 @@ body.ui-modern:not(.dt) #jxhud .jx-top .jx-rank {
   box-sizing: border-box;
   border-radius: 10px;
   border: 1px solid var(--m-gold-line);
-  background: linear-gradient(180deg, rgba(46, 36, 18, 0.95), rgba(20, 16, 9, 0.95));
+  background: linear-gradient(180deg, #3c2d14, #171209);
   color: var(--m-gold-hi) !important;
   font-weight: 700;
-  box-shadow: inset 0 1px 0 rgba(255, 232, 165, 0.28), 0 2px 6px rgba(0, 0, 0, 0.5);
-  text-shadow: 0 1px 2px #000;
-  transition: border-color 0.16s, box-shadow 0.16s, transform 0.12s;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-top .jx-rank:hover {
-  border-color: var(--m-gold-hi);
-  box-shadow: 0 0 10px rgba(255, 222, 128, 0.48);
-  transform: translateY(-0.5px);
+  box-shadow: var(--m-inner), 0 2px 6px rgba(0, 0, 0, 0.55);
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar {
@@ -64,71 +74,43 @@ body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar {
   height: 16px !important;
   box-sizing: content-box;
   border-radius: 999px;
-  background: rgba(5, 8, 12, 0.86);
-  border: 1px solid rgba(223, 184, 92, 0.42);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.85), 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: rgba(5, 8, 12, 0.88);
+  border: 1px solid rgba(228, 189, 99, 0.45);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.85);
 }
 
-body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar i {
-  border-radius: 999px;
-  transition: width 0.16s ease-out;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.life i {
-  background: linear-gradient(180deg, #ff6c63 0%, #d92626 52%, #8c1010 100%) !important;
-  box-shadow: 0 0 8px rgba(235, 52, 52, 0.45);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.mana i {
-  background: linear-gradient(180deg, #5cb4ff 0%, #1e66de 52%, #0d3282 100%) !important;
-  box-shadow: 0 0 8px rgba(45, 130, 255, 0.45);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.stamina i {
-  background: linear-gradient(180deg, #56e393 0%, #1ea858 52%, #0e6332 100%) !important;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.exp i {
-  background: linear-gradient(180deg, #ffe47e 0%, #d89b1c 52%, #875705 100%) !important;
-}
-
+body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar i { border-radius: 999px; transition: width 0.16s ease-out; }
+body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.life i { background: linear-gradient(180deg, #ff6c63, #d92626 52%, #8c1010) !important; }
+body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.mana i { background: linear-gradient(180deg, #5cb4ff, #1e66de 52%, #0d3282) !important; }
+body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.stamina i { background: linear-gradient(180deg, #56e393, #1ea858 52%, #0e6332) !important; }
+body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.exp i { background: linear-gradient(180deg, #ffe47e, #d89b1c 52%, #875705) !important; }
 body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar::after {
-  content: "";
-  position: absolute;
-  left: 3px;
-  right: 3px;
-  top: 1px;
-  height: 5px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0));
-  pointer-events: none;
+  content: ""; position: absolute; left: 3px; right: 3px; top: 1px; height: 5px;
+  border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.36), transparent); pointer-events: none;
 }
-
 body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar span {
-  line-height: 15px !important;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
+  line-height: 15px !important; font-size: 12px; font-weight: 600; color: #fff;
   text-shadow: 0 1px 2px #000, 1px 0 1px #000, -1px 0 1px #000;
 }
 
-/* ==================== PC: DẢI DƯỚI (NÚT ĐÁNH, Ô ĐỒ, CHỨC NĂNG) ==================== */
+/* ==================== PC: THANH DƯỚI (NỀN KÍNH TỐI KIẾM HIỆP) ==================== */
 body.ui-modern:not(.dt) #jxhud .jx-bot {
   background-image: none !important;
+  overflow: visible !important;
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-bot::before {
   content: "";
   position: absolute;
   left: 118px;
-  right: 54px;
-  top: 4px;
-  bottom: 4px;
-  border-radius: 16px;
+  right: 52px;
+  top: 2px;
+  bottom: 2px;
+  border-radius: 18px;
   background:
-    radial-gradient(ellipse at 50% 0%, rgba(223, 184, 92, 0.14), transparent 62%),
-    linear-gradient(180deg, rgba(20, 26, 38, 0.93) 0%, rgba(9, 13, 20, 0.95) 100%);
-  border: 1px solid var(--m-gold-line);
+    radial-gradient(ellipse at 50% 0%, rgba(228, 189, 99, 0.16), transparent 64%),
+    linear-gradient(180deg, rgba(20, 27, 40, 0.94) 0%, rgba(8, 12, 19, 0.96) 100%);
+  border: 1.5px solid var(--m-gold-line);
   box-shadow: var(--m-shadow), var(--m-inner);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -137,78 +119,290 @@ body.ui-modern:not(.dt) #jxhud .jx-bot::before {
 
 body.ui-modern:not(.dt) #jxhud .jx-bot .jx-inback {
   background-image: none !important;
-  background: rgba(6, 9, 14, 0.85) !important;
+  background: rgba(5, 8, 13, 0.88) !important;
   border: 1px solid var(--m-gold-dim);
-  border-radius: 8px;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.78);
+  border-radius: 9px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.85);
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-bot .jx-input {
   color: #f6eed7 !important;
-  padding: 0 4px;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot {
-  border-radius: 9px;
-  background: radial-gradient(circle at 50% 28%, rgba(32, 40, 56, 0.92), rgba(10, 13, 20, 0.96));
-  border: 1px solid rgba(223, 184, 92, 0.45);
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8), 0 2px 6px rgba(0, 0, 0, 0.45);
-  box-sizing: border-box;
-  transition: border-color 0.14s, box-shadow 0.14s, transform 0.12s;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot:hover {
-  border-color: var(--m-gold-hi);
-  box-shadow: inset 0 0 8px rgba(255, 229, 152, 0.25), 0 0 10px rgba(223, 184, 92, 0.45);
-  transform: translateY(-1px);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot:active {
-  transform: scale(0.95);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot.jx-skill {
-  border-radius: 11px;
-  border: 2px solid var(--m-gold);
-  background: radial-gradient(circle at 50% 30%, rgba(56, 44, 22, 0.92), rgba(12, 15, 22, 0.98));
-  box-shadow: 0 0 12px rgba(223, 184, 92, 0.35), inset 0 0 8px rgba(0, 0, 0, 0.85);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot.jx-skill:hover {
-  border-color: var(--m-gold-hi);
-  box-shadow: 0 0 16px rgba(255, 225, 132, 0.65), inset 0 0 8px rgba(255, 225, 132, 0.2);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot .jx-cd {
-  border-radius: 8px;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn {
-  border-radius: 8px;
-  background-color: rgba(16, 22, 32, 0.86);
-  box-shadow: inset 0 0 0 1px rgba(223, 184, 92, 0.38), 0 2px 6px rgba(0, 0, 0, 0.55);
-  transition: box-shadow 0.14s, filter 0.14s, transform 0.12s;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn:hover {
-  filter: brightness(1.15);
-  box-shadow: inset 0 0 0 1px var(--m-gold-hi), 0 0 10px rgba(255, 222, 128, 0.5);
-  transform: translateY(-1px);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn:active {
-  transform: scale(0.95);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Market"] {
-  border-radius: 12px;
-  box-shadow: inset 0 0 0 1.5px var(--m-gold), 0 0 14px rgba(223, 184, 92, 0.34);
+  padding: 0 6px;
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-bot .jx-chbtn {
-  border-radius: 6px;
-  background-color: rgba(24, 32, 46, 0.9);
+  border-radius: 7px;
+  background-color: rgba(24, 33, 49, 0.95);
   box-shadow: inset 0 0 0 1px var(--m-gold-dim);
+}
+
+/* ==================== PC: 9 Ô PHÍM TẮT (1-9) & 2 NÚT ĐÁNH / KỸ NĂNG (T / P) ==================== */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot[data-slot] {
+  border-radius: 10px;
+  background: radial-gradient(circle at 50% 25%, rgba(36, 46, 66, 0.94), rgba(10, 14, 22, 0.98));
+  border: 1.5px solid rgba(228, 189, 99, 0.5);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.82), 0 3px 8px rgba(0, 0, 0, 0.52);
+  box-sizing: border-box;
+  transition: border-color 0.14s, box-shadow 0.14s, transform 0.1s;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot[data-slot]:hover {
+  border-color: var(--m-gold-hi);
+  box-shadow: inset 0 0 10px rgba(255, 232, 163, 0.25), 0 0 12px rgba(228, 189, 99, 0.55);
+  transform: translateY(-2px);
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot[data-slot]:active {
+  transform: scale(0.93);
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot .ui-m-hk {
+  position: absolute;
+  right: 2px;
+  top: 1px;
+  font: 700 10px/11px system-ui, -apple-system, sans-serif;
+  color: rgba(255, 232, 163, 0.9);
+  background: rgba(6, 9, 15, 0.72);
+  padding: 0 3px;
+  border-radius: 4px;
+  text-shadow: 0 1px 1px #000;
+}
+
+/* 2 nút đánh T (chính) & P (phụ): tròn lớn nổi khối phong cách ARPG Kiếm hiệp */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-skill[data-skill="left"] {
+  left: 482px !important;
+  top: 17px !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  border: 2.5px solid var(--m-gold-hi) !important;
+  background:
+    radial-gradient(circle at 38% 28%, rgba(168, 52, 36, 0.85), rgba(48, 22, 16, 0.94) 55%, rgba(12, 14, 22, 0.98) 100%) !important;
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.85),
+    0 0 0 4px rgba(228, 189, 99, 0.35),
+    0 0 18px rgba(255, 196, 86, 0.55),
+    inset 0 2px 6px rgba(255, 232, 163, 0.35) !important;
+  box-sizing: border-box;
+  overflow: visible !important;
+  transition: transform 0.12s, box-shadow 0.15s;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-skill[data-skill="right"] {
+  left: 534px !important;
+  top: 23px !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  border: 2px solid var(--m-gold) !important;
+  background:
+    radial-gradient(circle at 38% 28%, rgba(34, 88, 128, 0.85), rgba(16, 32, 52, 0.95) 60%, rgba(10, 14, 22, 0.98) 100%) !important;
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.85),
+    0 0 14px rgba(107, 194, 255, 0.38),
+    inset 0 2px 5px rgba(255, 255, 255, 0.22) !important;
+  box-sizing: border-box;
+  overflow: visible !important;
+  transition: transform 0.12s, box-shadow 0.15s;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-skill:hover {
+  transform: scale(1.07);
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.85),
+    0 0 22px rgba(255, 225, 128, 0.82),
+    inset 0 2px 8px rgba(255, 238, 184, 0.4) !important;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-skill:active {
+  transform: scale(0.93);
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-skill .jx-qi {
+  width: 78% !important;
+  height: 78% !important;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-skill .jx-cd {
+  inset: 2px;
+  border-radius: 50%;
+}
+
+body.ui-modern #jxhud .jx-bot .jx-skill .ui-m-sk {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0.5;
+  color: var(--m-gold-hi);
+}
+
+body.ui-modern #jxhud .jx-bot .jx-skill.ui-m-has-qi .ui-m-sk {
+  display: none;
+}
+
+body.ui-modern #jxhud .jx-bot .jx-skill .ui-m-sk svg {
+  width: 54%;
+  height: 54%;
+  fill: currentColor;
+  filter: drop-shadow(0 1px 2px #000);
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-skill .ui-m-sktag {
+  position: absolute;
+  left: 50%;
+  bottom: -7px;
+  transform: translateX(-50%);
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #4b3816, #1b1307);
+  border: 1px solid var(--m-gold-hi);
+  color: var(--m-gold-hi);
+  font: 700 10px/11px system-ui, -apple-system, sans-serif;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.85);
+}
+
+/* ==================== PC: THAY MỚI TOÀN BỘ NÚT CHỨC NĂNG (.jx-btn[data-k]) ==================== */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k] {
+  background-image: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 9px;
+  border: 1px solid rgba(228, 189, 99, 0.48);
+  background: linear-gradient(180deg, rgba(31, 41, 60, 0.94) 0%, rgba(12, 17, 27, 0.97) 100%) !important;
+  box-shadow: var(--m-inner), 0 3px 8px rgba(0, 0, 0, 0.58);
+  color: #f3dfb0;
+  transition: transform 0.12s, border-color 0.14s, box-shadow 0.14s, background 0.14s;
+}
+
+/* Hàng nút chính bên dưới (10 nút: Status..Options) — nâng cao nhẹ đủ chứa icon + nhãn */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Status"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Items"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="ItemEx"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Skills"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Task"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Friend"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Team"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Faction"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="ChatRoom"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Options"] {
+  top: 47px !important;
+  width: 29px !important;
+  height: 36px !important;
+}
+
+/* Hàng nút thao tác nhanh phía trên (Sit, ChoTroi, Horse, Exchange, Rec, PK) */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Sit"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="ChoTroi"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Horse"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Exchange"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Rec"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="PK"] {
+  top: 8px !important;
+  width: 30px !important;
+  height: 34px !important;
+}
+
+/* Nút Kỳ Trân Các (Market) — huy hiệu vàng kim nổi bật */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Market"] {
+  left: 892px !important;
+  top: 10px !important;
+  width: 72px !important;
+  height: 70px !important;
+  border-radius: 14px;
+  border: 1.5px solid var(--m-gold-hi) !important;
+  background: radial-gradient(circle at 50% 25%, #694916 0%, #312008 62%, #181005 100%) !important;
+  box-shadow: 0 0 16px rgba(228, 189, 99, 0.42), inset 0 1px 0 rgba(255, 240, 190, 0.45) !important;
+  color: var(--m-gold-hi) !important;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Market"] .ui-m-svg {
+  width: 28px;
+  height: 28px;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Market"] .ui-m-btn em {
+  font-size: 10px;
+  line-height: 11px;
+  margin-top: 3px;
+  color: #fff2c6;
+  white-space: normal;
+  text-align: center;
+}
+
+/* Nút mini ô chat (Face, SendBtn) */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Face"],
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="SendBtn"] {
+  border-radius: 6px;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k] .ui-m-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 1px;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k] .ui-m-svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.9));
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="Face"] .ui-m-svg,
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="SendBtn"] .ui-m-svg {
+  width: 13px;
+  height: 13px;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k] .ui-m-btn em {
+  font-style: normal;
+  font: 700 8.5px/9px system-ui, -apple-system, sans-serif;
+  color: #e6ddc7;
+  letter-spacing: -0.2px;
+  text-shadow: 0 1px 2px #000;
+}
+
+/* Phân màu sắc nét theo nhóm nút */
+body.ui-modern [data-ui-tone="gold"]    { color: #ffe28a !important; }
+body.ui-modern [data-ui-tone="amber"]   { color: #ffbe66 !important; }
+body.ui-modern [data-ui-tone="crimson"] { color: #ff7a76 !important; }
+body.ui-modern [data-ui-tone="emerald"] { color: #67f0aa !important; }
+body.ui-modern [data-ui-tone="sky"]     { color: #7bcaff !important; }
+body.ui-modern [data-ui-tone="slate"]   { color: #d3deec !important; }
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k]:hover {
+  border-color: var(--m-gold-hi) !important;
+  background: linear-gradient(180deg, rgba(58, 48, 26, 0.96), rgba(22, 18, 12, 0.98)) !important;
+  box-shadow: 0 0 14px rgba(255, 224, 130, 0.58), inset 0 1px 0 rgba(255, 240, 190, 0.35);
+  transform: translateY(-2px);
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k]:active {
+  transform: scale(0.93);
+}
+
+/* Trạng thái ĐANG BẬT cho các nút toggle (PK, Ngựa, Ngồi, Giao dịch) */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k].is-on {
+  border-color: var(--m-gold-hi) !important;
+  background: linear-gradient(180deg, rgba(112, 82, 22, 0.95), rgba(48, 32, 8, 0.98)) !important;
+  box-shadow: 0 0 14px rgba(255, 214, 96, 0.72), inset 0 0 8px rgba(255, 232, 160, 0.35) !important;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k="PK"].is-on {
+  border-color: #ff6b6b !important;
+  background: linear-gradient(180deg, rgba(148, 24, 24, 0.96), rgba(66, 10, 10, 0.98)) !important;
+  box-shadow: 0 0 16px rgba(255, 74, 74, 0.8), inset 0 0 8px rgba(255, 160, 160, 0.35) !important;
+  color: #ffd0ce !important;
 }
 
 /* ==================== PC: BẢN ĐỒ NHỎ & CỘT ICON PHẢI ==================== */
@@ -216,154 +410,124 @@ body.ui-modern:not(.dt) #jxhud .jx-mm {
   border-radius: 12px;
   overflow: hidden;
   border: 2px solid var(--m-gold-line);
-  box-shadow: var(--m-shadow), 0 0 0 1px rgba(0, 0, 0, 0.85);
+  box-shadow: var(--m-shadow), 0 0 0 1px #000;
   background: #070a0f;
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-mm-shadow {
   border-radius: 10px 10px 0 0;
-  background: linear-gradient(180deg, rgba(7, 10, 16, 0.85), rgba(7, 10, 16, 0.18)) !important;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-mm-name,
-body.ui-modern:not(.dt) #jxhud .jx-mm-pos {
-  font-weight: 600;
-  text-shadow: 0 1px 3px #000;
+  background: linear-gradient(180deg, rgba(7, 10, 16, 0.86), rgba(7, 10, 16, 0.16)) !important;
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-auto {
-  margin-top: 3px;
+  margin-top: 4px;
   padding: 3px 8px !important;
   box-sizing: border-box;
   border-radius: 999px;
   text-align: center !important;
-  border: 1px solid rgba(92, 242, 155, 0.72);
-  background: linear-gradient(180deg, rgba(22, 92, 54, 0.92), rgba(11, 52, 30, 0.94));
-  color: #a6ffca !important;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5), 0 0 10px rgba(74, 232, 140, 0.25);
-  font-weight: 600;
-  transition: filter 0.14s, transform 0.12s;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-auto:hover {
-  filter: brightness(1.12);
+  border: 1.5px solid rgba(92, 242, 155, 0.82);
+  background: linear-gradient(180deg, rgba(24, 102, 58, 0.94), rgba(11, 52, 30, 0.96));
+  color: #b4ffd3 !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.55), 0 0 12px rgba(74, 232, 140, 0.32);
+  font-weight: 700;
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-auto.off {
   border-color: var(--m-gold-dim);
-  background: linear-gradient(180deg, rgba(24, 30, 42, 0.9), rgba(11, 15, 22, 0.94));
-  color: #b7c2d0 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.48);
+  background: linear-gradient(180deg, rgba(26, 33, 46, 0.92), rgba(11, 15, 22, 0.95));
+  color: #b8c4d4 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
+/* Cột icon bên phải thay bằng huy hiệu vector hiện đại (giữ nguyên Zalo & Khóa an toàn) */
 body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-lpbtn,
 body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-ttbtn,
 body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-hdbtn,
-body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-ptbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-ptbtn {
+  background-image: none !important;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid var(--m-gold-line);
+  background: linear-gradient(180deg, rgba(31, 41, 60, 0.94), rgba(11, 16, 25, 0.96)) !important;
+  box-shadow: var(--m-inner), 0 3px 10px rgba(0, 0, 0, 0.58);
+  transition: transform 0.12s, box-shadow 0.14s, border-color 0.14s;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .ui-m-right-ic {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .ui-m-right-ic svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+  filter: drop-shadow(0 1px 2px #000);
+}
+
 body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-zlbtn,
 body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-bcbtn,
 body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-katbtn,
 body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-mmbtn {
-  border-radius: 7px;
-  background-color: rgba(12, 17, 26, 0.88);
-  box-shadow: inset 0 0 0 1px rgba(223, 184, 92, 0.45), 0 2px 8px rgba(0, 0, 0, 0.55);
-  transition: box-shadow 0.14s, transform 0.12s;
+  border-radius: 8px;
+  background-color: rgba(14, 20, 30, 0.9);
+  box-shadow: inset 0 0 0 1px rgba(228, 189, 99, 0.5), 0 2px 8px rgba(0, 0, 0, 0.55);
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-btn:hover,
 body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-bcbtn:hover {
-  box-shadow: inset 0 0 0 1px var(--m-gold-hi), 0 0 10px rgba(255, 224, 130, 0.55);
-  transform: scale(1.06);
+  border-color: var(--m-gold-hi);
+  box-shadow: 0 0 12px rgba(255, 224, 130, 0.62);
+  transform: scale(1.08);
 }
 
-/* ==================== PC: KHUNG CHAT, NHIỆM VỤ, ĐỘI NGŨ, FPS ==================== */
+/* ==================== PC: KHUNG CHAT, NHIỆM VỤ, ĐỘI NGŨ ==================== */
 body.ui-modern:not(.dt) #jxhud .jx-chat,
 body.ui-modern:not(.dt) #jxhud .jx-sys {
   border-radius: 10px;
-  border: 1px solid rgba(223, 184, 92, 0.24);
-  background: linear-gradient(90deg, rgba(8, 12, 19, 0.72), rgba(8, 12, 19, 0.32)) !important;
+  border: 1px solid rgba(228, 189, 99, 0.28);
+  background: linear-gradient(90deg, rgba(8, 12, 19, 0.76), rgba(8, 12, 19, 0.34)) !important;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   padding: 3px 6px;
   box-sizing: border-box;
 }
 
-body.ui-modern:not(.dt) #jxhud .jx-chat.shade {
-  background: rgba(8, 12, 19, 0.86) !important;
-  border-color: var(--m-gold-dim);
-}
-
 body.ui-modern:not(.dt) #jxhud .jx-tab {
   border-radius: 7px 7px 0 0;
-  background: rgba(12, 17, 26, 0.82);
-  border: 1px solid rgba(223, 184, 92, 0.28);
+  background: rgba(13, 18, 28, 0.86);
+  border: 1px solid rgba(228, 189, 99, 0.32);
   border-bottom: 0;
   box-sizing: border-box;
-  transition: background 0.14s, border-color 0.14s;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-tab:hover {
-  background: rgba(34, 42, 58, 0.92);
-  border-color: var(--m-gold-hi);
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-nvbang {
-  border-radius: 11px;
+  border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--m-gold-dim);
   background: var(--m-bg);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.48);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.52);
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
 body.ui-modern:not(.dt) #jxhud .jx-nv-dau {
   height: 22px !important;
-  background: linear-gradient(90deg, rgba(46, 36, 17, 0.92), rgba(16, 22, 33, 0.88)) !important;
+  background: linear-gradient(90deg, rgba(52, 40, 18, 0.94), rgba(16, 22, 34, 0.9)) !important;
   border-bottom: 1px solid var(--m-gold-dim);
   color: var(--m-gold-hi);
-  font-weight: 600;
+  font-weight: 700;
 }
 
-body.ui-modern:not(.dt) #jxhud .jx-nv-than {
-  background: transparent !important;
-  padding: 5px 8px 7px !important;
-}
+body.ui-modern:not(.dt) #jxhud .jx-nv-than { background: transparent !important; padding: 5px 8px 7px !important; }
+body.ui-modern:not(.dt) #fps { top: 34px !important; border-radius: 8px; padding: 2px 8px; background: rgba(10,14,22,0.8) !important; border: 1px solid rgba(228,189,99,0.3); }
 
-body.ui-modern:not(.dt) #jxhud .jx-doi-ten {
-  border-radius: 6px 6px 0 0;
-  background: rgba(12, 17, 26, 0.86) !important;
-  border: 1px solid var(--m-gold-dim);
-  border-bottom: 0;
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-doi-hp,
-body.ui-modern:not(.dt) #jxhud .jx-doi-mp {
-  height: 4px;
-  background: rgba(4, 6, 10, 0.85);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-doi-hp i {
-  background: linear-gradient(90deg, #ef4444, #ff6b6b);
-}
-
-body.ui-modern:not(.dt) #jxhud .jx-doi-mp i {
-  background: linear-gradient(90deg, #2563eb, #60a5fa);
-}
-
-body.ui-modern:not(.dt) #fps {
-  top: 34px !important;
-  border-radius: 8px;
-  padding: 2px 8px;
-  background: rgba(10, 14, 22, 0.78) !important;
-  border: 1px solid rgba(223, 184, 92, 0.28);
-  backdrop-filter: blur(4px);
-}
-
-/* ==================== MOBILE: THANH TRÊN (DỌC & NGANG) ==================== */
+/* ==================== MOBILE: THANH CHỈ SỐ TRÊN (DỌC & NGANG) ==================== */
 body.ui-modern.dt #dt .dt-tren {
-  background: linear-gradient(180deg, rgba(18, 25, 37, 0.94) 0%, rgba(10, 14, 22, 0.9) 100%) !important;
-  box-shadow: inset 0 -1px 0 var(--m-gold-line), 0 6px 18px rgba(0, 0, 0, 0.56) !important;
+  background: linear-gradient(180deg, rgba(19, 26, 39, 0.95) 0%, rgba(10, 14, 22, 0.92) 100%) !important;
+  box-shadow: inset 0 -1px 0 var(--m-gold-line), 0 6px 18px rgba(0, 0, 0, 0.58) !important;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
@@ -375,160 +539,105 @@ body.ui-modern.dt.dt-ngang #dt .dt-tren {
 }
 
 body.ui-modern.dt #dt .dt-chan {
-  border-radius: 12px !important;
-  border: 2px solid var(--m-gold) !important;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.88), 0 0 12px rgba(223, 184, 92, 0.32) !important;
+  border-radius: 14px !important;
+  border: 2px solid var(--m-gold-hi) !important;
+  box-shadow: 0 0 0 1px #000, 0 0 14px rgba(228, 189, 99, 0.4) !important;
 }
 
 body.ui-modern.dt #dt .dt-cap {
   border-radius: 999px;
   padding: 0 7px !important;
   border: 1px solid var(--m-gold-hi) !important;
-  background: linear-gradient(180deg, #3c2e14, #17120a) !important;
+  background: linear-gradient(180deg, #473515, #181208) !important;
   color: var(--m-gold-hi) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-}
-
-body.ui-modern.dt #dt .dt-ten {
-  color: var(--m-gold-hi) !important;
-  text-shadow: 0 1px 3px #000;
-}
-
-body.ui-modern.dt #dt .dt-phai {
-  border-radius: 999px;
-  padding: 0 7px !important;
-  border: 1px solid var(--m-gold-dim) !important;
-  background: rgba(15, 22, 34, 0.88) !important;
-  color: #dbe8f8;
 }
 
 body.ui-modern.dt #dt .dt-tn {
   height: 15px;
   border-radius: 999px;
   overflow: hidden;
-  background: rgba(5, 8, 13, 0.9) !important;
-  border: 1px solid rgba(223, 184, 92, 0.44) !important;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.85) !important;
+  background: rgba(5, 8, 13, 0.92) !important;
+  border: 1px solid rgba(228, 189, 99, 0.48) !important;
 }
 
-body.ui-modern.dt #dt .dt-tn i {
-  border-radius: 999px;
-  left: 0 !important;
-  top: 0 !important;
-  bottom: 0 !important;
-  max-width: 100% !important;
-  transition: width 0.16s ease-out;
-}
+body.ui-modern.dt #dt .dt-tn i { border-radius: 999px; left: 0 !important; top: 0 !important; bottom: 0 !important; max-width: 100% !important; }
+body.ui-modern.dt #dt .dt-hp i { background: linear-gradient(180deg, #ff6c63, #d92626 52%, #8c1010) !important; }
+body.ui-modern.dt #dt .dt-mp i { background: linear-gradient(180deg, #5cb4ff, #1e66de 52%, #0d3282) !important; }
+body.ui-modern.dt #dt .dt-ex i { background: linear-gradient(180deg, #ffe47e, #d89b1c 52%, #875705) !important; }
 
-body.ui-modern.dt #dt .dt-hp i {
-  background: linear-gradient(180deg, #ff6c63 0%, #d92626 52%, #8c1010 100%) !important;
-}
-
-body.ui-modern.dt #dt .dt-mp i {
-  background: linear-gradient(180deg, #5cb4ff 0%, #1e66de 52%, #0d3282 100%) !important;
-}
-
-body.ui-modern.dt #dt .dt-ex i {
-  background: linear-gradient(180deg, #ffe47e 0%, #d89b1c 52%, #875705 100%) !important;
-}
-
-body.ui-modern.dt #dt .dt-tn::after {
-  content: "";
-  position: absolute;
-  left: 4px;
-  right: 4px;
-  top: 1px;
-  height: 4px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0));
-  pointer-events: none;
-}
-
-body.ui-modern.dt #dt .dt-nt,
-body.ui-modern.dt #dt .dt-mo {
-  border-radius: 10px !important;
-  border: 1px solid var(--m-gold-line) !important;
-  background: linear-gradient(180deg, rgba(28, 36, 52, 0.92), rgba(11, 16, 25, 0.94)) !important;
-  box-shadow: var(--m-inner), 0 4px 12px rgba(0, 0, 0, 0.5) !important;
-  color: var(--m-gold-hi) !important;
-}
-
-/* ==================== MOBILE: CẢNH CHƠI, BẢN ĐỒ NHỎ, TỰ ĐÁNH, CẦN ĐIỀU KHIỂN ==================== */
-body.ui-modern.dt #dt .dt-bd {
-  border-radius: 999px;
-  padding: 2px 12px !important;
-  background: rgba(10, 14, 22, 0.82) !important;
-  border: 1px solid var(--m-gold-dim) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
-
-body.ui-modern.dt #dt .dt-mang > b {
-  border-radius: 999px;
-  padding: 1px 8px !important;
-  background: rgba(10, 14, 22, 0.76) !important;
-  border: 1px solid rgba(223, 184, 92, 0.22);
-}
-
-body.ui-modern.dt #dt .dt-mm {
-  border-radius: 12px;
-  overflow: hidden;
+/* ==================== MOBILE: NÚT ĐÁNH & VÒNG KỸ NĂNG KIẾM HIỆP ARPG ==================== */
+body.ui-modern.dt #jxhud .jx-bot > .dt-o {
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 38% 28%, rgba(36, 48, 70, 0.94), rgba(10, 14, 22, 0.96)) !important;
   border: 2px solid var(--m-gold-line) !important;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.85), 0 5px 14px rgba(0, 0, 0, 0.65), inset 0 2px 5px rgba(255, 238, 184, 0.22) !important;
+  transition: transform 0.1s, box-shadow 0.14s;
 }
 
+body.ui-modern.dt #jxhud .jx-bot > .dt-o:active {
+  transform: scale(0.9);
+}
+
+body.ui-modern.dt #jxhud .jx-bot > .dt-o .jx-qi {
+  border-radius: 50%;
+}
+
+/* Nút đánh chính (T) trên Mobile — hào quang đỏ vàng nổi bật hẳn */
+body.ui-modern.dt #jxhud .jx-bot > .jx-skill[data-skill="left"] {
+  border: 2.5px solid var(--m-gold-hi) !important;
+  background: radial-gradient(circle at 35% 28%, rgba(176, 54, 38, 0.9), rgba(54, 22, 14, 0.96) 58%, rgba(14, 12, 18, 0.98) 100%) !important;
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.85),
+    0 0 0 4px rgba(228, 189, 99, 0.38),
+    0 0 22px rgba(255, 198, 88, 0.65),
+    inset 0 2px 8px rgba(255, 238, 184, 0.42) !important;
+}
+
+/* Nút chiêu phụ (P) trên Mobile — viền lam ngọc ánh vàng */
+body.ui-modern.dt #jxhud .jx-bot > .jx-skill[data-skill="right"] {
+  border: 2px solid #8ad2ff !important;
+  background: radial-gradient(circle at 35% 28%, rgba(36, 94, 142, 0.92), rgba(14, 30, 52, 0.96) 62%, rgba(9, 13, 22, 0.98) 100%) !important;
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.85),
+    0 0 16px rgba(107, 194, 255, 0.48),
+    inset 0 2px 6px rgba(255, 255, 255, 0.25) !important;
+}
+
+body.ui-modern.dt #jxhud .jx-bot > .dt-o::after {
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: -6px !important;
+  transform: translateX(-50%);
+  padding: 0 6px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #423114, #171107);
+  border: 1px solid var(--m-gold-line);
+  color: var(--m-gold-hi);
+  font: 700 10px/13px system-ui, -apple-system, sans-serif;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+body.ui-modern.dt #jxhud .jx-bot > .jx-skill .ui-m-sktag {
+  display: none !important;
+}
+
+/* Cần điều khiển, Tự đánh, Ngựa, Khóa ô, Nhặt, Nói chuyện, Chat */
 body.ui-modern.dt #dt .dt-tudanh {
   border-radius: 999px;
-  height: 26px !important;
-  line-height: 24px !important;
-  border: 1px solid rgba(92, 242, 155, 0.75) !important;
-  background: linear-gradient(180deg, rgba(22, 92, 54, 0.94), rgba(11, 52, 30, 0.95)) !important;
-  color: #a6ffca !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 10px rgba(74, 232, 140, 0.25);
-  font-weight: 600;
+  height: 27px !important;
+  line-height: 25px !important;
+  border: 1.5px solid rgba(92, 242, 155, 0.85) !important;
+  background: linear-gradient(180deg, rgba(24, 102, 58, 0.95), rgba(11, 52, 30, 0.97)) !important;
+  color: #b4ffd3 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55), 0 0 12px rgba(74, 232, 140, 0.3);
+  font-weight: 700;
 }
 
 body.ui-modern.dt #dt .dt-tudanh.tat {
   border-color: var(--m-gold-dim) !important;
-  background: linear-gradient(180deg, rgba(24, 30, 42, 0.92), rgba(11, 15, 22, 0.94)) !important;
-  color: #b7c2d0 !important;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.48);
-}
-
-body.ui-modern.dt #dt .dt-can > b {
-  border: 2px solid rgba(223, 184, 92, 0.65) !important;
-  background: radial-gradient(circle, rgba(223, 184, 92, 0.08) 0%, rgba(12, 18, 28, 0.68) 62%, rgba(7, 10, 16, 0.88) 100%) !important;
-  box-shadow: 0 0 16px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(223, 184, 92, 0.16) !important;
-}
-
-body.ui-modern.dt #dt .dt-can > b > i {
-  border: 1.5px solid var(--m-gold-hi) !important;
-  background: radial-gradient(circle at 35% 30%, #fff1c2, #cfa246 48%, #5e4414 85%, #231907) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.72), 0 0 10px rgba(223, 184, 92, 0.4) !important;
-}
-
-/* ==================== MOBILE: CỤM NÚT ĐÁNH, KỸ NĂNG, KHÓA Ô, NGỰA, CHAT ==================== */
-body.ui-modern.dt #jxhud .jx-bot > .dt-o {
-  border-radius: 12px;
-  background: radial-gradient(circle at 50% 30%, rgba(30, 38, 54, 0.92), rgba(9, 13, 20, 0.95)) !important;
-  border: 1.5px solid var(--m-gold-line) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 232, 165, 0.2) !important;
-}
-
-body.ui-modern.dt #jxhud .jx-bot > .jx-skill.dt-o {
-  border: 2px solid var(--m-gold-hi) !important;
-  background: radial-gradient(circle at 50% 25%, rgba(74, 56, 22, 0.94), rgba(14, 17, 24, 0.97)) !important;
-  box-shadow: 0 0 16px rgba(223, 184, 92, 0.42), 0 5px 14px rgba(0, 0, 0, 0.65) !important;
-}
-
-body.ui-modern.dt.dt-ngang #jxhud .jx-bot > .dt-o {
-  border-radius: 50% !important;
-}
-
-body.ui-modern.dt.dt-ngang #jxhud .jx-bot > .jx-skill[data-skill="left"] {
-  border: 2.5px solid var(--m-gold-hi) !important;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.75), 0 0 22px rgba(255, 219, 118, 0.55) !important;
+  background: linear-gradient(180deg, rgba(26, 33, 46, 0.94), rgba(11, 15, 22, 0.96)) !important;
+  color: #bcc8d6 !important;
 }
 
 body.ui-modern.dt #dt .dt-okhoa,
@@ -536,112 +645,127 @@ body.ui-modern.dt #dt .dt-ngua,
 body.ui-modern.dt #dt .dt-nutt,
 body.ui-modern.dt #dt .dt-noi,
 body.ui-modern.dt #dt .dt-nhat,
-body.ui-modern.dt #dt .dt-sap {
+body.ui-modern.dt #dt .dt-sap,
+body.ui-modern.dt #dt .dt-nt,
+body.ui-modern.dt #dt .dt-mo {
   border-radius: 999px !important;
-  border: 1px solid var(--m-gold-line) !important;
-  background: linear-gradient(180deg, rgba(28, 36, 52, 0.92), rgba(10, 14, 22, 0.95)) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55), var(--m-inner) !important;
+  border: 1.5px solid var(--m-gold-line) !important;
+  background: linear-gradient(180deg, rgba(30, 40, 58, 0.94), rgba(10, 14, 22, 0.96)) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.58), var(--m-inner) !important;
   color: var(--m-gold-hi) !important;
 }
 
-body.ui-modern.dt #dt .dt-ngua.bat {
+body.ui-modern.dt #dt .dt-can > b {
+  border: 2px solid rgba(228, 189, 99, 0.72) !important;
+  background: radial-gradient(circle, rgba(228, 189, 99, 0.1) 0%, rgba(12, 18, 28, 0.7) 62%, rgba(7, 10, 16, 0.9) 100%) !important;
+}
+
+body.ui-modern.dt #dt .dt-can > b > i {
+  border: 2px solid var(--m-gold-hi) !important;
+  background: radial-gradient(circle at 35% 30%, #fff4cc, #d9ab4c 48%, #634714 85%, #231907) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.75), 0 0 12px rgba(228, 189, 99, 0.45) !important;
+}
+
+/* ==================== MOBILE: ICON VECTOR CHO 13 NÚT GIANG HỒ & 5 THẺ CHỨC NĂNG ==================== */
+body.ui-modern.dt #dt .dt-khung.has-ui-m .dt-ic,
+body.ui-modern.dt #dt .dt-tic.has-ui-m .dt-ic {
+  opacity: 0 !important;
+}
+
+body.ui-modern.dt #dt .dt-khung.has-ui-m .ui-m-ic,
+body.ui-modern.dt #dt .dt-tic.has-ui-m .ui-m-ic {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+body.ui-modern.dt #dt .dt-khung.has-ui-m .ui-m-svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.85));
+}
+
+body.ui-modern.dt #dt .dt-tic.has-ui-m .ui-m-svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.85));
+}
+
+body.ui-modern.dt #dt .dt-khung {
+  border-radius: 14px !important;
+  background: radial-gradient(circle at 50% 25%, rgba(36, 48, 70, 0.94), rgba(11, 16, 25, 0.97)) !important;
+  border: 1.5px solid var(--m-gold-dim) !important;
+  box-shadow: var(--m-inner), 0 4px 10px rgba(0, 0, 0, 0.55) !important;
+  transition: transform 0.1s, border-color 0.14s;
+}
+
+body.ui-modern.dt #dt .dt-khung[data-ui-tone="market"] {
   border-color: var(--m-gold-hi) !important;
-  box-shadow: 0 0 14px rgba(255, 222, 128, 0.65) !important;
+  background: radial-gradient(circle at 50% 25%, #694916, #241806) !important;
+  color: var(--m-gold-hi) !important;
 }
 
-/* ==================== MOBILE: BẢNG CHỨC NĂNG DƯỚI & DẢI 5 THẺ ==================== */
+body.ui-modern.dt #dt .dt-o:active .dt-khung {
+  transform: scale(0.92);
+  border-color: var(--m-gold-hi) !important;
+}
+
 body.ui-modern.dt #dt .dt-bang {
-  background: linear-gradient(180deg, #101622 0%, #090d14 100%) !important;
-  box-shadow: 0 -1px 0 var(--m-gold-line), 0 -8px 22px rgba(0, 0, 0, 0.72) !important;
+  background: linear-gradient(180deg, #101724 0%, #090d14 100%) !important;
+  box-shadow: 0 -1.5px 0 var(--m-gold-line), 0 -8px 22px rgba(0, 0, 0, 0.72) !important;
 }
 
-body.ui-modern.dt #dt .dt-bang::before {
-  opacity: 0.16 !important;
-}
+body.ui-modern.dt #dt .dt-bang::before { opacity: 0.14 !important; }
 
 body.ui-modern.dt #dt .dt-bien,
 body.ui-modern.dt #dt .dt-nutda {
   border-radius: 999px;
   color: var(--m-gold-hi) !important;
-  background: linear-gradient(180deg, rgba(46, 36, 18, 0.95), rgba(20, 16, 10, 0.96)) !important;
+  background: linear-gradient(180deg, rgba(50, 38, 18, 0.95), rgba(20, 16, 10, 0.96)) !important;
   border: 1px solid var(--m-gold-line) !important;
-  box-shadow: var(--m-inner), 0 2px 8px rgba(0, 0, 0, 0.5) !important;
-}
-
-body.ui-modern.dt #dt .dt-bien::before,
-body.ui-modern.dt #dt .dt-bien::after {
-  background: radial-gradient(circle, var(--m-gold-hi), #8c651c) !important;
-  box-shadow: 0 0 4px rgba(255, 224, 130, 0.6) !important;
-}
-
-body.ui-modern.dt #dt .dt-khung {
-  border-radius: 12px;
-  background: radial-gradient(circle at 50% 25%, rgba(30, 39, 56, 0.92), rgba(11, 15, 23, 0.96)) !important;
-  border: 1px solid var(--m-gold-dim) !important;
-  box-shadow: var(--m-inner), 0 4px 10px rgba(0, 0, 0, 0.5) !important;
-}
-
-body.ui-modern.dt #dt .dt-o.bat .dt-khung {
-  border-color: var(--m-gold-hi) !important;
-  box-shadow: 0 0 12px rgba(255, 224, 130, 0.55) !important;
-}
-
-body.ui-modern.dt #dt .dt-viec {
-  border-radius: 10px;
-  border: 1px solid var(--m-gold-dim) !important;
-  background: rgba(8, 12, 18, 0.82) !important;
-}
-
-body.ui-modern.dt #dt .dt-chip {
-  border-radius: 999px;
-  padding: 0 9px !important;
-  border: 1px solid var(--m-gold-dim) !important;
-  background: rgba(24, 32, 48, 0.9) !important;
-  color: #f4e6c2 !important;
 }
 
 body.ui-modern.dt #dt .dt-tab {
-  background: linear-gradient(180deg, rgba(20, 27, 40, 0.96) 0%, rgba(9, 13, 20, 0.98) 100%) !important;
-  box-shadow: 0 -1px 0 var(--m-gold-line), 0 -4px 16px rgba(0, 0, 0, 0.65) !important;
-}
-
-body.ui-modern.dt #dt .dt-tab > div {
-  color: #b7c3d4;
+  background: linear-gradient(180deg, rgba(20, 27, 40, 0.97) 0%, rgba(8, 12, 19, 0.99) 100%) !important;
+  box-shadow: 0 -1.5px 0 var(--m-gold-line), 0 -4px 16px rgba(0, 0, 0, 0.68) !important;
 }
 
 body.ui-modern.dt #dt .dt-tab > .on {
   color: var(--m-gold-hi) !important;
-  background: radial-gradient(ellipse at 50% 100%, rgba(223, 184, 92, 0.24), transparent 72%) !important;
+  background: radial-gradient(ellipse at 50% 100%, rgba(228, 189, 99, 0.28), transparent 72%) !important;
 }
 
 body.ui-modern.dt #dt .dt-tab > .on::before {
-  height: 2.5px;
+  height: 3px;
   border-radius: 999px;
   background: linear-gradient(90deg, transparent, var(--m-gold-hi), transparent) !important;
 }
 
 body.ui-modern.dt.dt-ngang.dt-gon #dt .dt-tic {
-  border-radius: 10px !important;
-  border: 1px solid var(--m-gold-line) !important;
-  background: linear-gradient(180deg, rgba(28, 36, 52, 0.9), rgba(10, 14, 22, 0.94)) !important;
+  border-radius: 12px !important;
+  border: 1.5px solid var(--m-gold-line) !important;
+  background: linear-gradient(180deg, rgba(30, 40, 58, 0.94), rgba(10, 14, 22, 0.96)) !important;
 }
 
-/* ==================== BẢNG SỰ KIỆN & BOSS ĐỒNG BỘ ==================== */
+body.ui-modern.dt #dt .dt-mm {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--m-gold-line) !important;
+}
+
+body.ui-modern.dt #dt .dt-bd {
+  border-radius: 999px;
+  padding: 2px 12px !important;
+  background: rgba(10, 14, 22, 0.84) !important;
+  border: 1px solid var(--m-gold-dim) !important;
+}
+
 body.ui-modern :is(#btg, #bsat, #snh, #phtt, #tktt, #ldtt, .mn) {
   border-radius: 10px !important;
   border-color: var(--m-gold-line) !important;
-  background: linear-gradient(180deg, rgba(18, 24, 36, 0.92), rgba(9, 13, 20, 0.92)) !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.56), var(--m-inner) !important;
-}
-
-body.ui-modern #dt .dt-bdl {
-  border-radius: 14px;
-  overflow: hidden;
-  border: 1.5px solid var(--m-gold-line) !important;
-  background: #080c12 !important;
-}
-
-body.ui-modern #dt .dt-bdl-dau {
-  background: linear-gradient(180deg, rgba(24, 32, 48, 0.96), rgba(12, 16, 24, 0.96)) !important;
-  border-bottom: 1px solid var(--m-gold-dim) !important;
+  background: linear-gradient(180deg, rgba(18, 24, 36, 0.93), rgba(9, 13, 20, 0.93)) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.58), var(--m-inner) !important;
 }

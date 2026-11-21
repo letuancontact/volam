@@ -204,7 +204,7 @@ export class Hud {
     // ---- nút: khung Up / Over / Down theo ini; nút bật / tắt giữ khung Down khi bật ----
     const wire = (el, b, key, onClick) => {
       const frame = (f) => (el.style.backgroundPositionX = `${-(f ?? b.up) * b.w}px`);
-      const rest = () => frame(b.check && this.toggles[key] ? b.down : b.up);
+      const rest = () => { const on = !!(b.check && this.toggles[key]); frame(on ? b.down : b.up); el.classList.add("is-on-managed"); el.classList.toggle("is-on", on); };
       rest();
       el.onmouseenter = () => b.over != null && !(b.check && this.toggles[key]) && frame(b.over);
       el.onmouseleave = rest;
