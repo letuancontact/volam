@@ -159,7 +159,7 @@
   function render() {
     if (!bar.parentNode) return;
     const inGame = Date.now() - st.lastSync < 3500 && !!st.info.name;
-    bar.style.display = inGame && !st.active ? "flex" : "none";
+    bar.style.display = "none";
     const bf = document.getElementById("vl-btn-farm");
     if (bf) bf.classList.toggle("on", st.panel);
     if (!inGame) { farmEl.style.display = "none"; if (st.active) setAfk(false); return; }
@@ -222,6 +222,8 @@
   window.VLAfk = {
     get active() { return st.active; },
     setActive: setAfk,
+    get farmOpen() { return st.panel; },
+    toggleFarm(v) { mount(); st.panel = (v == null ? !st.panel : !!v); render(); return st.panel; },
     sync(info) {
       if (!info || !info.name) return;
       const key = String(info.name);

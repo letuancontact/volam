@@ -484,6 +484,8 @@ body.ui-modern.dt #jxhud .jx-bot > .dt-o::after {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
 }
 
+body.ui-modern.dt #jxhud .jx-bot > .dt-o .ui-m-hk,
+body.ui-modern.dt #jxhud .jx-bot .jx-slot .ui-m-hk,
 body.ui-modern.dt #jxhud .jx-bot > .jx-skill .ui-m-sktag {
   display: none !important;
 }

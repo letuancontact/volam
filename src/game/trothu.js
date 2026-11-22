@@ -639,6 +639,14 @@ export class TroThu {
   // ---------- Khác: (điện thoại dọc) cách di chuyển, hiển thị, bảo vệ, bố cục màn hình ----------
   _khac(A) {
     const P = this.api.P, S = P.settings, D = this.api.dt && this.api.dt(), out = [];
+    if (window.VLAfk) {
+      out.push(this._h("Treo máy & Thống kê", "Thống kê bãi: đo EXP/giờ, bạc/giờ, quái hạ và đồ hiếm. Treo pin: màn hình tối AMOLED, tạm ngắt vẽ cảnh để tiết kiệm pin"));
+      const dangFarm = !!window.VLAfk.farmOpen;
+      out.push(this._row(
+        this._b(dangFarm ? "Ẩn thống kê Farm" : "Mở thống kê Farm", () => { window.VLAfk.toggleFarm(); P.audio.ui("click"); this.render(); }),
+        this._b("Treo máy tiết kiệm pin", () => { P.audio.ui("click"); this.w.hide(); window.VLAfk.setActive(true); })
+      ));
+    }
     // anh 29/10: "cài đặt nút joystick để di chuyển bằng cách kéo … chọn chạm hoặc joystick trong phần Khác" — nhớ ở máy này (dienthoai.js datCan)
     if (D && D.on) {
       out.push(this._h("Điện thoại", "Cần điều khiển: vùng dưới bên trái phần cảnh, kéo để chạy, thả là đứng; không dùng thì mờ đi. Chạm đất để chạy vẫn dùng được. Nút khóa cạnh ô kỹ năng: khóa = chạm ô để dùng, kéo chiêu để ngắm; mở = chạm ô để gắn chiêu / thuốc, kéo để đổi chỗ / gỡ"));
