@@ -1269,7 +1269,7 @@ function mountHud() {
     gd: (b) => gdLam(b), // khung giao dịch (anh 30/10 — windows.js _giaoDich)
     khamNam: (b, o) => khamGoi(b, o), // khảm nạm Thủy tinh (o.sau: promise hiệu ứng — câu báo đợi xong) (anh 17/11 — windows.js _kham, may-chu/kham-nam.js)
     bh: (b, o) => bhLam(b, o), bhMinh: () => bhMinhCur, // Bang phái (anh 14/11 — windows.js _faction): việc POST /api/bang-hoi, bang của mình theo nhịp
-    teDan: () => teDanMo(), leVat: () => leVatMo(), // Bang hội đợt 2: khung lời Tế Đàn (Ký lục → Mục tiêu tuần) / Tổng quản Lễ phẩm phường (Tác phường → Sử dụng)
+    teDan: () => teDanMo(), leVat: () => leVatMo(), tacPhuong: (loai) => tacPhuongMo(loai), dacKy: () => dacKyBangMo(false), // Bang hội đợt 2: khung lời Tế Đàn (Ký lục → Mục tiêu tuần) / Tổng quản Lễ phẩm phường (Tác phường → Sử dụng)
     khuVao: () => khuVao(), khuTaoBanDo: () => khuChonMau(), khuThietLap: () => khuThietLap(), // đợt 4: khu vực bang (khung Bang phái — Vào bang này, Tạo bản đồ, Thiết lập khu vực)
     // khung chọn kiểu NPC (msgsel) cho khung Bang phái: chỉ số mục đã chọn, -1 = Hủy bỏ (Chuyển kiến thiết / Tự bù chiến bị — đợt 2)
     chon: (html, ds, ten) => new Promise((r) => { if (!NPCD || !hero) return r(-1); NPCD.choose("msgsel", "InfoText", richText(html, hero.name, ten || ""), [...ds.map((t, i) => [t, () => r(i)]), ["Hủy bỏ", () => r(-1)]]); }),
@@ -4397,6 +4397,111 @@ const khuHien = (n) => {
   return true;
 };
 // hội thoại NPC khu theo bhVai (client: script\tong\npc\*.lua, *_zongguan.lua, tong_totempole.lua / city_totempole.lua). Rương (viec "ruong") đã mở kho ở w.onTalk như client OpenBox
+// Cột biểu tượng bang — Đặc kỹ Bang hội (Gói 2A): nhận buff 4 giờ & lãnh đạo khai mở/nâng cấp bằng Kiến thiết
+function dacKyBangMo(laThanh = false) {
+  bhCanXem((B) => {
+    const ten = laThanh ? "Cột biểu tượng thành thị" : "Cột biểu tượng bang";
+    const noi = (t) => richText(t, hero.name, ten), lai = () => dacKyBangMo(laThanh);
+    const ds = Array.isArray(B.dacKy) ? B.dacKy : [];
+    if (!ds.length) return NPCD.talk([noi(`${ten}: Chưa nạp được danh sách đặc kỹ bang hội`)], 0, null);
+    const t = B.toi || {}, q = B.quyen || {};
+    const quan = t.cv === "chu" || (t.cv === "lao" && !!(q["2003"] || q["2005"]));
+    const lam = (b) => bhViecNpc(b, ten, lai);
+    const moTaDs = ds.map((d) => `• <color=yellow>${d.ten}<color> (cấp ${d.cap}/${d.max}): ${d.moTa}`).join("<enter>");
+    const moNhan = () => {
+      const daMo = ds.filter((d) => d.cap > 0);
+      if (!daMo.length) return NPCD.talk([noi(`${ten}: Bổn bang chưa khai mở đặc kỹ nào. Bang chủ hoặc Trưởng lão có thể dùng Ngân sách kiến thiết để khai mở.`)], 0, lai);
+      NPCD.choose("msgsel", "InfoText", noi(`${ten}: Chọn đặc kỹ muốn nhận (hiệu lực 4 giờ online · miễn phí lần đầu mỗi ngày, làm mới trong ngày tốn 10 cống hiến).<enter>Cống hiến cá nhân: <color=yellow>${fmtSo(t.cong || 0)}<color>`), [
+        ...daMo.map((d) => [`${d.ten} (cấp ${d.cap})${d.daNhan ? " [Làm mới: 10 CH]" : " [Miễn phí]"}`, () => lam({ viec: "dkNhan", k: d.k })]),
+        ["Quay lại", lai]
+      ]);
+    };
+    const moNang = () => {
+      NPCD.choose("msgsel", "InfoText", noi(`${ten}: Chọn đặc kỹ muốn khai mở / nâng cấp.<enter>Đẳng cấp bang: <color=yellow>${B.cap || 1}<color> · Ngân sách kiến thiết: <color=yellow>${fmtSo(B.kt || 0)} vạn<color>`), [
+        ...ds.map((d) => [
+          d.cap >= d.max ? `${d.ten} (Đã tối đa cấp ${d.max})` : `${d.cap === 0 ? "Khai mở" : "Nâng cấp"} ${d.ten} → cấp ${d.cap + 1} (${d.phiKt}v KT)`,
+          () => lam({ viec: "dkLenCap", k: d.k })
+        ]),
+        ["Quay lại", lai]
+      ]);
+    };
+    NPCD.choose("msgsel", "InfoText", noi(`${ten}: Đặc kỹ bang hội gia tăng thực lực cho toàn thể huynh đệ!<enter>${moTaDs}<enter>Cống hiến: <color=yellow>${fmtSo(t.cong || 0)}<color> · Kiến thiết: <color=yellow>${fmtSo(B.kt || 0)} vạn<color>`), [
+      ["Nhận hiệu quả đặc kỹ bang", moNhan],
+      ...(quan ? [["Khai mở / Nâng cấp đặc kỹ bang", moNang]] : []),
+      ["Hủy bỏ", null]
+    ]);
+  });
+}
+
+// 6 Tác phường Bang hội (Gói 2B): Thí luyện, Hoạt động, Binh giáp, Thiên công, Thiên ý, Dị dung
+function tacPhuongMo(loai) {
+  if (loai === "leVat" || loai === "lePham") return leVatMo();
+  bhCanXem((B) => {
+    const ten = KHU_TQ[loai] || "Tổng quản tác phường";
+    const noi = (t) => richText(t, hero.name, ten), lai = () => tacPhuongMo(loai);
+    const x = (B.tp || {})[loai];
+    if (!x) return NPCD.talk([noi(`${ten}: Không tìm thấy thông tin tác phường này`)], 0, null);
+    const t = B.toi || {}, q = B.quyen || {}, quan = t.cv === "chu" || (t.cv === "lao" && !!q["2003"]);
+    const lam = (b) => bhViecNpc(b, ten, lai);
+    if (!x.mo || (x.cap | 0) < 1) {
+      if (quan) {
+        return NPCD.choose("msgsel", "InfoText", noi(`${ten}: <color=yellow>${x.ten}<color> hiện chưa khai mở. Ngươi có muốn khai mở tác phường này ngay không?`), [
+          [`Khai mở ${x.ten}`, () => lam({ viec: "tpMoDong", tp: loai })],
+          ["Để sau", null]
+        ]);
+      }
+      return NPCD.talk([noi(`${ten}: ${x.ten} chưa được khai mở. Hãy báo Bang chủ hoặc Trưởng lão khai mở tại Bang phái → Tác phường.`)], 0, null);
+    }
+    const sd = Math.max(1, x.sd | 0), dem = B.tpNhat || {}, cong = fmtSo(t.cong || 0);
+    const dung = (hanh, extra) => lam({ viec: "tpDung", tp: loai, hanh, ...(extra || {}) });
+
+    if (loai === "thiLuyen") {
+      const exp = Math.round((50000 + (hero.lvl || 1) * 15000) * (1 + (sd - 1) * 0.25));
+      return NPCD.choose("msgsel", "InfoText", noi(`${ten} (cấp ${sd}): Nơi huynh đệ chuyên tâm tu luyện nội công!<enter>Cống hiến: <color=yellow>${cong}<color> · Hôm nay đã tu luyện ${dem.tlExp | 0}/3 lần`), [
+        [`Tu luyện nhận ${fmtSo(exp)} EXP (30 cống hiến)`, () => dung("luyenExp")],
+        [`Đổi 1 Tiên Thảo Lộ khóa (80 CH · cần cấp 2 · ${dem.tlTtl | 0}/1)`, () => dung("doiTtl")],
+        ["Hủy bỏ", null]
+      ]);
+    }
+    if (loai === "hoatDong") {
+      const hs = 1 + (sd - 1) * 0.1;
+      return NPCD.choose("msgsel", "InfoText", noi(`${ten} (cấp ${sd}): Hoàn thành nhiệm vụ bang hội hằng ngày để nhận điểm cống hiến và xây dựng ngân quỹ!<enter>Cống hiến: <color=yellow>${cong}<color> · Kiến thiết bang: <color=yellow>${fmtSo(B.kt || 0)} vạn<color>`), [
+        [`Tuần tra khu bang (Miễn phí · +${Math.round(40 * hs)} CH · ${dem.hdTuan | 0}/1)`, () => dung("tuanTra")],
+        [`Quyên vật tư chiến bị (5v lượng · +${Math.round(60 * hs)} CH · ${dem.hdVat | 0}/2)`, () => dung("quyenVatTu")],
+        ["Hủy bỏ", null]
+      ]);
+    }
+    if (loai === "binhGiap") {
+      const lan = dem.bgSua | 0;
+      return NPCD.choose("msgsel", "InfoText", noi(`${ten} (cấp ${sd}): Chuyên rèn sửa binh giáp và gia cố phòng ngự cho huynh đệ!<enter>Cống hiến: <color=yellow>${cong}<color>`), [
+        [`Sửa toàn bộ trang bị đang mặc (${lan === 0 ? "Miễn phí hôm nay" : "10 cống hiến"})`, () => dung("suaDo")],
+        [`Cường hóa chiến giáp 2h (+${sd * 200} HP, +${sd * 2}% Kháng · 25 CH)`, () => dung("buffGiap")],
+        ["Hủy bỏ", null]
+      ]);
+    }
+    if (loai === "thienCong") {
+      const giaChuy = Math.max(40, 100 - sd * 8), giaBql = Math.max(30, 80 - sd * 6);
+      return NPCD.choose("msgsel", "InfoText", noi(`${ten} (cấp ${sd}): Xưởng chế tác bảo vật đặc chế của bang hội (món đổi khóa vĩnh viễn)!<enter>Cống hiến: <color=yellow>${cong}<color>`), [
+        [`Đổi 1 Huyền Thiên Chùy (${giaChuy} CH · ${dem.tcChuy | 0}/2 hôm nay)`, () => dung("doiChuy")],
+        [`Đổi 1 Bách Quả Lộ (${giaBql} CH · cần cấp 2 · ${dem.tcBql | 0}/2)`, () => dung("doiBql")],
+        ["Hủy bỏ", null]
+      ]);
+    }
+    if (loai === "thienY") {
+      return NPCD.choose("msgsel", "InfoText", noi(`${ten} (cấp ${sd}): Rút quẻ cầu phúc mỗi ngày nhận lộc ngân lượng và tăng May mắn đánh quái!<enter>Cống hiến: <color=yellow>${cong}<color> · Hôm nay: ${dem.tyQue | 0}/1 lần`), [
+        [`Cầu phúc rút quẻ (20 CH · buff +${4 + sd * 2} May mắn 2h + lộc)`, () => dung("cauPhuc")],
+        ["Hủy bỏ", null]
+      ]);
+    }
+    if (loai === "diDung") {
+      return NPCD.choose("msgsel", "InfoText", noi(`${ten} (cấp ${sd}): Thay đổi danh hiệu cá nhân và dưỡng thần gia tăng công lực!<enter>Cống hiến: <color=yellow>${cong}<color>`), [
+        ["Đổi danh hiệu cá nhân trong bang (Miễn phí)", () => GW && GW.nhapChu({ tieuDe: "Nhập danh hiệu bang (tối đa 12 ký tự, để trống = xóa)", toiDa: 12 }).then((dh) => { if (dh != null) dung("doiDh", { dh }); })],
+        [`Dưỡng thần 2h (+${sd * 30} Công kích vật lý, +${sd * 5} Tốc đánh · 20 CH)`, () => dung("buffThan")],
+        ["Hủy bỏ", null]
+      ]);
+    }
+  });
+}
 const KHU_TQ = { binhGiap: "Tổng quản Binh giáp phường", thienCong: "Tổng quản Thiên công phường", diDung: "Tổng quản Dị dung phường", thienY: "Tổng quản Thiên ý phường",
   thiLuyen: "Tổng quản Thí luyện phường", lePham: "Tổng quản Lễ phẩm phường", hoatDong: "Tổng quản Hoạt động phường" };
 function khuNpc(n) {
@@ -4406,9 +4511,9 @@ function khuNpc(n) {
   if (v === "teDan") return teDanMo(); // Tế Tửu -> Tế Đàn (đợt 2)
   const loai = v.startsWith("tongQuan:") ? v.slice(9) : v.startsWith("nha:") ? v.slice(4) : null; // nhà = Tổng quản cùng loại (client building[] dùng script zongguan)
   if (loai === "lePham") return leVatMo(); // Khu Lễ vật -> Tổng quản Lễ phẩm phường (đợt 2)
-  if (loai) return NPCD.talk([noi(KHU_TQ[loai] || n.name, "Tác phường này đợt sau mới mở")], 0, null); // đợt 3 gắn 6 tác phường còn lại
-  if (v === "cot") return NPCD.talk([noi("Cột biểu tượng bang", "Kỹ năng bang hội chưa mở, không thể sử dụng Cột biểu tượng, hãy báo cho cấp lãnh đạo bang khai mở kỹ năng")], 0, null); // đợt 3: đặc kỹ
-  if (v === "cot:thanh") return NPCD.talk([noi("Cột biểu tượng thành thị", "Bang hội quí bang chưa mở kỹ năng thành thị, không thể sử dụng Cột biểu tượng. Hãy thông báo đến cấp lãnh đạo bang, tại trang chức năng có thể khai mở kỹ năng thành thị.")], 0, null);
+  if (loai) return tacPhuongMo(loai);
+  if (v === "cot") return dacKyBangMo(false);
+  if (v === "cot:thanh") return dacKyBangMo(true);
   NPCD.talk([noi(n.name, "Đợt sau mới mở")], 0, null);
 }
 // Xa phu khu (client tong_chefu.lua): "Những nơi đã đi qua" = bãi luyện công (miễn phí như Xa phu thành — xaPhuFn WayPointFun); "Những thành thị đã đi qua" = Ba Lăng huyện /

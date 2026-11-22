@@ -735,10 +735,11 @@ export class GameWindows {
       return b;
     };
     addSmallBtn(w.pages.record && w.pages.record.el, "Mở Tế Đàn", 12, 12, () => api.teDan && api.teDan());
-    addSmallBtn(w.pages.workshop && w.pages.workshop.el, "Sử dụng Lễ phẩm", 12, 12, () => {
+    addSmallBtn(w.pages.workshop && w.pages.workshop.el, "Sử dụng Tác phường", 12, 12, () => {
       if (st.tpChon === "leVat") api.leVat && api.leVat();
-      else this.bao("Tác phường này đợt sau mới mở");
+      else if (api.tacPhuong) api.tacPhuong(st.tpChon);
     });
+    addSmallBtn(w.pages.workshop && w.pages.workshop.el, "Đặc kỹ bang", 150, 12, () => api.dacKy && api.dacKy());
 
     const TAB_MAP = {
       base: "BtnBaseInfo", zhaomu: "BtnZhaoMu", otherzhaomu: "BtnOtherZhaoMu",

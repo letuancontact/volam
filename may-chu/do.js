@@ -684,6 +684,7 @@ function mayMan(h, key) {
     it.d.forEach(([k, v], i) => { if (k === "lucky_v" && coTacDung(i, kich)) n += v; });
   }
   if (key) for (const b of Object.keys(buffCon(h, key))) n += (KTC.buff[b] || {}).mayMan || 0; // Thiên Sơn Bảo Lộ +10, Quế Hoa Tửu +20
+  /* BH_BUFF_MM */ if (key) for (const b of Object.keys(buffCon(h, key))) { const m = /^bh:(thienPhuc|thienY):(\d+)$/.exec(b); if (m) n += m[1] === "thienPhuc" ? (+m[2] * 4) : (4 + +m[2] * 2); }
   return n;
 }
 
@@ -703,6 +704,7 @@ function knBuff(h, key) {
   const B = buffCon(h, key);
   let k = B.x2 ? (KTC.buff.x2 || {}).kinhNghiem || 2 : 1;
   if (B.nen) { try { k *= +BD().heSoNen() || 1; } catch (e) { console.error("Báo Đáp Ân Sư — Nến:", e.message); } }
+  /* BH_BUFF_KN */ for (const bk of Object.keys(B)) { const m = /^bh:tuLinh:(\d+)$/.exec(bk); if (m) k *= (1 + (+m[1] || 0) * 0.05); }
   return k;
 }
 // đang đứng trong sân Lôi Đài Công Bình Tử (bãi nhịp báo — BAI_NAY): trạng thái vật phẩm tạm mất tác dụng (anh 17/11 "các hiệu ứng có trước từ ngoài sẽ không có tác dụng,
@@ -2423,4 +2425,22 @@ function taoQua(h, q) {
 
 // NOI: phần dùng chung cho may-chu/da-tau.js (Dã Tẩu)
 const NOI = { oTrong: oTrongTui, laTB, campPhai: (fac) => (fac == null ? 0 : PHAI_CAMP.get(+fac) || 0), CFG, BY, ZONES, FARM, THANH, BAI_NAY, capVao, need, MAX_LEVEL, lenCap, loi, ngayVN, tien, themChong, coMon, mayMan, vaoTui, mang: MANG, soThuoc, laThuoc, xepChong, donChong, TIEN_MAX, ROWS, CHIA_XA, KBH_VV, KBH_TAM, CAU_KBH, KHONG_KHOA, CAU_TK, MAPS, FULL }; // chợ trời (may-chu/cho-troi.js): thuốc mang tối đa, gộp chồng, tiền tối đa; ROWS: sạp Hệ thống của Dã Tẩu dựng món; MAPS / FULL: bảng bản đồ đã nạp (region, scale — may-chu/npc-gan.js đổi tọa độ NPC, anh 13/11)
-module.exports = { muaLaiGui, MUA_LAI, NOI, mobStats: MS, quaiCap: (lv) => (QUAI_CAP ? QUAI_CAP(lv) : null), knBai, baiNay, chuan, hamChieu, laLuyen, sachPhai, luyenDon, luyenCua, diemDaDung, dangNhapDem, thuongDN, dnCho, mauSat, gietQuai, roiMon, luyenKn, nhanChia, nhat, datBai, datChung, doiDo, banMon, coMon, tien, chet, lam, uong, hao, uyThacVe, uyThacDo, buffDem, buffCon, laHoan, CHIEU_SACH, thuUyThac, ghiDev, tenMon, giaBan, SLOT_OF, timMon, taoQua, monTin, tenBai, MAX_LEVEL, RXC, monRuongXanh, choRuongXanh, nhanRuongCho, BUA_MON, LUAT: { muaLai: { phut: MUA_LAI.phut, heSo: MUA_LAI.heSo }, sua: SUA, haoMon: +DB.haoMon || 0, vuKhi: VK, uyThac: { gioNgay: UT.gioNgay, tiLe: UT.tiLe, vangGiay: UT.vangGiay }, get dangNhap() { return { xu: DN.xu, phiTiep: DN.phiTiep }; }, ruongChuy: ((CFG.daTau || {}).ruong || {}).chuy ?? 6, ruongXanh: { soDong: RXC.soDong, oTrong: RXC.oTrong }, ruong: { moRong: RG.moRong }, tienTrang: { luongMotXu: TT.luongMotXu, luongBanXu: TT.luongBanXu, banXuNgay: TT.banXuNgay }, doiPhai: { cap: +((CFG.doiPhai || {}).cap) || 120, ngay: +((CFG.doiPhai || {}).ngay) || 7 }, kyNangPhai: CFG.kyNangPhai || null, choTroi: ((C) => { const t = C.thue ?? 20, b = Number.isFinite(+C.thueBan) ? +C.thueBan : t / 2; return { thue: t, thueBan: b, thueMua: Number.isFinite(+C.thueMua) ? +C.thueMua : t - b, cap: C.cap ?? 10 }; })(CFG.choTroi || {}), get thuongCap() { return ((CFG.thuongCap || {}).moc || []).map((m) => m.cap).filter((c) => c > 0).sort((a, b) => a - b); }, tanThu: CFG.tanThu || null, tangIchDoi: CFG.tangIchDoi || null, quaiChung: CFG.quaiChung ? { bai: (CFG.quaiChung.bai || []).map(Number), thuong: QC_THUONG, manh: CFG.quaiChung.manh || null } : null, satThu: { mau: (CFG.satThu && CFG.satThu.mau) || {}, dat: SAT_DAT }, chong: TC.chongToiDa, mua: TC.muaToiDa, mang: TC.mangToiDa || 60, banLai: TC.banLai, giaBan: CFG.giaBan, thieuCap: VB.thieuCap | 0, noiCong: +((CFG.noiCong || {}).phanTram) || 0, quaiVoCong: { ...(CFG.quaiVoCong || {}), bat: process.env.VL_QUAI_VO_CONG === "1" || !!(CFG.quaiVoCong || {}).bat }, voCong: (CFG.voCong && CFG.voCong.moPhai) || ["shaolin", "emei"], canBang: { trum: CAN_BANG.trum || null, soQuai: CAN_BANG.soQuai || null, tinhAnhMoi: QD.tinhAnhMoi, thuLinhMoi: QD.thuLinhMoi, ta: Object.fromEntries(Object.entries(RDB).map(([z, b]) => [z, { ten: b.ta.ten, mau: b.ta.mau, st: b.ta.st, ar: b.ta.ar, def: b.ta.def }])), bai: Object.fromEntries(Object.entries(CAN_BANG.bai || {}).map(([z, b]) => [z, { mau: b.mau, satThuong: b.satThuong, ...(b.chiSo ? { chiSo: b.chiSo } : {}), ...(b.soQuai ? { soQuai: b.soQuai } : {}), ...Object.fromEntries(["chinhXac", "neTranh", "capQuai", "mauThuLinh", "mauTinhAnh"].filter((k) => b[k] != null).map((k) => [k, b[k]])) }])) } } };
+
+// Cộng kinh nghiệm trực tiếp cho nhân vật (dùng bởi Thí luyện phường Bang hội)
+function congKn(h, exp) {
+  const them = Math.max(0, Math.floor(+exp || 0));
+  if (!them) return 0;
+  h.exp = (+h.exp || 0) + them;
+  return lenCap(h);
+}
+// Sửa đầy độ bền toàn bộ trang bị đang mặc (dùng bởi Binh giáp phường Bang hội)
+function suaHetDo(h) {
+  let daSua = 0;
+  for (const it of Object.values(h.equip || {})) {
+    if (!it || typeof it !== "object") continue;
+    const mx = benMax(it);
+    if (mx > 0 && it.ben != null && it.ben < mx) { it.ben = mx; daSua++; }
+  }
+  return daSua;
+}
+module.exports = { congKn, suaHetDo, muaLaiGui, MUA_LAI, NOI, mobStats: MS, quaiCap: (lv) => (QUAI_CAP ? QUAI_CAP(lv) : null), knBai, baiNay, chuan, hamChieu, laLuyen, sachPhai, luyenDon, luyenCua, diemDaDung, dangNhapDem, thuongDN, dnCho, mauSat, gietQuai, roiMon, luyenKn, nhanChia, nhat, datBai, datChung, doiDo, banMon, coMon, tien, chet, lam, uong, hao, uyThacVe, uyThacDo, buffDem, buffCon, laHoan, CHIEU_SACH, thuUyThac, ghiDev, tenMon, giaBan, SLOT_OF, timMon, taoQua, monTin, tenBai, MAX_LEVEL, RXC, monRuongXanh, choRuongXanh, nhanRuongCho, BUA_MON, LUAT: { muaLai: { phut: MUA_LAI.phut, heSo: MUA_LAI.heSo }, sua: SUA, haoMon: +DB.haoMon || 0, vuKhi: VK, uyThac: { gioNgay: UT.gioNgay, tiLe: UT.tiLe, vangGiay: UT.vangGiay }, get dangNhap() { return { xu: DN.xu, phiTiep: DN.phiTiep }; }, ruongChuy: ((CFG.daTau || {}).ruong || {}).chuy ?? 6, ruongXanh: { soDong: RXC.soDong, oTrong: RXC.oTrong }, ruong: { moRong: RG.moRong }, tienTrang: { luongMotXu: TT.luongMotXu, luongBanXu: TT.luongBanXu, banXuNgay: TT.banXuNgay }, doiPhai: { cap: +((CFG.doiPhai || {}).cap) || 120, ngay: +((CFG.doiPhai || {}).ngay) || 7 }, kyNangPhai: CFG.kyNangPhai || null, choTroi: ((C) => { const t = C.thue ?? 20, b = Number.isFinite(+C.thueBan) ? +C.thueBan : t / 2; return { thue: t, thueBan: b, thueMua: Number.isFinite(+C.thueMua) ? +C.thueMua : t - b, cap: C.cap ?? 10 }; })(CFG.choTroi || {}), get thuongCap() { return ((CFG.thuongCap || {}).moc || []).map((m) => m.cap).filter((c) => c > 0).sort((a, b) => a - b); }, tanThu: CFG.tanThu || null, tangIchDoi: CFG.tangIchDoi || null, quaiChung: CFG.quaiChung ? { bai: (CFG.quaiChung.bai || []).map(Number), thuong: QC_THUONG, manh: CFG.quaiChung.manh || null } : null, satThu: { mau: (CFG.satThu && CFG.satThu.mau) || {}, dat: SAT_DAT }, chong: TC.chongToiDa, mua: TC.muaToiDa, mang: TC.mangToiDa || 60, banLai: TC.banLai, giaBan: CFG.giaBan, thieuCap: VB.thieuCap | 0, noiCong: +((CFG.noiCong || {}).phanTram) || 0, quaiVoCong: { ...(CFG.quaiVoCong || {}), bat: process.env.VL_QUAI_VO_CONG === "1" || !!(CFG.quaiVoCong || {}).bat }, voCong: (CFG.voCong && CFG.voCong.moPhai) || ["shaolin", "emei"], canBang: { trum: CAN_BANG.trum || null, soQuai: CAN_BANG.soQuai || null, tinhAnhMoi: QD.tinhAnhMoi, thuLinhMoi: QD.thuLinhMoi, ta: Object.fromEntries(Object.entries(RDB).map(([z, b]) => [z, { ten: b.ta.ten, mau: b.ta.mau, st: b.ta.st, ar: b.ta.ar, def: b.ta.def }])), bai: Object.fromEntries(Object.entries(CAN_BANG.bai || {}).map(([z, b]) => [z, { mau: b.mau, satThuong: b.satThuong, ...(b.chiSo ? { chiSo: b.chiSo } : {}), ...(b.soQuai ? { soQuai: b.soQuai } : {}), ...Object.fromEntries(["chinhXac", "neTranh", "capQuai", "mauThuLinh", "mauTinhAnh"].filter((k) => b[k] != null).map((k) => [k, b[k]])) }])) } } };

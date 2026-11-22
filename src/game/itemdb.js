@@ -65,6 +65,24 @@ export const ItemDB = {
     const T = this.ktc.buff[k]; if (T) return T;
     if (TK_BUFF[k]) return TK_BUFF[k];
     if (this._bd.has(k)) return this._bd.get(k);
+    /* BH_BUFF_DEF */
+    const bm = /^bh:(\w+):(\d+)$/.exec(k);
+    if (bm) {
+      const loai = bm[1], c = Math.max(1, +bm[2] || 1);
+      const defs = {
+        tuLinh:    { n: "Đặc kỹ: Tụ Linh Quyết",    d: `Kinh nghiệm đánh quái +${c * 5}% (Bang hội)`,             ic: "item/medecine/tianshanyulu.png" },
+        hoThe:     { n: "Đặc kỹ: Hộ Thể Chân Khí",  d: `Sinh lực & Nội lực tối đa +${c * 250} (Bang hội)`,       ic: "item/medecine/obj-potion15.png", attrs: { lifemax_v: [c * 250], manamax_v: [c * 250] } },
+        thienPhuc: { n: "Đặc kỹ: Thiên Phúc",       d: `May mắn +${c * 4} (Bang hội)`,                           ic: "item/medecine/tianshanyulu.png" },
+        thietBich: { n: "Đặc kỹ: Thiết Bích",       d: `Kháng tất cả +${c * 3}% (Bang hội)`,                     ic: "item/medecine/baiguolu.png", khang: c * 3 },
+        thanHanh:  { n: "Đặc kỹ: Chiến Hồn Bang",   d: `Tốc độ đánh ngoại & nội công +${c * 6} (Bang hội)`,      ic: "item/questkey/003.png", attrs: { attackspeed_v: [c * 6], castspeed_v: [c * 6] } },
+        binhGiap:  { n: "Binh giáp phường",         d: `Sinh lực tối đa +${c * 200}, Kháng tất cả +${c * 2}%`,  ic: "item/medecine/baiguolu.png", khang: c * 2, attrs: { lifemax_v: [c * 200] } },
+        thienY:    { n: "Thiên ý phường",           d: `May mắn +${4 + c * 2} (Quẻ cầu phúc)`,                   ic: "item/medecine/tianshanyulu.png" },
+        diDung:    { n: "Dị dung phường",           d: `Công kích vật lý +${c * 30}, Tốc độ đánh +${c * 5}`,     ic: "item/medecine/obj-potion15.png", attrs: { addphysicsdamage_v: [c * 30], attackspeed_v: [c * 5], castspeed_v: [c * 5] } }
+      };
+      const o = defs[loai] || null;
+      if (o) this._bd.set(k, o);
+      return o;
+    }
     const m = /^ph:(\w+):(\d+)$/.exec(k), H = m && this.ktc.bua.hieu[m[1]];
     if (!H) return null;
     const v = +m[2], o = { n: H.ten, d: `${H.n} +${v}${H.pt ? "%" : ""} (bùa Phong Hỏa)`, ic: H.ic, attrs: Object.fromEntries(H.attrs.map((a) => [a, [v]])) };

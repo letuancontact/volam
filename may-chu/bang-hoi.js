@@ -23,6 +23,35 @@ const TP_MAC = {
   hoatDong: { k: "hoatDong", ten: "Hoạt động phường", cap: 0, sd: 0, mo: 0 }
 };
 
+// 5 Đặc kỹ Bang hội (Gói 2A — Cột biểu tượng bang): cấp 0..5, nâng bằng Ngân sách kiến thiết (B.kt)
+const DAC_KY_DS = [
+  { k: "tuLinh",    ten: "Tụ Linh Quyết",    moTa: "+5% kinh nghiệm đánh quái / cấp",   max: 5, giay: 14400 },
+  { k: "hoThe",     ten: "Hộ Thể Chân Khí",  moTa: "+250 Sinh lực & Nội lực tối đa / cấp", max: 5, giay: 14400 },
+  { k: "thienPhuc", ten: "Thiên Phúc",       moTa: "+4 May mắn rơi đồ / cấp",           max: 5, giay: 14400 },
+  { k: "thietBich", ten: "Thiết Bích",       moTa: "+3% Kháng tất cả / cấp",            max: 5, giay: 14400 },
+  { k: "thanHanh",  ten: "Chiến Hồn Bang",   moTa: "+6 Tốc độ đánh ngoại & nội công / cấp", max: 5, giay: 14400 }
+];
+const DAC_KY_MAP = new Map(DAC_KY_DS.map((x) => [x.k, x]));
+
+function datBuffBh(h, loai, cap, giay) {
+  h.buff = h.buff && typeof h.buff === "object" ? h.buff : {};
+  for (const k of Object.keys(h.buff)) {
+    if (k.startsWith("bh:" + loai + ":")) delete h.buff[k];
+  }
+  h.buff["bh:" + loai + ":" + (cap | 0)] = Math.max(60, giay | 0);
+}
+function luotNgay(m, khoa) {
+  const hom = ngayVn();
+  if (m.tpNgay !== hom) { m.tpNgay = hom; m.tpDem = {}; }
+  m.tpDem = m.tpDem && typeof m.tpDem === "object" ? m.tpDem : {};
+  return m.tpDem[khoa] | 0;
+}
+function tangLuotNgay(m, khoa) {
+  const n = luotNgay(m, khoa) + 1;
+  m.tpDem[khoa] = n;
+  return n;
+}
+
 function docCauHinh() {
   for (const p of [path.join(D.ROOT, "..", "cau-hinh.json"), path.join(D.ROOT, "cau-hinh.json")]) {
     try { const j = JSON.parse(fs.readFileSync(p, "utf8")); if (j && j.bangHoi) return j.bangHoi; } catch {}
@@ -314,6 +343,13 @@ function xemBang(B, mToi) {
     khu: B.khu || null,
     phi: { ngay: Math.max(0, (B.cap | 0) * 10), dung: 0 },
     tp: B.tp || JSON.parse(JSON.stringify(TP_MAC)),
+    dacKy: DAC_KY_DS.map((d) => {
+      const cap = (B.dacKy && (B.dacKy[d.k] | 0)) || 0;
+      const hom = ngayVn();
+      const daNhan = !!(mToi && mToi.dkNgay === hom && mToi.dkNhan && mToi.dkNhan[d.k]);
+      return { k: d.k, ten: d.ten, moTa: d.moTa, cap, max: d.max, phiKt: (cap + 1) * 120, daNhan: daNhan ? 1 : 0 };
+    }),
+    tpNhat: mToi ? (mToi.tpNgay === ngayVn() ? (mToi.tpDem || {}) : {}) : {},
     tv: (B.tv || []).map((x) => ({
       ten: x.ten,
       cv: x.cv,
@@ -770,6 +806,194 @@ function lam(tk, h, o, b, qt) {
       tangV(B); henGhi();
       return { bh: xemBang(B, m), msg: `${tp.ten}: đặt cấp sử dụng ${c}` };
     }
+  }
+
+  // ---- Đặc kỹ Bang hội (Gói 2A — Cột biểu tượng bang) ----
+  if (viec === "dkLenCap") {
+    if (!coQuyen(B, m, "2003") && !coQuyen(B, m, "2005")) loi("Bạn không có quyền khai mở hoặc nâng cấp đặc kỹ bang hội");
+    const d = DAC_KY_MAP.get(String(b.k || ""));
+    if (!d) loi("Đặc kỹ không tồn tại");
+    B.dacKy = B.dacKy && typeof B.dacKy === "object" ? B.dacKy : {};
+    const capHien = B.dacKy[d.k] | 0;
+    const tranCap = Math.min(d.max, (B.cap | 0) + 1);
+    if (capHien >= d.max) loi(`${d.ten} đã đạt cấp tối đa (${d.max})`);
+    if (capHien >= tranCap) loi(`Cần nâng đẳng cấp kiến thiết bang lên cấp ${capHien + 1} để nâng tiếp ${d.ten}`);
+    const canKt = (capHien + 1) * 120;
+    if ((B.kt | 0) < canKt) loi(`Cần ${canKt} vạn ngân sách kiến thiết (hiện có ${B.kt | 0} vạn)`);
+    B.kt -= canKt;
+    B.dacKy[d.k] = capHien + 1;
+    ghiSuKien(B, `${m.ten} nâng đặc kỹ ${d.ten} lên cấp ${capHien + 1}.`);
+    tangV(B); henGhi();
+    return { bh: xemBang(B, m), msg: `Đã nâng đặc kỹ ${d.ten} lên cấp ${capHien + 1} (-${canKt} vạn kiến thiết)` };
+  }
+
+  if (viec === "dkNhan") {
+    if (m.cv === "an") loi("Ẩn sỹ không thể nhận đặc kỹ bang hội");
+    const d = DAC_KY_MAP.get(String(b.k || ""));
+    if (!d) loi("Đặc kỹ không tồn tại");
+    const cap = (B.dacKy && (B.dacKy[d.k] | 0)) || 0;
+    if (cap < 1) loi(`${d.ten} chưa được lãnh đạo bang khai mở`);
+    const hom = ngayVn();
+    if (m.dkNgay !== hom) { m.dkNgay = hom; m.dkNhan = {}; }
+    m.dkNhan = m.dkNhan && typeof m.dkNhan === "object" ? m.dkNhan : {};
+    const daNhan = !!m.dkNhan[d.k];
+    const phiCong = daNhan ? 10 : 0;
+    if (phiCong > 0 && (m.cong | 0) < phiCong) loi(`Làm mới đặc kỹ trong ngày cần ${phiCong} điểm cống hiến`);
+    if (phiCong > 0) m.cong -= phiCong;
+    m.dkNhan[d.k] = 1;
+    datBuffBh(h, d.k, cap, d.giay);
+    tangV(B); henGhi();
+    return { doi: true, bh: xemBang(B, m), msg: `Đã nhận đặc kỹ ${d.ten} (cấp ${cap}) trong 4 giờ!${phiCong ? ` (-${phiCong} cống hiến)` : " (miễn phí lần đầu trong ngày)"}` };
+  }
+
+  // ---- 6 Tác phường Bang hội (Gói 2B: thiLuyen, hoatDong, binhGiap, thienCong, thienY, diDung) ----
+  if (viec === "tpDung") {
+    if (m.cv === "an") loi("Ẩn sỹ không thể sử dụng tác phường bang hội");
+    B.tp = B.tp || JSON.parse(JSON.stringify(TP_MAC));
+    const tpKey = String(b.tp || ""), hanh = String(b.hanh || "");
+    const tp = B.tp[tpKey];
+    if (!tp || tpKey === "leVat") loi("Tác phường không hợp lệ");
+    if ((tp.cap | 0) < 1 || !tp.mo) loi(`${tp.ten} chưa được khai mở — Bang chủ/Trưởng lão có thể khai mở trong Bang phái → Tác phường`);
+    const sd = Math.max(1, tp.sd | 0);
+
+    // 1. Thí luyện phường
+    if (tpKey === "thiLuyen") {
+      if (hanh === "luyenExp") {
+        if (luotNgay(m, "tlExp") >= 3) loi("Hôm nay ngươi đã tu luyện đủ 3 lần tại Thí luyện phường");
+        const phi = 30;
+        if ((m.cong | 0) < phi) loi(`Cần ${phi} điểm cống hiến để tu luyện`);
+        const exp = Math.round((50000 + (h.lvl || 1) * 15000) * (1 + (sd - 1) * 0.25));
+        m.cong -= phi;
+        tangLuotNgay(m, "tlExp");
+        const up = DO.congKn(h, exp);
+        tangV(B); henGhi();
+        return { doi: true, bh: xemBang(B, m), msg: `Tu luyện thành công (-${phi} cống hiến): nhận ${exp.toLocaleString("vi-VN")} kinh nghiệm${up ? `, thăng lên cấp ${h.lvl}!` : ""}` };
+      }
+      if (hanh === "doiTtl") {
+        if (sd < 2) loi("Cần Thí luyện phường cấp sử dụng từ 2 trở lên");
+        if (luotNgay(m, "tlTtl") >= 1) loi("Hôm nay ngươi đã đổi Tiên Thảo Lộ tại Thí luyện phường rồi");
+        const phi = 80;
+        if ((m.cong | 0) < phi) loi(`Cần ${phi} điểm cống hiến`);
+        const ds = DO.taoQua(h, { mon: [{ k: "ms:71", n: 1 }], kbh: DO.NOI.KBH_VV });
+        m.cong -= phi;
+        tangLuotNgay(m, "tlTtl");
+        tangV(B); henGhi();
+        return { doi: true, bh: xemBang(B, m), msg: `Đã đổi ${ds.join(", ")} (-${phi} cống hiến, khóa vĩnh viễn)` };
+      }
+    }
+
+    // 2. Hoạt động phường
+    if (tpKey === "hoatDong") {
+      const hs = 1 + (sd - 1) * 0.1;
+      if (hanh === "tuanTra") {
+        if (luotNgay(m, "hdTuan") >= 1) loi("Hôm nay ngươi đã hoàn thành nhiệm vụ tuần tra bang hội rồi");
+        const cong = Math.round(40 * hs), quy = Math.round(10 * hs), kt = Math.round(5 * hs);
+        m.cong = (m.cong | 0) + cong; m.congTong = (m.congTong | 0) + cong; m.congTuan = (m.congTuan | 0) + cong;
+        B.quy = (B.quy | 0) + quy; B.kt = (B.kt | 0) + kt;
+        tangLuotNgay(m, "hdTuan");
+        tangV(B); henGhi();
+        return { bh: xemBang(B, m), msg: `Hoàn thành Tuần tra khu bang: +${cong} cống hiến, bang thêm +${quy} vạn ngân quỹ & +${kt} vạn kiến thiết!` };
+      }
+      if (hanh === "quyenVatTu") {
+        if (luotNgay(m, "hdVat") >= 2) loi("Hôm nay ngươi đã quyên vật tư chiến bị đủ 2 lần rồi");
+        const phiTien = 5 * VAN;
+        if ((+h.gold || 0) < phiTien) loi("Cần 5 vạn lượng để quyên vật tư chiến bị");
+        const cong = Math.round(60 * hs), quy = Math.round(15 * hs), kt = Math.round(10 * hs), cb = Math.round(10 * hs);
+        h.gold -= phiTien;
+        m.cong = (m.cong | 0) + cong; m.congTong = (m.congTong | 0) + cong; m.congTuan = (m.congTuan | 0) + cong;
+        B.quy = (B.quy | 0) + quy; B.kt = (B.kt | 0) + kt; B.cb = (B.cb | 0) + cb;
+        tangLuotNgay(m, "hdVat");
+        ghiSuKien(B, `${m.ten} quyên vật tư chiến bị tại Hoạt động phường (+${kt} vạn kiến thiết).`);
+        tangV(B); henGhi();
+        return { doi: true, bh: xemBang(B, m), msg: `Quyên vật tư thành công (-5 vạn lượng): +${cong} cống hiến, bang thêm +${quy}v ngân quỹ, +${kt}v kiến thiết, +${cb} chiến bị!` };
+      }
+    }
+
+    // 3. Binh giáp phường
+    if (tpKey === "binhGiap") {
+      if (hanh === "suaDo") {
+        const lan = luotNgay(m, "bgSua");
+        const phi = lan === 0 ? 0 : 10;
+        if (phi > 0 && (m.cong | 0) < phi) loi(`Sửa đồ lần tiếp theo trong ngày cần ${phi} điểm cống hiến`);
+        const so = DO.suaHetDo(h);
+        if (so === 0) loi("Toàn bộ trang bị đang mặc đều còn nguyên độ bền");
+        if (phi > 0) m.cong -= phi;
+        tangLuotNgay(m, "bgSua");
+        tangV(B); henGhi();
+        return { doi: true, bh: xemBang(B, m), msg: `Đã sửa đầy độ bền cho ${so} món trang bị đang mặc${phi ? ` (-${phi} cống hiến)` : " (miễn phí lần đầu trong ngày)"}` };
+      }
+      if (hanh === "buffGiap") {
+        const phi = 25;
+        if ((m.cong | 0) < phi) loi(`Cần ${phi} điểm cống hiến`);
+        m.cong -= phi;
+        datBuffBh(h, "binhGiap", sd, 7200);
+        tangV(B); henGhi();
+        return { doi: true, bh: xemBang(B, m), msg: `Cường hóa chiến giáp cấp ${sd} trong 2 giờ (+${sd * 200} Sinh lực tối đa, +${sd * 2}% Kháng tất cả)!` };
+      }
+    }
+
+    // 4. Thiên công phường
+    if (tpKey === "thienCong") {
+      if (hanh === "doiChuy") {
+        if (luotNgay(m, "tcChuy") >= 2) loi("Hôm nay ngươi đã đổi đủ 2 Huyền Thiên Chùy rồi");
+        const phi = Math.max(40, 100 - sd * 8);
+        if ((m.cong | 0) < phi) loi(`Cần ${phi} điểm cống hiến`);
+        const ds = DO.taoQua(h, { mon: [{ k: "ms:2348", n: 1 }], kbh: DO.NOI.KBH_VV });
+        m.cong -= phi;
+        tangLuotNgay(m, "tcChuy");
+        tangV(B); henGhi();
+        return { doi: true, bh: xemBang(B, m), msg: `Đã chế tạo ${ds.join(", ")} (-${phi} cống hiến, khóa vĩnh viễn)` };
+      }
+      if (hanh === "doiBql") {
+        if (sd < 2) loi("Cần Thiên công phường cấp sử dụng từ 2 trở lên");
+        if (luotNgay(m, "tcBql") >= 2) loi("Hôm nay ngươi đã đổi đủ 2 Bách Quả Lộ rồi");
+        const phi = Math.max(30, 80 - sd * 6);
+        if ((m.cong | 0) < phi) loi(`Cần ${phi} điểm cống hiến`);
+        const ds = DO.taoQua(h, { mon: [{ k: "ms:73", n: 1 }], kbh: DO.NOI.KBH_VV });
+        m.cong -= phi;
+        tangLuotNgay(m, "tcBql");
+        tangV(B); henGhi();
+        return { doi: true, bh: xemBang(B, m), msg: `Đã đổi ${ds.join(", ")} (-${phi} cống hiến, khóa vĩnh viễn)` };
+      }
+    }
+
+    // 5. Thiên ý phường
+    if (tpKey === "thienY") {
+      if (hanh === "cauPhuc") {
+        if (luotNgay(m, "tyQue") >= 1) loi("Hôm nay ngươi đã cầu phúc tại Thiên ý phường rồi");
+        const phi = 20;
+        if ((m.cong | 0) < phi) loi(`Cần ${phi} điểm cống hiến để cầu phúc`);
+        const r = Math.random();
+        const que = r < 0.2 ? { ten: "Thượng Thượng", loc: 10 * sd } : r < 0.6 ? { ten: "Đại Cát", loc: 5 * sd } : { ten: "Trung Cát", loc: 2 * sd };
+        m.cong -= phi;
+        h.gold = (+h.gold || 0) + que.loc * VAN;
+        datBuffBh(h, "thienY", sd, 7200);
+        tangLuotNgay(m, "tyQue");
+        tangV(B); henGhi();
+        return { doi: true, bh: xemBang(B, m), msg: `Rút được quẻ ${que.ten}! Nhận lộc ${que.loc} vạn lượng và buff May mắn +${4 + sd * 2} trong 2 giờ!` };
+      }
+    }
+
+    // 6. Dị dung phường
+    if (tpKey === "diDung") {
+      if (hanh === "doiDh") {
+        const dh = String(b.dh || "").replace(/[\u0000-\u001f<>]/g, "").trim().slice(0, 12);
+        if (kiemTenCam && dh && kiemTenCam(dh)) loi("Danh hiệu chứa từ ngữ không phù hợp");
+        m.dh = dh;
+        tangV(B); henGhi();
+        return { bh: xemBang(B, m), msg: dh ? `Đã đổi danh hiệu bang thành "${dh}"` : "Đã xóa danh hiệu cá nhân" };
+      }
+      if (hanh === "buffThan") {
+        const phi = 20;
+        if ((m.cong | 0) < phi) loi(`Cần ${phi} điểm cống hiến`);
+        m.cong -= phi;
+        datBuffBh(h, "diDung", sd, 7200);
+        tangV(B); henGhi();
+        return { doi: true, bh: xemBang(B, m), msg: `Dưỡng thần thành công cấp ${sd} trong 2 giờ (+${sd * 30} Công kích vật lý, +${sd * 5} Tốc độ đánh)!` };
+      }
+    }
+
+    loi("Thao tác tác phường không hợp lệ");
   }
 
   // ---- Tế Đàn (Đợt 2) ----
