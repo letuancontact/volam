@@ -1494,6 +1494,7 @@ export class World {
       chung: !!o.chung }); // chung: món người chơi vứt ra — cả bãi thấy (datChung)
     if (this.drops.length > DROP_MAX) this.drops.shift();
     const snd = !o.tuoi && R.sound(id); if (snd) this.P.audio.play(snd, 0.5);
+    if (!o.tuoi && !o.chung && this.P.audio && this.P.audio.playChime) { const moi = this.drops[this.drops.length - 1]; const tr = this._dropTier(moi); if (tr >= 1) this.P.audio.playChime(tr); }
   }
   // món người chơi vứt ra của cả bãi (máy chủ gửi khi danh sách đổi — anh 30/10 "người khác cùng máy chủ không thấy"): thêm món mới, bỏ món chung
   // không còn (người khác nhặt rồi / hết hạn) — trừ món mình đang chờ máy chủ trả lời nhặt
@@ -1658,7 +1659,7 @@ export class World {
     // vật rơi nằm trên mặt đất: vẽ trước mọi thân (tên vẽ cùng tên người / quái)
     const inView = (e) => e.x > cam.x - 200 && e.x < cam.x + vw + 200 && e.y > cam.y - 60 && e.y < cam.y + vh + 250;
     const drops = this.drops.filter((d) => !d.picked && inView(d));
-    for (const d of drops) d.top = this.P.roi.draw(ctx, d.id, d.t, d.x, d.y);
+    for (const d of drops) { this._drawDropBeam(ctx, d); d.top = this.P.roi.draw(ctx, d.id, d.t, d.x, d.y); }
     // ẩn bớt người chơi khác + phân thân của họ (nguoiHien) / sạp hàng — NPC trông sạp (anSap) — Trợ Thủ → Khác → Hiển thị (anh 11/11 "về Tân Thủ
     // Thôn lag quá"): không vẽ thân, tên, vòng sáng của người đang ẩn
     const hien = this.nguoiHien(), anSap = !!this.P.settings.anSap;
@@ -1677,6 +1678,7 @@ export class World {
     // hình trạng thái của võ công (bùa, vòng sáng, bùa hại): dưới chân + khung "sau lưng" của hình trên thân vẽ trước thân, còn lại sau thân
     const vc = !!this.P.vc, body = (e) => {
       if (vc && (e.kind === "hero" || e.kind === "mob" || e.kind === "other")) this.vcDrawStates(ctx, e, true); // other: vòng sáng người khác đang bật (e.vs)
+      if ((e.kind === "hero" || e.kind === "other") && !this.tk) this._drawAura(ctx, e);
       if (e.kind === "hero" || e.kind === "other" || (e.tkb && !e.tkq)) this.drawHeroBody(ctx, e); else if (e.kind === "npc") this.drawNpcBody(ctx, e); else this.drawMobBody(ctx, e); // bot Tống Kim: vẽ như người; quân NPC (tkq): như quái
       if (vc && (e.kind === "hero" || e.kind === "mob" || e.kind === "other")) this.vcDrawStates(ctx, e, false);
     };
