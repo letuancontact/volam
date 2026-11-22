@@ -3263,15 +3263,19 @@ export class GameWindows {
     if (D && !this.W.wins.system && !D.sec.UyThac) {
       const S = D.sec, buoc = S.ContiumeGame.y - S.OffLine.y;
       S.UyThac = { ...S.OffLine, y: S.OffLine.y + buoc };
-      S.ContiumeGame = { ...S.ContiumeGame, y: S.OffLine.y + 2 * buoc };
+      S.DoiMk = { ...S.OffLine, y: S.OffLine.y + 2 * buoc };
+      S.ContiumeGame = { ...S.ContiumeGame, y: S.OffLine.y + 3 * buoc };
       const cao = S.ContiumeGame.y + S.ContiumeGame.h + 2;
       if (S.Main.h < cao) S.Main = { ...S.Main, y: S.Main.y - Math.round((cao - S.Main.h) / 2), h: cao };
-      D.order = D.order.flatMap((k) => (k === "ContiumeGame" ? ["UyThac", k] : [k]));
+      D.order = D.order.flatMap((k) => (k === "ContiumeGame" ? ["UyThac", "DoiMk", k] : [k]));
     }
     const w = this.W.get("system"), api = this.api;
     const u = w.node("UyThac");
     if (u) { const t = document.createElement("span"); t.className = "jw-escchu"; t.textContent = "ỦY THÁC"; u.appendChild(t); }
     w.on("UyThac", () => { w.hide(); if (api.uyThac) api.uyThac(); });
+    const dm = w.node("DoiMk");
+    if (dm) { const t = document.createElement("span"); t.className = "jw-escchu"; t.textContent = "ĐỔI MẬT KHẨU"; dm.appendChild(t); }
+    w.on("DoiMk", () => { w.hide(); if (api.doiMk) api.doiMk(); });
     w.on("ExitGame", () => { this.closeAll(); api.leaveGame(); });
     w.on("GameHelp", () => { w.hide(); api.help(); });
     w.on("Options", () => { w.hide(); this.W.get("options").show(); });

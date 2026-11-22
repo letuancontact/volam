@@ -440,9 +440,10 @@ function csPanel() {
     `<div class="cs-btns">${h && f
       ? del ? '<button class="red" id="cs-dely">Đồng Ý Xóa</button><button id="cs-deln">Hủy Bỏ</button>'
             : '<button class="go" id="cs-go">Vào Trò Chơi</button><button class="red" id="cs-del">Xóa Nhân Vật</button>'
-      : '<button class="go" id="cs-new">Tạo Nhân Vật</button>'}<button id="cs-out" title="Tài khoản ${esc(Net.me.ten)}">Đăng Xuất</button></div>`;
+      : '<button class="go" id="cs-new">Tạo Nhân Vật</button>'}<button id="cs-mk" title="Đổi mật khẩu đăng nhập">Đổi Mật Khẩu</button><button id="cs-out" title="Tài khoản ${esc(Net.me.ten)}">Đăng Xuất</button></div>`;
   const on = (id, fn) => { const b = $(id); if (b) b.onclick = () => { P.audio.ui("click"); fn(); }; };
   on("#cs-go", csEnter);
+  on("#cs-mk", () => { if (KAT) KAT.doiMk1(); });
   on("#cs-new", csEnter);
   on("#cs-del", () => { CS.del = CS.sel; csPanel(); });
   on("#cs-deln", () => { CS.del = -1; csPanel(); });
@@ -1269,7 +1270,7 @@ function mountHud() {
     gd: (b) => gdLam(b), // khung giao dịch (anh 30/10 — windows.js _giaoDich)
     khamNam: (b, o) => khamGoi(b, o), // khảm nạm Thủy tinh (o.sau: promise hiệu ứng — câu báo đợi xong) (anh 17/11 — windows.js _kham, may-chu/kham-nam.js)
     bh: (b, o) => bhLam(b, o), bhMinh: () => bhMinhCur, // Bang phái (anh 14/11 — windows.js _faction): việc POST /api/bang-hoi, bang của mình theo nhịp
-    teDan: () => teDanMo(), leVat: () => leVatMo(), tacPhuong: (loai) => tacPhuongMo(loai), dacKy: () => dacKyBangMo(false), // Bang hội đợt 2: khung lời Tế Đàn (Ký lục → Mục tiêu tuần) / Tổng quản Lễ phẩm phường (Tác phường → Sử dụng)
+    teDan: () => teDanMo(), leVat: () => leVatMo(), doiMk: () => KAT && KAT.doiMk1(), tacPhuong: (loai) => tacPhuongMo(loai), dacKy: () => dacKyBangMo(false), // Bang hội đợt 2: khung lời Tế Đàn (Ký lục → Mục tiêu tuần) / Tổng quản Lễ phẩm phường (Tác phường → Sử dụng)
     khuVao: () => khuVao(), khuTaoBanDo: () => khuChonMau(), khuThietLap: () => khuThietLap(), // đợt 4: khu vực bang (khung Bang phái — Vào bang này, Tạo bản đồ, Thiết lập khu vực)
     // khung chọn kiểu NPC (msgsel) cho khung Bang phái: chỉ số mục đã chọn, -1 = Hủy bỏ (Chuyển kiến thiết / Tự bù chiến bị — đợt 2)
     chon: (html, ds, ten) => new Promise((r) => { if (!NPCD || !hero) return r(-1); NPCD.choose("msgsel", "InfoText", richText(html, hero.name, ten || ""), [...ds.map((t, i) => [t, () => r(i)]), ["Hủy bỏ", () => r(-1)]]); }),
