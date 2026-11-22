@@ -787,3 +787,264 @@ body.ui-modern #kat .kat-nut {
   border-color: rgba(232, 194, 102, 0.72);
   box-shadow: var(--m-bevel), 0 0 8px rgba(232, 194, 102, 0.24);
 }
+
+/* === V2: BO TRON ICON VUONG & MAN CHON MAY CHU === */
+
+/* 1. Làm đẹp toàn diện màn Chọn máy chủ (#s-server) — cân đối cả 1 server lẫn nhiều server, mobile & PC */
+#s-server .box {
+  font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  width: min(760px, 92vw);
+  padding: 28px 26px 24px;
+  background: linear-gradient(165deg, rgba(20, 24, 28, 0.9), rgba(10, 12, 16, 0.94)) !important;
+  border: 1.5px solid rgba(232, 194, 102, 0.72) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 20px 54px rgba(0, 0, 0, 0.78),
+    0 0 28px rgba(232, 194, 102, 0.18),
+    inset 0 1px 0 rgba(255, 242, 196, 0.22) !important;
+}
+
+#s-server .box.sv-one {
+  width: min(460px, 92vw);
+}
+
+#s-server .box h1 {
+  margin: 0 0 6px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #ffe396;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75), 0 0 14px rgba(232, 194, 102, 0.35);
+}
+
+#s-server .box h1::after {
+  content: "Chọn máy chủ để bắt đầu hành tẩu giang hồ";
+  display: block;
+  margin: 6px auto 18px;
+  padding-bottom: 14px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  color: #b7c2b9;
+  text-shadow: none;
+  border-bottom: 1px solid rgba(232, 194, 102, 0.24);
+}
+
+#s-server .cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+#s-server .cards.sv-one {
+  grid-template-columns: 1fr;
+}
+
+#s-server button.card.sv-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 18px 20px !important;
+  text-align: left;
+  font-family: inherit;
+  border-radius: 16px !important;
+  background: linear-gradient(155deg, rgba(40, 34, 24, 0.92), rgba(22, 20, 17, 0.96)) !important;
+  border: 1.5px solid rgba(232, 194, 102, 0.68) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 242, 196, 0.2),
+    0 10px 24px rgba(0, 0, 0, 0.52),
+    0 0 16px rgba(232, 194, 102, 0.14) !important;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.14s ease, border-color 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+
+#s-server button.card.sv-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 44%;
+  background: linear-gradient(180deg, rgba(255, 234, 168, 0.1), transparent);
+  pointer-events: none;
+}
+
+#s-server button.card.sv-card:hover {
+  border-color: #ffe28a !important;
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 248, 214, 0.34),
+    0 14px 30px rgba(0, 0, 0, 0.62),
+    0 0 22px rgba(255, 218, 114, 0.42) !important;
+}
+
+#s-server button.card.sv-card:active {
+  transform: scale(0.985);
+}
+
+#s-server .sv-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#s-server .sv-name {
+  margin: 0 !important;
+  font-size: 19px !important;
+  font-weight: 700;
+  color: #ffe396 !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+#s-server .sv-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #9effc4;
+  background: rgba(24, 96, 54, 0.55);
+  border: 1px solid rgba(112, 244, 162, 0.55);
+  white-space: nowrap;
+}
+
+#s-server .sv-stat i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #52f295;
+  box-shadow: 0 0 8px #52f295;
+}
+
+#s-server .sv-desc {
+  display: block;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #d6d0c0 !important;
+}
+
+#s-server .sv-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(232, 194, 102, 0.2);
+  font-size: 12.5px;
+}
+
+#s-server .sv-tag {
+  color: #b7ad96;
+}
+
+#s-server .sv-go {
+  font-weight: 700;
+  color: #ffd978;
+}
+
+#s-server .row.end {
+  margin-top: 18px;
+  justify-content: center;
+}
+
+#s-server #sv-back {
+  min-width: 136px;
+  padding: 9px 22px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f3e4bc;
+  background: linear-gradient(180deg, rgba(46, 54, 52, 0.85), rgba(24, 30, 29, 0.92));
+  border: 1px solid rgba(232, 194, 102, 0.52);
+  border-radius: 999px !important;
+}
+
+/* 2. Bo tròn mượt toàn bộ ảnh icon hình vuông trong giao diện Hiện đại (không làm lệch sprite 2-3 khung) */
+body.ui-modern.dt #dt .dt-chan {
+  border-radius: 14px !important;
+  overflow: hidden;
+  border: 2px solid rgba(232, 194, 102, 0.82) !important;
+  box-shadow: 0 0 10px rgba(232, 194, 102, 0.34), 0 4px 10px rgba(0, 0, 0, 0.62) !important;
+}
+
+/* Các ô bảng Giang hồ: cắt gọn theo bo góc khung và bo chính lớp .dt-ic để gọt viền vuông sát mép của ảnh gốc */
+body.ui-modern.dt #dt .dt-khung {
+  overflow: hidden !important;
+  isolation: isolate;
+}
+
+body.ui-modern.dt #dt .dt-khung::before {
+  z-index: 2;
+}
+
+body.ui-modern.dt #dt .dt-khung .dt-ic {
+  border-radius: 10px !important;
+  overflow: hidden;
+  transform: scale(1.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 240, 196, 0.14);
+}
+
+/* Thanh 5 thẻ dưới (Giang hồ, Nhân vật, Võ công, Hành trang, Trợ Thủ) */
+body.ui-modern.dt #dt .dt-tic {
+  overflow: hidden !important;
+  padding: 3px !important;
+  display: grid;
+  place-items: center;
+}
+
+body.ui-modern.dt #dt .dt-tic .dt-ic {
+  border-radius: 9px !important;
+  overflow: hidden;
+  transform: scale(1.05);
+}
+
+body.ui-modern.dt.dt-ngang.dt-gon #dt .dt-tic .dt-ic {
+  border-radius: 50% !important;
+  transform: scale(1.04);
+}
+
+/* Ổ khóa an toàn đỏ bên phải màn hình mobile: bo góc mượt nhưng vẫn giữ chấm đỏ thông báo ::after ở góc ngoài */
+body.ui-modern.dt #dt .dt-kat {
+  border-radius: 9px !important;
+  border: 1.5px solid rgba(232, 194, 102, 0.82);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 244, 200, 0.35),
+    0 3px 10px rgba(0, 0, 0, 0.6),
+    0 0 10px rgba(232, 194, 102, 0.32);
+  background-origin: border-box;
+  background-clip: padding-box;
+}
+
+/* Nút mời tổ đội / icon phụ trên cảnh mobile */
+body.ui-modern.dt #dt .dt-moidoi > i,
+body.ui-modern.dt #dt .dt-ngam > i,
+body.ui-modern.dt #dt .dt-ngam img {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Đồng bộ bo góc gọn trên PC cho thanh nút dưới & cột icon bên phải */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k],
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-lpbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-ttbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-hdbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-ptbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-zlbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-bcbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-katbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-mmbtn {
+  overflow: hidden;
+  background-clip: padding-box;
+}
+
+/* Icon Zalo & các ảnh vuông có nền phủ kín sát mép: bo tròn mềm hơn nữa */
+body.ui-modern.dt #dt .dt-o[data-a="l14"] .dt-ic,
+body.ui-modern.dt #dt .dt-o[data-a="l15"] .dt-ic {
+  border-radius: 11px !important;
+}
