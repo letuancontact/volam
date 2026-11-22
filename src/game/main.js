@@ -1248,9 +1248,8 @@ function mmDiemLoiRa(w) {
   const out = [...(DuaNgua.mm() || [])];
   if (!w || !w.npcs) return out;
   for (const n of w.npcs) {
-    const laRa = !!n.baiRa || !!n.pld || n.ph === "xp" || n.bhVai === "xaPhu" || (n.script && /车夫/.test(n.script)) || /^Xa phu|^Thuyền phu/i.test(n.name || "");
-    if (!laRa) continue;
-    out.push({ x: n.x, y: n.y, c: "#4ade80", r: 2.5, ten: n.baiRa ? "Lối ra" : undefined });
+    if (!n.baiRa) continue;
+    out.push({ x: n.x, y: n.y, c: "#4ade80", r: 2.5, ten: "Lối ra" });
   }
   return out;
 }
