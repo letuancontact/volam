@@ -657,6 +657,11 @@ async function vaoGame() {
     if (nay === xoa) P.hud.msg("Hôm nay là ngày xác nhận xóa pass rương — đến Lễ quan (Ba Lăng huyện) để xác nhận, qua hôm nay đăng ký sẽ bị hủy");
     else if (nay < xoa) P.hud.msg(`Pass rương sẽ được xóa vào ngày ${ngayXoaMk(xoa)} — đúng ngày đó đến Lễ quan xác nhận, nếu không đăng ký xoá pass rương sẽ bị hủy bỏ`);
   }
+  // Duong dan /admin (hoac ?admin=1): tu dong mo bang Quan tri F10 neu la tai khoan admin (chi 1 lan moi phien trang)
+  if (!window._vlAdminAuto && (/^\/admin\/?$/i.test(location.pathname) || /[?&]admin=1\b/.test(location.search)) && Net.me && Net.me.admin) {
+    window._vlAdminAuto = true;
+    setTimeout(() => { if (Net.me && Net.me.admin) qt.toggle(true); }, 150);
+  }
   saveCleanup();
   if (!looping) { looping = true; requestAnimationFrame(loop); }
 }
@@ -4937,6 +4942,7 @@ const qt = new QuanTri({
   // nhật ký: trỏ tên món -> ô xem món (quantri.js monChu) như món trong túi của nhân vật không mặc gì — không hiện ô so với đồ quản trị đang mặc
   tipMon: (it, e) => GW && hero && GW._showTip(it, e, undefined, undefined, undefined, { ...hero, equip: {}, ten: "nhật ký", o: -1 }), anTip: () => GW && GW._hideTip(),
 });
+window.VLAdmin = { isAdmin: () => !!(Net.me && Net.me.admin), openQt: () => { if (Net.me && Net.me.admin) qt.toggle(true); }, openDev: () => { if (devOn()) dev.toggle(true); } };
 // ---------- phím tắt: bảng của client (ui\autoexec.lua -> hud.json hotkeys; src/game/hotkeys.js) ----------
 // Game thêm (client không có): Space tự đánh, Ctrl+M tắt tiếng; máy dev: ` công cụ thử (client gắn ` cho Chiến báo — game chưa có).
 const OPEN_BTN = { status: "Status", items: "Items", skills: "Skills", friend: "Friend", team: "Team", Tong: "Faction", ChatRoomList: "ChatRoom", ItemEx: "ItemEx", tasknote: "Task", NewTask: "Task" };

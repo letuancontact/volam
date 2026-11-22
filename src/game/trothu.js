@@ -639,6 +639,13 @@ export class TroThu {
   // ---------- Khác: (điện thoại dọc) cách di chuyển, hiển thị, bảo vệ, bố cục màn hình ----------
   _khac(A) {
     const P = this.api.P, S = P.settings, D = this.api.dt && this.api.dt(), out = [];
+    if (window.VLAdmin && window.VLAdmin.isAdmin()) {
+      out.push(this._h("Quản trị (Admin)", "Chỉ hiển thị với tài khoản quản trị — dùng để mở nhanh trên điện thoại hoặc PC"));
+      out.push(this._row(
+        this._b("Mở Quản trị (F10)", () => { P.audio.ui("click"); this.w.hide(); window.VLAdmin.openQt(); }),
+        this._b("Công cụ thử (`)", () => { P.audio.ui("click"); this.w.hide(); window.VLAdmin.openDev(); })
+      ));
+    }
     if (window.VLAfk) {
       out.push(this._h("Treo máy & Thống kê", "Thống kê bãi: đo EXP/giờ, bạc/giờ, quái hạ và đồ hiếm. Treo pin: màn hình tối AMOLED, tạm ngắt vẽ cảnh để tiết kiệm pin"));
       const dangFarm = !!window.VLAfk.farmOpen;

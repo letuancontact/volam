@@ -40,7 +40,8 @@ function banNen(file, st, cb) {
 
 // p = đường dẫn đã giải mã (/assets/…)
 function phatTep(req, res, p) {
-  if (p === "/") p = "/game.html";
+  if (p === "/admin/") { res.writeHead(302, { Location: "/admin" }); return res.end(); }
+  if (p === "/" || p === "/admin") p = "/game.html";
   if (p.includes("\0")) return het(res, 400); // ký tự NUL: fs.stat ném lỗi đồng bộ (rà soát lượt 61 — trước làm sập máy chủ)
   const goc = path.join(ROOT, path.normalize(p));
   const rel = path.relative(ROOT, goc).split(path.sep).join("/"); // so SAU khi chuẩn hóa: /assets/../du-lieu/… bị chặn
