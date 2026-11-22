@@ -1334,3 +1334,43 @@ html.dt-bat body.ui-modern .csel .cs-btns button.go {
   font-size: 14px !important;
   padding: 10px 12px !important;
 }
+
+/* === V5: FIX AVATAR LEVEL, AN PHIM CU TREN O TRON, DONG BO FONT CO TOAN BO === */
+/* 1. Avatar mobile: bo overflow:hidden khoi .dt-chan de so cap .dt-cap hien tron ven khong bi cat */
+body.ui-modern.dt #dt .dt-chan {
+  overflow: visible !important;
+}
+body.ui-modern.dt #dt .dt-cap {
+  z-index: 6 !important;
+  left: -3px;
+  bottom: -5px;
+}
+
+/* 2. An nhan phim cu (.jx-qa) o goc tren trai cac o thuoc/ky nang vi giao dien moi da co vien phim o day */
+body.ui-modern.dt #jxhud .jx-bot > .dt-o .jx-qa,
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot .jx-qa {
+  display: none !important;
+}
+
+/* 3 & 4. Dong bo font co cua game cho TOAN BO man ngoai game (Dang nhap, Chon may chu, Doi MK, Chon/Tao NV) */
+#s-login, #s-login *,
+#s-doimk, #s-doimk *,
+#s-server, #s-server *,
+#s-select, #s-select *,
+#s-create, #s-create *,
+.csel, .csel *,
+.cc, .cc * {
+  font-family: var(--jx), "IBM Plex Mono", monospace !important;
+}
+/* Tieu de H1 viet HOA (CHON NHAN VAT, DANG NHAP, CHON MAY CHU...): dung IBM Plex Mono (font co san trong game, du 100% dau hoa tieng Viet khong bi lech chu O/A nang) */
+#s-login h1,
+#s-doimk h1,
+#s-server h1,
+#s-select h1,
+#s-create h1,
+.csel h1,
+.cc h1 {
+  font-family: "IBM Plex Mono", monospace !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+}
