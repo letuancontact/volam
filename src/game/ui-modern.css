@@ -731,3 +731,471 @@ body.ui-modern :is(#btg, #bsat, #snh, #phtt, #tktt, #ldtt, .mn) {
   background: linear-gradient(180deg, rgba(18, 25, 38, 0.93), rgba(9, 13, 20, 0.93)) !important;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.58), 0 0 12px rgba(230, 190, 96, 0.2), var(--m-bevel) !important;
 }
+
+
+/* === SYNC_ALL_UI_START === */
+/* ==========================================================================
+   ĐỒNG BỘ TOÀN BỘ GIAO DIỆN NGOÀI GAME & CỬA SỔ TRONG GAME (GIỮ 100% ẢNH GỐC)
+   ========================================================================== */
+
+/* ---------- 1. MÀN ĐĂNG NHẬP, ĐỔI MẬT KHẨU, CHỌN MÁY CHỦ ---------- */
+body.ui-modern #s-login .box,
+body.ui-modern #s-doimk .box,
+body.ui-modern #s-server .box {
+  background: linear-gradient(180deg, rgba(18, 25, 38, 0.86) 0%, rgba(9, 13, 21, 0.92) 100%);
+  border: 1.5px solid rgba(230, 190, 96, 0.72);
+  border-radius: 18px;
+  box-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.72),
+    0 0 24px rgba(230, 190, 96, 0.22),
+    inset 0 1px 0 rgba(255, 242, 198, 0.28);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body.ui-modern #s-login h1,
+body.ui-modern #s-doimk h1,
+body.ui-modern #s-server h1 {
+  color: var(--m-gold-hi);
+  text-shadow: 0 0 14px rgba(230, 190, 96, 0.45), 0 2px 4px #000;
+}
+
+body.ui-modern #s-login input,
+body.ui-modern #s-doimk input {
+  background: rgba(5, 8, 14, 0.86);
+  border: 1px solid rgba(230, 190, 96, 0.44);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #f7f0de;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.75);
+  transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
+}
+
+body.ui-modern #s-login input:focus,
+body.ui-modern #s-doimk input:focus {
+  border-color: var(--m-gold-hi);
+  background: rgba(8, 12, 20, 0.94);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.75), 0 0 12px rgba(255, 218, 112, 0.45);
+}
+
+body.ui-modern #s-login button,
+body.ui-modern #s-doimk button,
+body.ui-modern #s-server button,
+body.ui-modern #s-load button {
+  border-radius: 999px;
+  transition: transform 0.12s, box-shadow 0.16s, filter 0.14s, border-color 0.16s;
+}
+
+body.ui-modern #s-login button.main,
+body.ui-modern #s-doimk button.main,
+body.ui-modern #s-load button.main {
+  background: linear-gradient(180deg, #deb14c 0%, #a8751f 55%, #6e480d 100%);
+  border: 1.5px solid var(--m-gold-hi);
+  color: #fff9e8;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+  box-shadow: var(--m-bevel), 0 4px 14px rgba(0, 0, 0, 0.55), 0 0 14px rgba(230, 190, 96, 0.42);
+}
+
+body.ui-modern #s-login button.main:hover,
+body.ui-modern #s-doimk button.main:hover,
+body.ui-modern #s-load button.main:hover {
+  filter: brightness(1.12);
+  box-shadow: var(--m-bevel), 0 6px 18px rgba(0, 0, 0, 0.65), 0 0 20px rgba(255, 224, 128, 0.72);
+  transform: translateY(-1px);
+}
+
+body.ui-modern #s-login button.ghost,
+body.ui-modern #s-doimk button.ghost,
+body.ui-modern #s-server button.ghost {
+  background: linear-gradient(180deg, rgba(30, 40, 58, 0.85), rgba(12, 16, 26, 0.92));
+  border: 1px solid rgba(230, 190, 96, 0.56);
+  color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 3px 10px rgba(0, 0, 0, 0.48);
+}
+
+body.ui-modern #s-login button.ghost:hover,
+body.ui-modern #s-doimk button.ghost:hover,
+body.ui-modern #s-server button.ghost:hover {
+  border-color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 0 14px rgba(255, 222, 120, 0.52);
+  transform: translateY(-1px);
+}
+
+body.ui-modern #s-login button:active,
+body.ui-modern #s-doimk button:active,
+body.ui-modern #s-server button:active {
+  transform: scale(0.95);
+}
+
+body.ui-modern #s-server .card {
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(24, 32, 48, 0.88), rgba(10, 14, 22, 0.94));
+  border: 1.5px solid rgba(230, 190, 96, 0.54);
+  box-shadow: var(--m-bevel), 0 6px 18px rgba(0, 0, 0, 0.55);
+  transition: transform 0.14s, border-color 0.16s, box-shadow 0.16s;
+}
+
+body.ui-modern #s-server .card:hover {
+  border-color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 8px 22px rgba(0, 0, 0, 0.65), 0 0 18px rgba(255, 220, 118, 0.48);
+  transform: translateY(-2px);
+}
+
+/* ---------- 2. MÀN CHỌN NHÂN VẬT (#s-select) ---------- */
+body.ui-modern .csel .cs-panel {
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(18, 25, 38, 0.9) 0%, rgba(9, 13, 21, 0.95) 100%);
+  border: 1.5px solid rgba(230, 190, 96, 0.76);
+  box-shadow:
+    0 12px 34px rgba(0, 0, 0, 0.78),
+    0 0 22px rgba(230, 190, 96, 0.24),
+    inset 0 1px 0 rgba(255, 242, 198, 0.24);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.ui-modern .csel .plus {
+  border: 2px solid rgba(230, 190, 96, 0.78);
+  background: radial-gradient(circle at 38% 28%, rgba(44, 56, 80, 0.9), rgba(10, 14, 22, 0.96));
+  box-shadow: var(--m-bevel), 0 0 20px rgba(230, 190, 96, 0.38), 0 6px 18px rgba(0, 0, 0, 0.75);
+}
+
+body.ui-modern .csel .cs-btns button {
+  border-radius: 999px;
+  border: 1.5px solid rgba(230, 190, 96, 0.68);
+  background: linear-gradient(180deg, rgba(36, 46, 66, 0.94), rgba(13, 18, 28, 0.96));
+  color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 4px 12px rgba(0, 0, 0, 0.58), 0 0 10px rgba(230, 190, 96, 0.22);
+}
+
+body.ui-modern .csel .cs-btns button:hover {
+  border-color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 6px 16px rgba(0, 0, 0, 0.68), 0 0 18px rgba(255, 224, 128, 0.6);
+}
+
+body.ui-modern .csel .cs-btns button.go {
+  background: linear-gradient(180deg, #e0b34c 0%, #a8751f 56%, #69430b 100%);
+  border-color: var(--m-gold-hi);
+  color: #fff9e8;
+  box-shadow: var(--m-bevel), 0 5px 16px rgba(0, 0, 0, 0.65), 0 0 18px rgba(255, 214, 96, 0.55);
+}
+
+body.ui-modern .csel .cs-btns button.red {
+  background: linear-gradient(180deg, #9e2f24 0%, #591610 100%);
+  border-color: rgba(255, 118, 104, 0.8);
+  color: #ffe2de;
+  box-shadow: var(--m-bevel), 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 86, 72, 0.32);
+}
+
+/* ---------- 3. MÀN TẠO NHÂN VẬT (#s-create) ---------- */
+body.ui-modern .cc-tag {
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(28, 36, 52, 0.9), rgba(10, 14, 22, 0.95));
+  border: 1.5px solid rgba(230, 190, 96, 0.66);
+  box-shadow: var(--m-bevel), 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+body.ui-modern .cc-char.active .cc-tag {
+  background: linear-gradient(180deg, #deb14c, #734b0e);
+  border-color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 0 18px rgba(255, 218, 108, 0.72);
+}
+
+body.ui-modern .cc-se {
+  border-width: 2px;
+  box-shadow: var(--m-bevel), 0 4px 14px rgba(0, 0, 0, 0.75);
+}
+
+body.ui-modern .cc-desc {
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(16, 22, 34, 0.86), rgba(9, 13, 20, 0.9));
+  border: 1.5px solid rgba(230, 190, 96, 0.62);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.72), 0 0 14px rgba(230, 190, 96, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+body.ui-modern .cc-bar {
+  border-radius: 14px;
+  border: 1.5px solid rgba(230, 190, 96, 0.8);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.82), 0 0 18px rgba(230, 190, 96, 0.34), inset 0 1px 0 rgba(255, 242, 198, 0.28);
+}
+
+body.ui-modern .cc-name {
+  border-radius: 9px;
+}
+
+body.ui-modern .cc-bar button {
+  border-radius: 10px;
+}
+
+/* ---------- 4. MÀN CHỜ CHUYỂN BẢN ĐỒ (.zl) ---------- */
+body.ui-modern .zl-bar {
+  height: 14px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(230, 190, 96, 0.78);
+  background: rgba(8, 12, 19, 0.88);
+  box-shadow: 0 0 0 1px #000, 0 0 14px rgba(230, 190, 96, 0.34), inset 0 2px 5px rgba(0, 0, 0, 0.88);
+}
+
+body.ui-modern .zl-bar i {
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff0ad 0%, #e0ab36 52%, #8c5c0c 100%);
+  box-shadow: 0 0 12px rgba(255, 214, 96, 0.72);
+}
+
+body.ui-modern .zl-nut {
+  border-radius: 999px;
+  padding: 5px 16px;
+  border: 1.5px solid rgba(230, 190, 96, 0.78);
+  background: linear-gradient(180deg, rgba(36, 46, 66, 0.92), rgba(12, 17, 26, 0.95));
+  color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 4px 12px rgba(0, 0, 0, 0.65), 0 0 12px rgba(230, 190, 96, 0.32);
+}
+
+body.ui-modern .zl-nut:hover {
+  border-color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 0 16px rgba(255, 224, 128, 0.65);
+}
+
+/* ---------- 5. CỬA SỔ CLIENT TRONG GAME (#jxwin .jw) — GIỮ NGUYÊN 100% ẢNH & TỌA ĐỘ GỐC ---------- */
+body.ui-modern #jxwin .jw {
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(230, 190, 96, 0.52),
+    0 0 18px rgba(230, 190, 96, 0.16),
+    0 12px 34px rgba(0, 0, 0, 0.74);
+}
+
+body.ui-modern #jxwin .jw-btn:not(.dis):hover {
+  filter: brightness(1.14) drop-shadow(0 0 4px rgba(255, 224, 128, 0.55));
+}
+
+body.ui-modern #jxwin .jw-slot:hover {
+  outline: none;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1.5px var(--m-gold-hi), 0 0 10px rgba(255, 214, 102, 0.55);
+}
+
+body.ui-modern #jxwin .jw-max,
+body.ui-modern #jxwin .jw-gia-them {
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(24, 33, 49, 0.95), rgba(10, 14, 22, 0.97));
+  border: 1px solid rgba(230, 190, 96, 0.72);
+  box-shadow: var(--m-bevel), 0 4px 12px rgba(0, 0, 0, 0.68), 0 0 10px rgba(230, 190, 96, 0.25);
+}
+
+body.ui-modern #jxwin .jw-max:hover:not(:disabled) {
+  border-color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 0 14px rgba(255, 224, 128, 0.65);
+}
+
+body.ui-modern #jxwin .jw-tim {
+  border-radius: 8px;
+  background: rgba(6, 10, 16, 0.92);
+  border: 1px solid rgba(230, 190, 96, 0.56);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+body.ui-modern #jxwin .jw-tim:focus {
+  border-color: var(--m-gold-hi);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 218, 112, 0.45);
+}
+
+body.ui-modern .jw-sktip {
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.78)) drop-shadow(0 0 8px rgba(230, 190, 96, 0.24));
+}
+
+/* ---------- 6. MENU CHUỘT PHẢI (.jx-menu) & BẢNG CHỌN CHIÊU (.jx-skpick) ---------- */
+body.ui-modern .jx-menu {
+  border-radius: 12px;
+  padding: 5px;
+  background: linear-gradient(180deg, rgba(18, 25, 38, 0.95), rgba(9, 13, 21, 0.97));
+  border: 1.5px solid rgba(230, 190, 96, 0.68);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.74), 0 0 16px rgba(230, 190, 96, 0.22), inset 0 1px 0 rgba(255, 242, 198, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.ui-modern .jx-menu div {
+  border-radius: 8px;
+  padding: 5px 12px;
+  transition: background 0.12s, color 0.12s;
+}
+
+body.ui-modern .jx-menu div:hover {
+  background: linear-gradient(90deg, rgba(230, 190, 96, 0.24), rgba(230, 190, 96, 0.08));
+  color: var(--m-gold-hi);
+}
+
+body.ui-modern .jx-menu.jx-nguoi .dau,
+body.ui-modern .jx-menu.jx-nguoi .dau:hover {
+  border-radius: 0;
+  border-bottom: 1px solid rgba(230, 190, 96, 0.36);
+  color: var(--m-gold-hi);
+}
+
+body.ui-modern .jx-skpick {
+  border-radius: 14px;
+  padding: 8px;
+  gap: 5px;
+  background: linear-gradient(180deg, rgba(18, 25, 38, 0.95), rgba(9, 13, 21, 0.97));
+  border: 1.5px solid rgba(230, 190, 96, 0.72);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.76), 0 0 18px rgba(230, 190, 96, 0.24), inset 0 1px 0 rgba(255, 242, 198, 0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+body.ui-modern .jx-skpick > div {
+  border-radius: 10px;
+  border: 1.5px solid rgba(230, 190, 96, 0.52);
+  background: radial-gradient(circle at 50% 25%, rgba(36, 48, 70, 0.94), rgba(10, 14, 22, 0.97));
+  box-shadow: var(--m-bevel), 0 3px 8px rgba(0, 0, 0, 0.6);
+  transition: transform 0.12s, border-color 0.14s, box-shadow 0.14s;
+}
+
+body.ui-modern .jx-skpick > div:hover {
+  border-color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 0 12px rgba(255, 222, 120, 0.7);
+  transform: translateY(-1px) scale(1.05);
+}
+
+body.ui-modern .jx-skpick > div.on {
+  border-color: #7cff8a;
+  box-shadow: var(--m-bevel), 0 0 14px rgba(104, 245, 132, 0.65);
+}
+
+/* ---------- 7. CHAT MOBILE (.dt-chatp) & THANH VIỆC LÀM MÓN (#dt-hanh / #cg-hanh) ---------- */
+body.ui-modern.dt #dt .dt-ctab {
+  gap: 3px;
+}
+
+body.ui-modern.dt #dt .dt-ctab > span {
+  border-radius: 9px 9px 0 0;
+  border: 1px solid rgba(230, 190, 96, 0.42);
+  border-bottom: 0;
+  background: linear-gradient(180deg, rgba(24, 33, 49, 0.92), rgba(10, 14, 22, 0.95));
+  color: #c2d2e4;
+}
+
+body.ui-modern.dt #dt .dt-ctab > span.on {
+  color: var(--m-gold-hi);
+  border-color: var(--m-gold-hi);
+  background: linear-gradient(180deg, rgba(64, 48, 20, 0.95), rgba(22, 18, 12, 0.97));
+  box-shadow: inset 0 1px 0 rgba(255, 240, 190, 0.35), 0 -2px 10px rgba(230, 190, 96, 0.25);
+}
+
+body.ui-modern.dt #dt .dt-clist {
+  border-radius: 0 0 12px 12px;
+  border: 1.5px solid rgba(230, 190, 96, 0.56);
+  background: rgba(7, 10, 16, 0.88);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+
+body.ui-modern.dt #dt .dt-ghim {
+  border: 1px solid rgba(230, 190, 96, 0.58);
+  border-bottom: 0;
+  background: linear-gradient(90deg, rgba(58, 38, 12, 0.94), rgba(26, 18, 9, 0.94));
+}
+
+/* Giữ nguyên sprite face.png / sendbtn.png / icon kênh — chỉ bo tròn nổi & viền sáng */
+body.ui-modern.dt #dt .dt-ckenh,
+body.ui-modern.dt #dt .dt-cbtn {
+  border-radius: 10px;
+  border: 1.5px solid rgba(230, 190, 96, 0.72);
+  background-color: rgba(14, 20, 31, 0.94);
+  box-shadow: var(--m-bevel), 0 0 10px rgba(230, 190, 96, 0.26), 0 3px 8px rgba(0, 0, 0, 0.6);
+}
+
+body.ui-modern.dt #dt .dt-cgo {
+  border-radius: 999px;
+  padding: 0 14px;
+  border: 1.5px solid rgba(230, 190, 96, 0.58);
+  background: rgba(6, 10, 16, 0.92);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.82);
+}
+
+body.ui-modern.dt #dt .dt-cgo:focus {
+  border-color: var(--m-gold-hi);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.82), 0 0 12px rgba(255, 218, 112, 0.42);
+}
+
+body.ui-modern.dt #dt .dt-cmenu {
+  border-radius: 12px;
+  padding: 5px;
+  border: 1.5px solid rgba(230, 190, 96, 0.7);
+  background: linear-gradient(180deg, rgba(18, 25, 38, 0.96), rgba(9, 13, 21, 0.98));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.78), 0 0 14px rgba(230, 190, 96, 0.24);
+}
+
+body.ui-modern.dt #dt .dt-cmenu > div {
+  border-radius: 8px;
+}
+
+body.ui-modern.dt #dt .dt-cmenu > div.on {
+  background: rgba(230, 190, 96, 0.22);
+}
+
+body.ui-modern #dt-hanh .dt-hn,
+body.ui-modern #cg-hanh .dt-hn {
+  border-radius: 6px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.78)) drop-shadow(0 0 4px rgba(230, 190, 96, 0.32));
+}
+
+/* ---------- 8. KHÓA AN TOÀN (#kat) — GIỮ NGUYÊN BÀN PHÍM SỐ CLIENT ---------- */
+body.ui-modern #kat {
+  background: rgba(4, 7, 12, 0.56);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+body.ui-modern #kat .kat-hop {
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(18, 25, 38, 0.96) 0%, rgba(9, 13, 21, 0.98) 100%);
+  border: 1.5px solid rgba(230, 190, 96, 0.78);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.8), 0 0 22px rgba(230, 190, 96, 0.26), inset 0 1px 0 rgba(255, 242, 198, 0.24);
+}
+
+body.ui-modern #kat .kat-tieu {
+  color: var(--m-gold-hi);
+  border-bottom: 1px solid rgba(230, 190, 96, 0.36);
+  padding: 7px 12px 6px;
+  text-shadow: 0 1px 3px #000;
+}
+
+body.ui-modern #kat .kat-form input,
+body.ui-modern #kat .kat-o {
+  border-radius: 9px;
+  background: rgba(6, 10, 16, 0.9);
+  border: 1px solid rgba(230, 190, 96, 0.48);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+body.ui-modern #kat .kat-form input:focus,
+body.ui-modern #kat .kat-o:hover {
+  border-color: var(--m-gold-hi);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8), 0 0 10px rgba(255, 218, 112, 0.42);
+}
+
+body.ui-modern #kat .kat-nut {
+  border-radius: 999px;
+  padding: 0 14px;
+  border: 1px solid rgba(230, 190, 96, 0.62);
+  background: linear-gradient(180deg, rgba(34, 44, 64, 0.95), rgba(12, 17, 26, 0.97));
+  box-shadow: var(--m-bevel), 0 3px 8px rgba(0, 0, 0, 0.6);
+  transition: transform 0.12s, box-shadow 0.14s, border-color 0.14s;
+}
+
+body.ui-modern #kat .kat-nut:hover {
+  border-color: var(--m-gold-hi);
+  box-shadow: var(--m-bevel), 0 0 14px rgba(255, 222, 120, 0.62);
+}
+
+body.ui-modern #kat .kat-nut[data-k="ok"],
+body.ui-modern #kat .kat-nut[data-k="dat"],
+body.ui-modern #kat .kat-nut[data-k="mo"] {
+  background: linear-gradient(180deg, #deb14c 0%, #8f6015 100%);
+  border-color: var(--m-gold-hi);
+  color: #fff9e8;
+}
+/* === SYNC_ALL_UI_END === */
