@@ -792,7 +792,7 @@ body.ui-modern #kat .kat-nut {
 
 /* 1. Làm đẹp toàn diện màn Chọn máy chủ (#s-server) — cân đối cả 1 server lẫn nhiều server, mobile & PC */
 #s-server .box {
-  font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family: var(--jx), "IBM Plex Mono", monospace;
   width: min(760px, 92vw);
   padding: 28px 26px 24px;
   background: linear-gradient(165deg, rgba(20, 24, 28, 0.9), rgba(10, 12, 16, 0.94)) !important;
@@ -1062,7 +1062,7 @@ body.ui-modern.dt #dt .dt-o[data-a="l15"] .dt-ic {
 /* 1. Đồng bộ màn Đăng nhập (#s-login) & Đổi mật khẩu (#s-doimk) */
 body.ui-modern #s-login .box,
 body.ui-modern #s-doimk .box {
-  font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family: var(--jx), "IBM Plex Mono", monospace;
   width: min(410px, 92vw);
   padding: 28px 26px 24px;
   background: linear-gradient(165deg, rgba(20, 24, 28, 0.9), rgba(10, 12, 16, 0.94)) !important;
@@ -1152,7 +1152,7 @@ body.ui-modern #s-login .lg-chiase {
 
 /* 2. Đồng bộ màn Chọn nhân vật (#s-select / .csel) */
 body.ui-modern .csel {
-  font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family: var(--jx), "IBM Plex Mono", monospace;
 }
 
 body.ui-modern .csel h1 {
@@ -1204,7 +1204,7 @@ body.ui-modern .csel .cs-btns button.go {
 
 /* 3. Đồng bộ màn Tạo nhân vật (#s-create / .cc) */
 body.ui-modern .cc {
-  font-family: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family: var(--jx), "IBM Plex Mono", monospace;
 }
 
 body.ui-modern .cc .cc-desc,
@@ -1230,4 +1230,107 @@ body.ui-modern .cc .cc-bar button.ok {
 body.ui-modern .cc .cc-name input {
   font-family: inherit;
   border-radius: 10px;
+}
+
+/* === V4: FIX FONT CO, NUT CHON NV MOBILE & DAU THONG BAO ICON === */
+/* A. Tra lai day du cham do / so thong bao tren icon bo tron (KHONG cat overflow o vo ngoai) */
+body.ui-modern.dt #dt .dt-khung,
+body.ui-modern.dt #dt .dt-tic {
+  overflow: visible !important;
+}
+body.ui-modern.dt #dt .dt-khung::before {
+  z-index: 1 !important;
+  pointer-events: none;
+}
+body.ui-modern.dt #dt .dt-khung .dt-ic,
+body.ui-modern.dt #dt .dt-tic .dt-ic {
+  position: relative;
+  z-index: 0;
+  overflow: hidden !important;
+}
+body.ui-modern.dt #dt .dt-so {
+  z-index: 8 !important;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.85), 0 0 0 1.5px rgba(255, 240, 195, 0.55);
+}
+/* PC: bo overflow:hidden khoi nut .jx-btn de cham do .co-moi::after hien tron ven */
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k],
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-lpbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-ttbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-hdbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-ptbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-zlbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-bcbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-katbtn,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-mmbtn {
+  overflow: visible !important;
+}
+body.ui-modern:not(.dt) #jxhud .jx-bot .jx-btn[data-k]::before,
+body.ui-modern:not(.dt) #jxhud .jx-mmbox .jx-btn::before {
+  z-index: 1;
+  pointer-events: none;
+}
+body.ui-modern:not(.dt) #jxhud .jx-btn.co-moi::after {
+  z-index: 6 !important;
+}
+
+/* B. Dong bo font co cua game & chong vo khung / cat chu nut o man Chon nhan vat */
+body.ui-modern #s-login .box,
+body.ui-modern #s-doimk .box,
+body.ui-modern #s-server .box,
+body.ui-modern .csel,
+body.ui-modern .cc {
+  font-family: var(--jx), "IBM Plex Mono", monospace !important;
+}
+body.ui-modern .csel h1,
+body.ui-modern #s-login h1,
+body.ui-modern #s-doimk h1,
+body.ui-modern #s-server h1 {
+  font-family: "VK Sans Serif 16", var(--jx), monospace !important;
+  letter-spacing: 1px;
+}
+body.ui-modern .csel .cs-panel {
+  box-sizing: border-box;
+  width: min(620px, calc(100vw - 20px));
+  max-width: calc(100vw - 20px);
+  overflow: hidden;
+}
+body.ui-modern .csel .cs-btns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+body.ui-modern .csel .cs-btns button {
+  min-width: 0 !important;
+  width: auto;
+  padding: 8px 14px;
+  font-size: 13px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+/* Dien thoai: chia luoi 2 cot gon dep, nut Vao Game / Tao Nhan Vat hien tron ven 100% khong bao gio bi ep thanh 1 chu hay tran khung */
+html.dt-bat body.ui-modern .csel .cs-panel {
+  padding: 12px 12px 14px !important;
+}
+html.dt-bat body.ui-modern .csel .cs-btns {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  width: 100%;
+}
+html.dt-bat body.ui-modern .csel .cs-btns button,
+html.dt-bat body.ui-modern .csel .cs-btns button.go {
+  width: 100% !important;
+  min-width: 0 !important;
+  padding: 9px 8px !important;
+  font-size: 13px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+html.dt-bat body.ui-modern .csel .cs-btns button.go {
+  grid-column: 1 / -1;
+  font-size: 14px !important;
+  padding: 10px 12px !important;
 }

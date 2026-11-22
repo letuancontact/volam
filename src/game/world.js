@@ -1761,6 +1761,67 @@ export class World {
     if (!r && kcN) r = jx.draw(ctx, p.look, { act: fight ? "FightRun" : "NormalRun", dir: p.dir, t: p.t, duration: DUR.run, x: p.x, y: p.y - kcZ, alpha: hid ? HIDE_ALPHA : 1, shadow: false }); // hình nhảy đang tải: tạm hình chạy, không biến mất
     p.top = p.y - kcZ + (r ? Math.max(-150, r.top) : -90);
   }
+  // Phan loai do hiem vat roi: 0 = thuong/tien/thuoc, 1 = do xanh 1-4 dong, 2 = cuc pham/hiem/do xanh >=5 dong
+  _dropTier(d) {
+    if (!d || d.loai === "tien" || d.loai === "thuoc") return 0;
+    if (d.loai === "db" || (d.dong | 0) >= 5) return 2;
+    const nm = String(d.name || "");
+    if (/hoàng kim|bạch kim|an bang|định quốc|hiệp cốt|nhu tình|thủy tinh|tinh hồng|phúc duyên|bí kíp|lệnh bài|tiên thảo|quế hoa|bách quả|huyền tinh|huyền thiên|rương|đại thành|chiếu dạ|phi vân|bôn tiêu|phiên vũ|xích thố/i.test(nm)) return 2;
+    if (d.loai === "do" && (d.dong | 0) >= 1) return 1;
+    return 0;
+  }
+  // Cot anh sang roi do hiem (chi bat o giao dien Hien dai)
+  _drawDropBeam(ctx, d) {
+    try {
+      if (typeof document === "undefined" || !document.body || !document.body.classList.contains("ui-modern")) return;
+      const tier = this._dropTier(d); if (tier < 1) return;
+      const R = this.P && this.P.roi; if (R && d.t < R.fallTime(d.id) * 0.75) return;
+      const pulse = 0.78 + 0.22 * Math.sin(this.time * (tier >= 2 ? 4.8 : 3.2) + d.x * 0.05);
+      const h = tier >= 2 ? 70 : 40, w = tier >= 2 ? 14 : 9;
+      const cTop = tier >= 2 ? "rgba(255,214,92,0)" : "rgba(104,188,255,0)";
+      const cMid = (tier >= 2 ? "rgba(255,214,96," : "rgba(106,190,255,") + (tier >= 2 ? 0.30 * pulse : 0.20 * pulse).toFixed(3) + ")";
+      const cBot = (tier >= 2 ? "rgba(255,240,176," : "rgba(150,218,255,") + (tier >= 2 ? 0.70 * pulse : 0.44 * pulse).toFixed(3) + ")";
+      ctx.save(); ctx.strokeStyle = cBot; ctx.lineWidth = tier >= 2 ? 1.8 : 1.2;
+      ctx.beginPath(); ctx.ellipse(d.x, d.y + 1, (tier >= 2 ? 15 : 10) * (0.94 + 0.08 * pulse), (tier >= 2 ? 7 : 4.8) * (0.94 + 0.08 * pulse), 0, 0, Math.PI * 2); ctx.stroke();
+      const g = ctx.createLinearGradient(d.x, d.y - h, d.x, d.y + 2); g.addColorStop(0, cTop); g.addColorStop(0.55, cMid); g.addColorStop(1, cBot);
+      ctx.fillStyle = g; ctx.fillRect(d.x - w / 2, d.y - h, w, h + 2);
+      if (tier >= 2) {
+        ctx.fillStyle = "rgba(255,246,198,0.85)";
+        for (let i = 0; i < 3; i++) {
+          const ph = (this.time * 0.75 + i * 0.33 + (d.x % 17) * 0.05) % 1;
+          ctx.globalAlpha = (1 - ph) * 0.85; ctx.beginPath(); ctx.arc(d.x + Math.sin(ph * 6.28 + i * 2) * 7, d.y - 4 - ph * (h * 0.85), 1.5, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      ctx.restore();
+    } catch {}
+  }
+  // Hao quang danh hieu duoi chan (Bang chu/Quan tri, Ho Bang, Truong lao/Duong chu, Cao thu >= 80)
+  _drawAura(ctx, e) {
+    try {
+      if (typeof document === "undefined" || !document.body || !document.body.classList.contains("ui-modern")) return;
+      const other = e.kind === "other"; if (other ? e.an : e.hideUntil > this.time) return;
+      const cv = other ? e.bhc : (this.bhMinh && this.bhMinh.cv);
+      const nhan = String((other ? e.bh : (this.bhMinh && this.bhMinh.nhan)) || "");
+      const isChu = cv === "chu" || (other ? !!e.qt : !!this.laQt);
+      const isHoBang = /hộ bang/i.test(nhan);
+      const isQuan = cv === "lao" || cv === "duong";
+      const isCaoThu = !other && !!(this.hero && (this.hero.lvl | 0) >= 80);
+      if (!isChu && !isHoBang && !isQuan && !isCaoThu) return;
+      const r = (e.look && e.look.horse) || e.horse ? 33 : 24;
+      const pulse = 0.72 + 0.28 * Math.sin(this.time * 3.4 + (e.x || 0) * 0.02);
+      const c = isChu ? [255, 214, 92] : isHoBang ? [94, 234, 212] : isQuan ? [132, 232, 174] : [220, 214, 178];
+      const rgba = (a) => "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a.toFixed(3) + ")";
+      ctx.save();
+      const gr = ctx.createRadialGradient(e.x, e.y + 3, r * 0.2, e.x, e.y + 3, r * 1.18);
+      gr.addColorStop(0, rgba(0.14 * pulse)); gr.addColorStop(0.72, rgba(0.30 * pulse)); gr.addColorStop(1, rgba(0));
+      ctx.fillStyle = gr; ctx.beginPath(); ctx.ellipse(e.x, e.y + 3, r * 1.18, r * 0.54, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = rgba(0.76 * pulse); ctx.lineWidth = isChu ? 1.8 : 1.3;
+      ctx.beginPath(); ctx.ellipse(e.x, e.y + 3, r, r * 0.46, 0, 0, Math.PI * 2); ctx.stroke();
+      if (isChu) { ctx.strokeStyle = "rgba(255,244,192," + (0.42 * pulse).toFixed(3) + ")"; ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(e.x, e.y + 3, r + 4.5, (r + 4.5) * 0.46, 0, 0, Math.PI * 2); ctx.stroke(); }
+      ctx.restore();
+    } catch {}
+  }
+
   drawHeroLabel(ctx, p) {
     // F7 (client showplayername): tên; F8 (showplayerlife): thanh máu dưới tên như client. Người khác: không có thanh máu
     // (máy chủ chưa báo sinh lực)
