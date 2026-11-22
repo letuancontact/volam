@@ -1253,7 +1253,7 @@
       "tiLeTtl": 0.05
     },
     "ruongXanh": 2,
-    "toiThieu": 3,
+    "toiThieu": 1,
     "heSo": {
       "goc": 2,
       "them": 0.5
@@ -1789,8 +1789,8 @@
     "baoDanh": 5,
     "danh": 20,
     "chuSoai": 14,
-    "cap": 90,
-    "phi": 1000000,
+    "cap": 60,
+    "phi": 100000,
     "diem": 10,
     "dot": 30,
     "song": [
@@ -2031,7 +2031,7 @@
     "vaoTuDo": true,
     "giaThuocCo": 1,
     "mauSoai": 20000000,
-    "cap": 80,
+    "cap": 60,
     "phi": 3000,
     "giuKq": 120,
     "raSau": 30,
@@ -2762,5 +2762,25 @@
         "chiSo": 24
       }
     }
+  },
+  "bauCua": {
+    "bat": true,
+    "gio": [
+      "09:00",
+      "11:00",
+      "13:00",
+      "15:00",
+      "17:00",
+      "19:00",
+      "21:00",
+      "23:00"
+    ],
+    "dai": 30,
+    "toiDa": 100,
+    "bao": 50,
+    "bai": [
+      53,
+      37
+    ]
   }
 }

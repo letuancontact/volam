@@ -132,4 +132,40 @@ function quanTri(qt, b) {
   loi("Việc không rõ");
 }
 
-module.exports = { nhap, quanTri, FILE };
+// Tự khởi tạo 3 Giftcode khai mở mặc định nếu chưa tồn tại (không ghi đè mã quản trị đã sửa hoặc lượt đã dùng)
+function khoiTaoMacDinh() {
+  try {
+    const all = doc();
+    const t = Date.now();
+    const mac = {
+      TANTHU: {
+        tien: 200000, xu: 20, khoa: 1,
+        mon: [{ k: "ms:71", n: 2 }, { k: "ms:1427", n: 1 }],
+        loi: "Chao mung tan thu gia nhap giang ho Vo Lam!"
+      },
+      VOLAM2026: {
+        tien: 500000, xu: 50, khoa: 1,
+        mon: [{ k: "ms:71", n: 3 }, { k: "ms:2348", n: 2 }],
+        loi: "Qua khai mo may chu Vo Lam 2026 — chuc dai hiep hanh tau vui ve!"
+      },
+      HOIQUAN: {
+        tien: 300000, xu: 30, khoa: 1,
+        mon: [{ k: "ms:122", n: 1 }, { k: "ms:73", n: 1 }],
+        loi: "Tri an anh chi em group Hoi Quan!"
+      }
+    };
+    let doi = false;
+    for (const [ma, cf] of Object.entries(mac)) {
+      if (all.ma[ma]) continue;
+      const { qua } = kiemQua(cf);
+      all.ma[ma] = { qua, loi: cf.loi, toiDa: 0, het: 0, tao: { boi: "he-thong", luc: t }, dung: [] };
+      doi = true;
+    }
+    if (doi) ghi(all);
+  } catch (e) {
+    console.error("Khoi tao giftcode mac dinh:", e.message);
+  }
+}
+khoiTaoMacDinh();
+
+module.exports = { nhap, quanTri, FILE, khoiTaoMacDinh };

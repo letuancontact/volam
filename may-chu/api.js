@@ -331,6 +331,7 @@ function taoNv(res, tk, o, b, trang) {
   // trường máy chủ giữ (GIU) không nhận từ trình duyệt lúc tạo (soát 05/11: trước nhận nguyên -> gieo được rương / tiền công phân thân… = đúc vật phẩm)
   const goc = { ...h }; for (const k of GIU) delete goc[k];
   const hero = { ...goc, v: 1, slot: o, name, server: SV.server, lvl: 1, exp: 0, gold: 0, xu: 0, bag: [], equip: {}, uN: 0, locDo: 0, created: t, last: t };
+  /* QUA_TAN_THU_3A */ try { DO.taoQua(hero, { tien: 50000, mon: [{ k: "potion:2", n: 20 }, { k: "potion:7", n: 20 }, { k: "townportal:1", n: 5 }], kbh: DO.NOI.KBH_VV }); } catch (e) { console.error("Qua tan thu:", e.message); }
   DO.chuan(hero);
   if (JSON.stringify(hero).length > NV_MAX) return loi(res, 413, "Nhân vật quá lớn");
   tk.nv[o] = hero; D.ghiTk(tk);
