@@ -1495,7 +1495,7 @@ function ghimNhan(g) {
 // datThuong; điện thoại: nút Nhận thưởng + thẻ Giang hồ + ô đầu Việc cần làm — dienthoai.js _dau), mục còn quà trong khung chọn ghi "(có thể
 // nhận)" (nhanThuong). Dòng tin: nhịp đầu sau khi vào game (còn mấy loại) + loại mới có trong lúc chơi (sang ngày, lên mốc cấp, đủ giờ phúc
 // duyên — Online nhận thưởng đã có câu báo riêng lúc đủ mốc: may-chu/online.js)
-const TEN_THUONG = { dn: "Đăng nhập nhận thưởng", cap: "Thưởng thăng cấp", onl: "Online nhận thưởng", pd: "Phúc duyên" };
+const TEN_THUONG = { dn: "Đăng nhập nhận thưởng", dd7: "Điểm danh 7 ngày", cap: "Thưởng thăng cấp", onl: "Online nhận thưởng", pd: "Phúc duyên" };
 let thuongCho = [], thuongDau = true, thuongVe = -1; // thuongVe: số đang vẽ trên nút (-1: chưa vẽ)
 function capNhatThuong(ds) {
   if (!hudMounted) { thuongCho = ds; return; } // nhịp tới lúc thanh giao diện chưa dựng (lần vào game đầu — gotoZone trước mountHud): chờ nhịp sau
@@ -1681,7 +1681,7 @@ function nhanThuong() {
   if (GW && GW.W.get("loginprize") && GW.W.get("loginprize").visible) return GW.openLoginPrize();
   const co = (k) => TEN_THUONG[k] + (thuongCho.includes(k) ? " <color=green>(có thể nhận)<color>" : ""); // mục còn quà chờ nhận (capNhatThuong)
   NPCD.choose("msgsel", "InfoText", richText("Đại hiệp, xin hãy chọn phần thưởng:", hero.name),
-    [[co("dn"), () => GW.openLoginPrize()], [co("cap"), () => thuongCap({ viec: "mo" })], [co("onl"), () => thuongOnline({ viec: "mo" })], [co("pd"), () => phucDuyen({ viec: "mo" })], ["Kết thúc", null]]);
+    [[co("dn"), () => GW.openLoginPrize()], [co("dd7"), () => diemDanh7({ viec: "mo" })], [co("cap"), () => thuongCap({ viec: "mo" })], [co("onl"), () => thuongOnline({ viec: "mo" })], [co("pd"), () => phucDuyen({ viec: "mo" })], ["Kết thúc", null]]);
 }
 // Phúc duyên (anh 31/10 khuya lần 2 — may-chu/phuc-duyen.js, lời Võ Lâm Minh Truyền Nhân của client): say / talk / tin như Online nhận thưởng;
 // shop: 93 = mở cửa hàng Thần bí Thương Nhân Liễu Ất (giá điểm phúc duyên — windows.js openShop(93, "pd"))
@@ -1768,6 +1768,15 @@ function thuongCap(b) {
   }).catch((e) => { if (e.ma !== "het-phien") P.hud.msg(e.message); });
 }
 // Online nhận thưởng: máy chủ trả say { text, opts: [[nhãn, việc]] } | talk [câu] (xong quay lại khung), tin = câu báo khung tin
+function diemDanh7(b) {
+  if (!hero) return;
+  Net.diemDanh7(hero.slot | 0, b).then((j) => {
+    applyServer(j);
+    for (const t of j.tin || []) P.hud.msg(t.replace(/<color=?\w*>/g, ""), MAU_TIN.tien);
+    if (GW) GW.refresh(true);
+    if (j.say && NPCD) NPCD.choose("msgsel", "InfoText", richText(j.say.text, hero.name), j.say.opts.map(([nhan, viec]) => [nhan, viec ? () => diemDanh7({ viec }) : null]));
+  }).catch((e) => { if (e.ma !== "het-phien") P.hud.msg(e.message); });
+}
 function thuongOnline(b) {
   if (!hero) return;
   Net.thuongOnline(hero.slot | 0, b).then((j) => {

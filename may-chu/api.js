@@ -115,7 +115,8 @@ const KTN = require("./khoa-tai-nguyen"); // phiếu tài nguyên: assets/ chỉ
 const CH = require("./chong-hack"); // phát hiện tăng tốc trình duyệt (Cheat Engine, trình duyệt có nút tăng tốc — anh 31/10 khuya)
 const NT = require("./nghi-tool"); // nghi dùng công cụ tự động (anh 13/11 — "S2 PRO AUTO"): cờ tk.nghiTool + nhật ký "tool" cho bảng F10, không tự khóa
 const NG = require("./npc-gan"); // đứng gần NPC (anh 13/11): API NPC chỉ nhận ở đúng bản đồ + gần NPC — sai thì 400 ma "xa-npc" + cờ nghi dùng công cụ
-const ONL = require("./online"); // Online nhận thưởng — tích lũy thời gian online trong ngày (anh 31/10 khuya)
+const ONL = require("./online");
+const DD7 = require("./diem-danh-7"); // Online nhận thưởng — tích lũy thời gian online trong ngày (anh 31/10 khuya)
 const TCAP = require("./thuong-cap"); // Thưởng thăng cấp 10 … 150 (anh 02/11)
 const PTH = require("./phan-than"); // Phân Thân — thuê phân thân của người chơi khác (anh 05/11)
 const QC = require("./quai-chung"); // quái chung ở bãi train (anh 02/11 — làm thử Lâm Du Quan; cau-hinh.json quaiChung.bai)
@@ -551,7 +552,7 @@ function nhip(res, tk, b, trang) {
     } else if (h.kbhMoTin) { delete h.kbhMoTin; ghi = true; }
     // phần thưởng đang chờ nhận (anh 03/11 — "nhân vật đủ điều kiện nhận thưởng nhưng họ quên thì làm sao nhắc", chọn kiểu chấm đỏ có số): loại thưởng
     // của nút Nhận thưởng còn nhận được — trình duyệt hiện số đỏ trên nút, "(có thể nhận)" trong khung chọn, dòng tin lúc vào game / có loại mới
-    ket.ntc = [DO.dnCho(tk) && "dn", TCAP.coNhan(h) && "cap", ONL.coNhan(h, key) && "onl", PD.coNhan(h, key) && "pd"].filter(Boolean);
+    ket.ntc = [DO.dnCho(tk) && "dn", DD7.coNhan(tk) && "dd7", TCAP.coNhan(h) && "cap", ONL.coNhan(h, key) && "onl", PD.coNhan(h, key) && "pd"].filter(Boolean);
     // Phú Quý Cẩm Hạp (may-chu/phu-quy.js — anh 03/11): đợt vừa quay mà có số trúng chưa nhận -> 1 câu nhắc mỗi đợt
     const pqb = PQ.bao(h);
     if (pqb) { ket.pqBao = pqb; ghi = true; }
@@ -724,6 +725,11 @@ async function xuLyApi(req, res, p) {
       return guiJson(res, 200, { ...r, nv: nvCua(h), tui: tuiCua(h) });
     }
     // Online nhận thưởng (may-chu/online.js — anh 31/10 khuya): { o, viec: "mo" | "xem" | "nhan" } -> { say | talk, tin }
+    // Điểm danh 7 ngày theo tài khoản (may-chu/diem-danh-7.js): { o, viec: "mo" | "nhan" }
+    if (p === "/api/diem-danh-7" && m === "POST") {
+      const h = oCua(tk, body), r = DD7.lam(tk, h, body); D.ghiTk(tk);
+      return guiJson(res, 200, { ...r, nv: nvCua(h), tui: tuiCua(h) });
+    }
     if (p === "/api/thuong-online" && m === "POST") {
       const h = oCua(tk, body), r = ONL.lam(h, tk.ten + "|" + (body.o | 0), body); D.ghiTk(tk);
       return guiJson(res, 200, { ...r, nv: nvCua(h), tui: tuiCua(h) });
