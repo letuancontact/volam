@@ -98,4 +98,25 @@ export class GameAudio {
   ui(name, vol = 0.8) { this.play(this.meta.ui[name], vol); }
   // tiếng đòn thường: missile(1, 0) lúc vung, missile(1, 1) lúc trúng (sound.json missile[1] — tiếng đạn 1 của client)
   missile(id, k = 0, vol = 0.8) { const f = this.meta.missile[id]; this.play(f && f[Math.min(k, f.length - 1)], vol); }
+
+  // Chuông ngọc khi rơi trang bị xanh (tier 1) hoặc cực phẩm/đồ hiếm (tier 2) — dùng Web Audio, tự theo nút tắt tiếng & âm lượng SFX
+  playChime(tier = 1) {
+    if (this.muted || !this.ctx || !this.out || this.ctx.state !== "running") return;
+    const key = "chime:" + tier, now = this.ctx.currentTime;
+    if ((this.last.get(key) || 0) + 0.25 > now) return;
+    this.last.set(key, now);
+    const notes = tier >= 2 ? [[1046.5, 0, 0.36, 0.14], [1567.98, 0.08, 0.45, 0.13]] : [[880, 0, 0.22, 0.08]];
+    for (const [freq, dl, dur, vol] of notes) {
+      try {
+        const osc = this.ctx.createOscillator(), g = this.ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, now + dl);
+        g.gain.setValueAtTime(0.0001, now + dl);
+        g.gain.exponentialRampToValueAtTime(vol, now + dl + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + dl + dur);
+        osc.connect(g); g.connect(this.out);
+        osc.start(now + dl); osc.stop(now + dl + dur + 0.02);
+      } catch {}
+    }
+  }
 }

@@ -480,21 +480,24 @@ addEventListener("keydown", (e) => {
 function serverScreen(slot) {
   tenMay(Net.me && Net.me.sv);
   show("s-server");
+  const back = $("#sv-back");
+  if (back) back.onclick = () => { try { P.audio && P.audio.ui("click"); } catch {} selectScreen(); };
   const ds = SERVERS.filter((s) => !P.only || s.id === P.only);
   const box = $("#s-server .box"), wrap = $("#servers");
   if (box) box.classList.toggle("sv-one", ds.length === 1);
   if (wrap) {
     wrap.classList.toggle("sv-one", ds.length === 1);
     wrap.innerHTML = ds.map((s) =>
-      `<button class="card sv-card" data-id="${s.id}">` +
+      `<button class="card sv-card" type="button" data-id="${s.id}">` +
         `<span class="sv-head"><b class="sv-name">${esc(s.n)}</b><span class="sv-stat"><i></i>Hoạt động</span></span>` +
         `<small class="sv-desc">${esc(s.d)}</small>` +
         `<span class="sv-foot"><span class="sv-tag">Khai mở giang hồ</span><span class="sv-go">Chọn máy chủ →</span></span>` +
       `</button>`
     ).join("");
   }
-  $("#servers .card").forEach((b) => (b.onclick = () => { P.audio.ui("click"); createScreen(+b.dataset.id, slot); }));
-  $("#sv-back").onclick = () => selectScreen();
+  $$("#servers .card").forEach((b) => {
+    b.onclick = () => { try { P.audio && P.audio.ui("click"); } catch {} createScreen(+b.dataset.id, slot); };
+  });
 }
 
 // ---------- tạo nhân vật (theo bản 2 js/ui.js pickFaction) ----------
