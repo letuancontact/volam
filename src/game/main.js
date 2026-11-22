@@ -926,7 +926,7 @@ async function loadZone(zone, opt, L) {
   // vào thành / thôn lúc tự đánh đang bật (Thổ Địa Phù, trọng thương, Trợ Thủ về làm việc…): tạm dừng tự đánh — không lao vào đánh mộc nhân
   // (anh 31/10 khuya); ra bãi thì World mới tự đánh tiếp, bấm bật lại (Space 2 lần) thì đánh mộc nhân như thường. Trợ Thủ đang về làm việc ở
   // thành / đi Xa phu thì không báo. Boss thế giới đang ở thôn / thành này (anh 02/11 — ngoài cổng): báo chỗ, tới gần boss là tự đánh boss
-  if (w.auto && TOWN_KINDS.has(zone.kind)) {
+  if (w.auto && TOWN_KINDS.has(zone.kind) && !(zone.bang && w.mobs.some((m) => m.btg && m.alive))) {
     w.tamDung = true;
     const bt = BossTG.b && !BossTG.b.ket && BossTG.b.bai === zone.id ? BossTG.b : null, sn = SanNhim.s && !SanNhim.s.ket && SanNhim.s.ds.some((r) => r[1] === zone.id && !r[8]);
     if (!thanh && !diXe) P.hud.msg(`Tự đánh tạm dừng ở ${zone.n} (không đánh mộc nhân) — ra bãi luyện công sẽ tự đánh tiếp, tắt rồi bật lại Tự đánh để tự về bãi${bt ? `; boss thế giới ${bt.ten} ${bt.noi || "ngoài thành"} — tới gần boss là tự đánh boss` : ""}${sn ? "; đang có Nhím béo phì ngoài thành — tới gần nhím là tự đánh nhím" : ""}`);
@@ -4317,14 +4317,33 @@ function teDanMo() {
       : `Tuần trước bổn bang chưa có Hộ Bang. Mỗi thứ Hai, ${HB.so} thành viên có điểm cống hiến từ hoạt động trong tuần cao nhất (ít nhất ${fmtSo(HB.congMin)} điểm) được chọn: nhận ${fmtSo(HB.cong)} điểm cống hiến và danh hiệu (Hộ Bang) ${HB.ngay} ngày.`);
     const ruBan = () => xem(`Mời bằng hữu vào bang bằng lời mời (Ctrl + chuột phải vào người chơi → Mời vào bang). Người mới ở bang đủ ${RB.ngay} ngày và có ${fmtSo(RB.congCan)} điểm cống hiến từ hoạt động (trong ${RB.hetNgay} ngày đầu): người mời nhận ${fmtSo(RB.cong)}, người mới nhận ${fmtSo(RB.congMoi)} điểm cống hiến, bang thêm ${fmtSo(RB.kt)} vạn ngân sách kiến thiết. Mỗi tài khoản (mỗi chủ tài khoản) chỉ tính 1 lần; người mời và người mới phải là 2 người khác nhau.<enter>` +
       (Array.isArray(T.ruBan) && T.ruBan.length ? `Đang chờ: ${T.ruBan.map((x) => `<color=yellow>${bhTenNpc(x.ten)}<color> (còn ${x.con | 0} ngày)`).join(", ")}` : "Hiện chưa có người mới nào đang chờ."));
-    const duaCap = () => { const d = T.duaCap || {}, ds = (c) => (Array.isArray(d[c]) && d[c].length ? d[c].map((x) => `<color=yellow>${bhTenNpc(x)}<color>`).join(", ") : "chưa có"); return xem(`Ba bang hội đầu tiên lên đẳng cấp kiến thiết 2 và 4 được ghi danh (phần thưởng lệnh gọi Boss mở ở đợt sau).<enter>Cấp 2: ${ds("2")}<enter>Cấp 4: ${ds("4")}`); };
+    const duaCap = () => { const d = T.duaCap || {}, ds = (c) => (Array.isArray(d[c]) && d[c].length ? d[c].map((x) => `<color=yellow>${bhTenNpc(x)}<color>`).join(", ") : "chưa có"); return xem(`Ba bang hội đầu tiên lên đẳng cấp kiến thiết 2 và 4 được ghi danh (tặng Lệnh gọi Boss Bang miễn phí: Cấp 2 +1 lệnh, Cấp 4 +2 lệnh).<enter>Cấp 2: ${ds("2")}<enter>Cấp 4: ${ds("4")}`); };
+        const bossMenu = () => {
+      const bs = T.boss || {};
+      if (bs.dang) return xem(`Hiện tại <color=yellow>${bhTenNpc(bs.dang.ten)}<color> đang xuất hiện tại sân Khu vực bang! Hãy chạy ra giữa sân phía trước Tế Đàn và bật Tự đánh cùng anh em trong bang.`);
+      if (bs.daGoi) return xem("Hôm nay bổn bang đã triệu hồi Boss Bang hội rồi. Hãy quay lại vào ngày mai!");
+      const phi = bs.phiKt || 50, lenh = bs.lenh | 0;
+      const moTa = lenh > 0
+        ? `Bổn bang đang có <color=green>${lenh} Lệnh gọi Boss miễn phí<color> (từ thưởng Đua cấp). Khi triệu hồi sẽ ưu tiên dùng 1 Lệnh, không tốn ngân sách kiến thiết!`
+        : `Triệu hồi Boss Bang hội cần <color=yellow>${phi} vạn Ngân sách kiến thiết<color> (hiện có ${fmtSo(B.kt || 0)} vạn). Giới hạn 1 lần/ngày; hạ gục nhận EXP, 2 Bảo rương đồ xanh, +80~150 Cống hiến, quà Top sát thương và +30 vạn Ngân quỹ bang!`;
+      if (!quan) return xem(`${moTa}<enter><color=red>Chỉ Bang chủ hoặc Trưởng lão có quyền quản lý mới được triệu hồi.<color>`);
+      NPCD.choose("msgsel", "InfoText", noi(`${ten}: ${moTa}<enter>Ngươi muốn triệu hồi Boss Bang hội ngay bây giờ không?`),
+        [["Triệu hồi ngay tại sân bang", () => lam({ viec: "goiBoss" })], ["Để lúc khác", lai]]);
+    };
+    const tienCuMenu = () => {
+      const tc = T.tuTienCu || {};
+      if (!tc.duoc) return xem(`Tự tiến cử chức Bang chủ cho phép thành viên tiếp quản khi Bang chủ vắng mặt liên tục từ <color=yellow>${tc.canNgay || 7} ngày<color> trở lên.<enter>Trạng thái hiện tại: <color=red>${bhTenNpc(tc.ly || "Chưa đủ điều kiện")}<color>`);
+      NPCD.choose("msgsel", "InfoText", noi(`${ten}: Bang chủ <color=yellow>${bhTenNpc(tc.chu)}<color> đã vắng mặt <color=yellow>${tc.vangNgay} ngày<color>. Ngươi đủ điều kiện tự tiến cử tiếp quản chức Bang chủ bang hội <color=yellow>${bhTenNpc(B.ten)}<color> (Bang chủ cũ sẽ xuống làm Trưởng lão). Xác nhận tiếp quản?`),
+        [["Xác nhận tiếp quản Bang chủ", () => lam({ viec: "tuTienCu" })], ["Hủy bỏ", lai]]);
+    };
     const dd = T.dd ? "<color=green>Hôm nay đã nhận thưởng điểm danh.<color>" : T.ly ? `<color=red>${bhTenNpc(T.ly)}<color>` : `Hôm nay chưa nhận thưởng: <color=yellow>${fmtSo(T.cong)}<color> điểm cống hiến.`;
     NPCD.choose("msgsel", "InfoText", noi(`${ten}: Ngươi tìm ta có việc gì?<enter>${dd}<enter>Cống hiến cá nhân: <color=yellow>${fmtSo(t.cong || 0)}<color>`), [
       ["Nhận phần thưởng điểm cống hiến mỗi ngày", () => lam({ viec: "diemDanh" })],
       ["Phần thưởng mục tiêu tuần cá nhân", () => lam({ viec: "mtLinh" })],
       ...(quan ? [["Thiết lập độ khó mục tiêu tuần", doKho], ["Phần thưởng mục tiêu tuần bang hội", () => lam({ viec: "mtBang" })]] : []),
       ["Hộ Bang tuần trước", hoBang], ["Rủ bạn vào bang", ruBan], ["Đua cấp bang hội", duaCap],
-      ["<color=gray>Tự tiến cử chức bang chủ<color>", () => xem("Tự tiến cử chức bang chủ — Đợt sau mới mở")],
+      ["<color=yellow>Triệu hồi Boss Bang hội<color>", bossMenu],
+      ["Tự tiến cử chức bang chủ", tienCuMenu],
       ["Hủy bỏ", null]]);
   });
 }

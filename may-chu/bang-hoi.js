@@ -308,6 +308,54 @@ function onlineSet() {
   return s;
 }
 
+const BOSS_TG = () => require("./boss-tg");
+const DL_BH = () => require("./du-lieu");
+const BOSS_BANG_PHI_KT = 50; // 50 vạn ngân sách kiến thiết / lần gọi Boss Bang hội
+const TU_TIEN_CU_NGAY = 7;   // Bang chủ vắng liên tục >= 7 ngày mở quyền tự tiến cử
+
+function ngayVnHomNay() {
+  return new Date(Date.now() + 7 * 3600000).toISOString().slice(0, 10);
+}
+
+// Đảm bảo bang ghi danh Đua cấp 2/4 được nhận Lệnh gọi Boss miễn phí (cấp 2: +1, cấp 4: +2)
+function capBuLenhDuaCap(B) {
+  if (!B) return;
+  const dc = DB.duaCap || {};
+  const d2 = Array.isArray(dc["2"]) && dc["2"].includes(B.ten);
+  const d4 = Array.isArray(dc["4"]) && dc["4"].includes(B.ten);
+  let them = 0;
+  if (d2 && !B.daNhanLenh2) { B.daNhanLenh2 = 1; them += 1; }
+  if (d4 && !B.daNhanLenh4) { B.daNhanLenh4 = 1; them += 2; }
+  if (them > 0) { B.lenhBoss = (B.lenhBoss | 0) + them; henGhi(); }
+}
+
+// Mốc hoạt động gần nhất (ms) và số ngày vắng mặt của Bang chủ hiện tại
+function trangThaiChuBang(B, onSet) {
+  const chu = (B.tv || []).find((x) => x.cv === "chu");
+  if (!chu) return { chu: null, on: false, vangNgay: 999, duNgay: true };
+  if (onSet && onSet.has(String(chu.tk || "").toLowerCase())) return { chu, on: true, vangNgay: 0, duNgay: false };
+  let moc = Math.max(Number(chu.cuoi) || 0, Number(chu.vaoLuc) || 0, Number(B.lapLuc) || 0);
+  try {
+    const tkObj = DL_BH().docTk(chu.tk);
+    if (tkObj) {
+      if (tkObj.truoc && tkObj.truoc.luc) moc = Math.max(moc, Number(tkObj.truoc.luc) || 0);
+      const nv = Array.isArray(tkObj.nv) ? (tkObj.nv[chu.o | 0] || tkObj.nv.find((x) => x && x.name === chu.ten)) : null;
+      if (nv && nv.last) moc = Math.max(moc, Number(nv.last) || 0);
+    }
+  } catch {}
+  if (!moc) moc = Date.now();
+  const vangNgay = Math.max(0, Math.floor((Date.now() - moc) / 86400000));
+  return { chu, on: false, vangNgay, duNgay: vangNgay >= TU_TIEN_CU_NGAY };
+}
+
+function thuongQuyBoss(bangId, vanQuy = 30) {
+  const B = bangTheoId(bangId);
+  if (!B) return;
+  B.quy = (B.quy | 0) + (vanQuy | 0);
+  tangV(B);
+  henGhi();
+}
+
 function xemBang(B, mToi) {
   damBaoTuan(B);
   damBaoNgay(B);
@@ -381,7 +429,36 @@ function xemBang(B, mToi) {
       doKhoSau: B.doKhoSau || 1,
       hoBang: B.hoBang || [],
       ruBan: [],
-      duaCap: DB.duaCap || { "2": [], "4": [] }
+      duaCap: DB.duaCap || { "2": [], "4": [] },
+      boss: (() => {
+        capBuLenhDuaCap(B);
+        const dang = BOSS_TG().coBossBang ? BOSS_TG().coBossBang(B.id) : null;
+        return {
+          dang: dang ? { ten: dang.ten, bai: dang.bai, het: dang.het } : null,
+          daGoi: B.bossNgay === ngayVnHomNay() ? 1 : 0,
+          phiKt: BOSS_BANG_PHI_KT,
+          lenh: B.lenhBoss | 0
+        };
+      })(),
+      tuTienCu: (() => {
+        const st = trangThaiChuBang(B, on);
+        const laChu = !!(mToi && mToi.cv === "chu");
+        const oNgay = mToi && mToi.vaoLuc ? Math.floor((Date.now() - mToi.vaoLuc) / 86400000) : 0;
+        const laQuan = !!(mToi && (mToi.cv === "lao" || mToi.cv === "duong"));
+        const duCong = !!(mToi && (mToi.congTong | 0) >= 200);
+        const duTv = !laChu && !!mToi && mToi.cv !== "an" && (oNgay >= 3 || laQuan) && duCong;
+        return {
+          chu: st.chu ? st.chu.ten : "",
+          on: st.on ? 1 : 0,
+          vangNgay: st.vangNgay,
+          canNgay: TU_TIEN_CU_NGAY,
+          duoc: !laChu && st.duNgay && duTv ? 1 : 0,
+          ly: laChu ? "Bạn đang là Bang chủ"
+            : !st.duNgay ? (st.on ? `Bang chủ ${st.chu ? st.chu.ten : ""} hiện đang trực tuyến` : `Bang chủ mới vắng ${st.vangNgay} ngày (cần vắng liên tục đủ ${TU_TIEN_CU_NGAY} ngày)`)
+            : !duTv ? "Cần là Trưởng lão/Đường chủ hoặc đã gia nhập bang đủ 3 ngày, và có từ 200 tổng cống hiến trở lên"
+            : ""
+        };
+      })()
     },
     leVat: {
       hb: {
@@ -1038,7 +1115,53 @@ function lam(tk, h, o, b, qt) {
     B.kt = (B.kt | 0) + thuongKt;
     ghiSuKien(B, `${m.ten} lĩnh thưởng mục tiêu tuần bang hội (+${thuongKt} vạn kiến thiết).`);
     tangV(B); henGhi();
-    return { bh: xemBang(B, m), msg: `Bang hội nhận +${thuongKt} vạn ngân sách kiến thiết!` };
+    return { bh: xemBang(B, m), msg: `Bang hội nhận +${thuongKt}
+
+  if (viec === "goiBoss") {
+    if (!(m.cv === "chu" || (m.cv === "lao" && !!(B.quyen || {})["2005"]))) loi("Chỉ Bang chủ hoặc Trưởng lão có quyền quản lý mới được triệu hồi Boss Bang hội");
+    capBuLenhDuaCap(B);
+    if (BOSS_TG().coBossBang && BOSS_TG().coBossBang(B.id)) loi("Bổn bang đang có Boss Bang hội chưa bị tiêu diệt");
+    const homNay = ngayVnHomNay();
+    if (B.bossNgay === homNay) loi("Hôm nay bổn bang đã triệu hồi Boss Bang hội rồi — hãy quay lại vào ngày mai");
+    const dungLenh = (B.lenhBoss | 0) > 0;
+    if (!dungLenh && (B.kt | 0) < BOSS_BANG_PHI_KT) loi(`Cần ${BOSS_BANG_PHI_KT} vạn ngân sách kiến thiết (hoặc 1 Lệnh gọi Boss) để triệu hồi Boss Bang hội`);
+    const zId = (B.khu && B.khu.mau) || 586;
+    const boss = BOSS_TG().goiBang({ bangId: B.id, bangTen: B.ten, bai: zId, x: 5700, y: 2852, nguoiGoi: h.name, capBang: B.cap | 0 || 1 });
+    if (dungLenh) B.lenhBoss = Math.max(0, (B.lenhBoss | 0) - 1);
+    else B.kt = Math.max(0, (B.kt | 0) - BOSS_BANG_PHI_KT);
+    B.bossNgay = homNay;
+    B.bossLuc = Date.now();
+    tangV(B);
+    henGhi();
+    return { bh: xemBang(B, m), msg: `Triệu hồi thành công ${boss.ten} tại sân Khu vực bang!${dungLenh ? " (dùng 1 Lệnh gọi Boss miễn phí)" : ` (-${BOSS_BANG_PHI_KT} vạn kiến thiết)`}` };
+  }
+
+  if (viec === "tuTienCu") {
+    if (m.cv === "chu") loi("Bạn hiện đang là Bang chủ của bang hội này rồi");
+    if (m.cv === "an") loi("Ẩn sỹ không thể tự tiến cử chức Bang chủ");
+    const st = trangThaiChuBang(B, onlineSet());
+    if (!st.duNgay) {
+      loi(st.on ? `Bang chủ ${st.chu ? st.chu.ten : ""} hiện đang trực tuyến, không thể tự tiến cử`
+        : `Bang chủ mới vắng mặt ${st.vangNgay} ngày — cần vắng liên tục đủ ${TU_TIEN_CU_NGAY} ngày mới có thể tự tiến cử`);
+    }
+    const oNgay = m.vaoLuc ? Math.floor((Date.now() - m.vaoLuc) / 86400000) : 0;
+    const laQuan = m.cv === "lao" || m.cv === "duong";
+    if (!laQuan && oNgay < 3) loi("Bạn cần gia nhập bang ít nhất 3 ngày (hoặc giữ chức Trưởng lão / Đường chủ) mới được tự tiến cử");
+    if ((m.congTong | 0) < 200) loi("Cần đạt ít nhất 200 tổng điểm cống hiến để tự tiến cử chức Bang chủ");
+    const tenCu = st.chu ? st.chu.ten : B.chu;
+    for (const x of B.tv || []) if (x.cv === "chu") { x.cv = "lao"; if (x.dh === "Bang chủ") x.dh = "Trưởng lão"; }
+    m.cv = "chu";
+    m.dh = "Bang chủ";
+    m.cuoi = Date.now();
+    B.chu = m.ten;
+    tangV(B);
+    henGhi();
+    try {
+      const TG_M = require("./the-gioi");
+      for (const x of B.tv || []) if (TG_M.dangChoi(x.tk)) TG_M.thongBaoTk(`${m.ten} đã tự tiến cử tiếp quản chức Bang chủ ${B.ten} (Bang chủ cũ ${tenCu} vắng mặt quá ${TU_TIEN_CU_NGAY} ngày).`, x.tk, true);
+    } catch {}
+    return { bh: xemBang(B, m), msg: `Chúc mừng! Bạn đã chính thức tiếp quản chức Bang chủ bang hội ${B.ten}!` };
+  } vạn ngân sách kiến thiết!` };
   }
 
   // ---- Tổng quản Lễ phẩm phường (Đợt 2) ----
@@ -1091,6 +1214,7 @@ function nhip(tkTen, o, h, b) {
   const cur = cuaNv(tkTen, o, h && h.name);
   if (cur) {
     const { B, m } = cur;
+    const nowM = Date.now(); if (nowM - (m.cuoi | 0) > 5 * 60000) { m.cuoi = nowM; }
     out.bhMinh = { id: B.id, ten: B.ten, cv: m.cv, dh: m.dh || "", nhan: nhanText(B, m, h && h.sex), v: B.v | 0 };
     const ccClient = +(b && b.bhcc) || 0;
     const ccId = B.congCao ? (B.ccId | 0) : 0;
@@ -1256,5 +1380,5 @@ module.exports = {
   ganKiemTen: (fn) => { kiemTenCam = typeof fn === "function" ? fn : null; },
   xa, CF, TEN_CV, TEN_PHE, cong, quai,
   nhanCho: () => null,
-  chanRtb, teDanNay, VAN
+  chanRtb, teDanNay, thuongQuyBoss, VAN
 };
