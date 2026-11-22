@@ -13,18 +13,18 @@ const ROOT = path.join(__dirname, "..");
 // bản phát hành (anh 10/11 — chống sao chép: cong-cu/dung-ban-phat-hanh.mjs nén mã, bỏ ghi chú): VPS chép thẳng bản nén vào game.html + src/;
 // máy thử chạy bản nén thì đặt VL_PHAT = thư mục bản nén (ban-dung) — game.html + src/ lấy ở đó, assets/ vẫn ở thư mục game
 const PHAT = process.env.VL_PHAT ? path.resolve(process.env.VL_PHAT) : ROOT;
-const ALLOW = /^(game\.html$|src\/|assets\/)/;
+const ALLOW = /^(game\.html$|manifest\.webmanifest$|src\/|assets\/)/;
 // trang game: không cho trang khác nhúng vào khung (bản sao nhúng game của mình — chống sao chép, anh 10/11)
 const DAU_TRANG = { "X-Frame-Options": "DENY", "Content-Security-Policy": "frame-ancestors 'none'", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "same-origin" };
 const MIME = {
   ".html": "text/html; charset=utf-8", ".js": "application/javascript; charset=utf-8",
-  ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8",
+  ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8", ".webmanifest": "application/manifest+json; charset=utf-8",
   ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp",
   ".gif": "image/gif", ".svg": "image/svg+xml", ".ico": "image/x-icon",
   ".mp3": "audio/mpeg", ".wav": "audio/wav", ".ogg": "audio/ogg",
   ".woff": "font/woff", ".woff2": "font/woff2", ".ttf": "font/ttf",
 };
-const NEN = new Set([".html", ".js", ".css", ".json", ".svg"]);
+const NEN = new Set([".html", ".js", ".css", ".json", ".svg", ".webmanifest"]);
 const GIU = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".ico", ".mp3", ".wav", ".ogg", ".woff", ".woff2", ".ttf"]);
 const gz = new Map(); // file -> { t: mtimeMs, buf: bản gzip }
 

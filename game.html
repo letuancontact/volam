@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Võ Lâm</title>
 <meta name="author" content="Võ Lâm"><meta name="copyright" content="© 2026 Võ Lâm — Võ Lâm"><!-- chữ ký bản gốc (anh 11/11 — src/game/an-ky.js) -->
 <link rel="stylesheet" href="src/game/game.css">
@@ -10,6 +10,16 @@
 <script type="module" src="src/game/ui-theme.js"></script>
 <script>(function(){try{if(localStorage.getItem("vl_ui_theme")!=="classic"){document.documentElement.classList.add("ui-modern");document.addEventListener("DOMContentLoaded",function(){document.body.classList.add("ui-modern");});}}catch(e){document.documentElement.classList.add("ui-modern");}})();</script>
 <link rel="preload" as="image" href="assets/ui/dang-nhap/login.webp"><!-- ảnh nền màn đăng nhập: tải ngay lúc mở trang, khỏi hiện trễ -->
+<meta name="theme-color" content="#0b1310">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Võ Lâm">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="assets/ui/app-icon.svg">
+<link rel="apple-touch-icon" href="assets/ui/dang-nhap/logo-nho.webp">
+<script defer src="src/game/afk-farm.js"></script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.getRegistration("/").then(function(r){if(!r)navigator.serviceWorker.register("/src/sw.js",{scope:"/"}).catch(function(){});}).catch(function(){});});}</script>
 </head>
 <body>
 <canvas id="cv"></canvas>

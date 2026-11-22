@@ -855,7 +855,7 @@ async function loadZone(zone, opt, L) {
   }; // TẠM câu báo (script chưa giải được)
   // giết quái / trọng thương: gom lại, nhịp sau gửi máy chủ tính (kinh nghiệm, ngân lượng, rơi đồ, phạt — applyServer báo kết quả)
   // r[7] = 1: phân thân ra đòn kết liễu (World.hit ptGiet — anh 05/11): máy chủ cho đủ kinh nghiệm, không tiền / đồ (may-chu/do.js)
-  w.onKill = (m) => { pending.kills.push([zone.id, m.id, m.lvl, m.va ? 4 : m.sat ? 3 : m.boss ? 1 : m.ta ? 2 : 0, m.series, Math.round(m.x), Math.round(m.y), m.ptGiet ? 1 : 0]); pending.at.push([m.x, m.y, w]); };
+  w.onKill = (m) => { pending.kills.push([zone.id, m.id, m.lvl, m.va ? 4 : m.sat ? 3 : m.boss ? 1 : m.ta ? 2 : 0, m.series, Math.round(m.x), Math.round(m.y), m.ptGiet ? 1 : 0]); pending.at.push([m.x, m.y, w]); if (window.VLAfk) window.VLAfk.addKill(1); };
   w.onDeath = () => { if (!laAi(zone) && !laVd(zone) && !laPh(zone) && !laTk(zone) && !laLd(zone) && !laDn(zone) && !TongKim.laTo()) pending.deaths++; }; // Vượt Ải: tử vong trong ải không mất kinh nghiệm (ải tắt phạt — player_death.lua); Phong Hỏa: SetPunish(0); Tống Kim: bị hạ không mất gì (thiết kế mục 3); lôi đài: không mất gì (D5)
   w.onTkChet = () => (LoiDai.laTo() ? LoiDai.chet() : TongKim.chet()); // Tống Kim: báo người kết liễu, 8 giây sau đứng dậy ở doanh (tongkim.js); lôi đài: báo bị hạ, thành người xem (loidai.js)
   w.onPick = (d) => pending.nhat.push(d.g); // nhặt vật trên đất: báo máy chủ kèm nhịp
@@ -1573,8 +1573,10 @@ function applyServer(j, at) {
     ccKiem(); // anh 16/11 — Báo Đáp Ân Sư: Nhất Kỷ / Càn khôn (nv.ccKn) vừa thêm / hết -> tính lại chỉ số, bảng Võ công
   }
   const kq = j.kq;
+  if (window.VLAfk && kq && kq.kn > 0) window.VLAfk.addExp(kq.kn);
   if (kq && kq.kn > 0) P.hud.msg(`Bạn nhận được ${fmtSo(kq.kn)} điểm kinh nghiệm.`, MAU_TIN.kn, true); // câu client MSG_GET_EXP (gộp các con của 1 nhịp)
   // tổ đội (may-chu/do.js chiaDoi): phần đồng đội giết chia cho + lên cấp thống soái
+  if (window.VLAfk && j.chia && j.chia.kn > 0) window.VLAfk.addExp(j.chia.kn);
   if (j.chia && j.chia.kn > 0) P.hud.msg(`Bạn nhận được ${fmtSo(j.chia.kn)} điểm kinh nghiệm (tổ đội).`, MAU_TIN.kn, true);
   for (const t of (j.chia && j.chia.tin) || []) P.hud.msg(t);
   for (const t of j.mcTin || []) P.hud.msg(t); // nhiệm vụ Võ Lâm Minh Chủ: con quái nhiệm vụ đồng đội hạ giúp
@@ -1595,6 +1597,7 @@ function applyServer(j, at) {
     if (n.day.length) P.hud.msg("Hành trang đã đầy — đồ vẫn nằm trên đất, dọn túi rồi bấm vào đồ để nhặt", MAU_TIN.do);
     if (world) for (const g of n.vang) world.dropGone(g);
     if (n.tien && world) world.text(world.player, `+${n.tien} lượng`, "#ffe680");
+    if (window.VLAfk) { if (n.tien) window.VLAfk.addGold(n.tien); for (const m of n.nhan || []) if (!m.hoi) window.VLAfk.addItem(m, mauMon(m)); }
     if (n.tien) P.hud.msg(`Bạn nhận được ${fmtSo(n.tien)} lượng bạc!`, MAU_TIN.tien, true); // câu client MSG_EARN_MONEY
   }
   if (j.vut && world) world.drop(j.vut.x, j.vut.y, { g: j.vut.g, chung: 1, item: j.vut }); // món vứt ra: chung cả bãi (người khác nhặt thì nhịp bỏ đi)
@@ -5252,6 +5255,25 @@ function loop(now) {
   const tL = performance.now();
   simulate(now);
   fps.logic += performance.now() - tL; // logic (não bot, quân, đạn…) — dòng FPS (anh 06/11 Tống Kim "giật 3–9 fps": cần biết chậm ở logic hay vẽ)
+  if (window.VLAfk && hero && world && world.player) {
+    const pA = world.player;
+    if (window.VLAfk.active) {
+      if (now - (loop._afkUi || 0) >= 500) {
+        loop._afkUi = now;
+        const zObj = P.maps && P.maps.zones && P.maps.zones.find((z) => z.id === hero.zone);
+        const expNeed = (P.chr && P.chr.exp && P.chr.exp[hero.lvl - 1]) || 1;
+        window.VLAfk.sync({ name: hero.name, lvl: hero.lvl, map: (zObj && zObj.n) || "", hp: pA.hp, hpMax: pA.hpMax, mp: pA.mp, mpMax: pA.mpMax, exp: hero.exp || 0, expMax: expNeed, auto: !!(hero.auto && hero.auto.on), gold: hero.gold || 0 });
+      }
+      setTimeout(() => { if (world) requestAnimationFrame(loop); else looping = false; }, 220);
+      return;
+    }
+    if (now - (loop._afkUi || 0) >= 1000) {
+      loop._afkUi = now;
+      const zObj = P.maps && P.maps.zones && P.maps.zones.find((z) => z.id === hero.zone);
+      const expNeed = (P.chr && P.chr.exp && P.chr.exp[hero.lvl - 1]) || 1;
+      window.VLAfk.sync({ name: hero.name, lvl: hero.lvl, map: (zObj && zObj.n) || "", hp: pA.hp, hpMax: pA.hpMax, mp: pA.mp, mpMax: pA.mpMax, exp: hero.exp || 0, expMax: expNeed, auto: !!(hero.auto && hero.auto.on), gold: hero.gold || 0 });
+    }
+  }
   snapCam();
   if (rsCho != null) { rs = rsCho; rsCho = null; resize(); } // tỉ lệ vẽ mới (rsTick): đổi cỡ canvas rồi vẽ ngay trong cùng khung
   ctx.setTransform(dpr * rs * zoom, 0, 0, dpr * rs * zoom, 0, 0);

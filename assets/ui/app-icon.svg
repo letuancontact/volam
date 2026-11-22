@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="42%" r="65%">
+      <stop offset="0%" stop-color="#223b2d"/>
+      <stop offset="100%" stop-color="#09100d"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff1b8"/>
+      <stop offset="50%" stop-color="#e5b450"/>
+      <stop offset="100%" stop-color="#8c5a14"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect x="24" y="24" width="464" height="464" rx="92" fill="none" stroke="url(#gold)" stroke-width="10" opacity="0.85"/>
+  <rect x="44" y="44" width="424" height="424" rx="76" fill="none" stroke="#e5b450" stroke-width="2" opacity="0.35"/>
+  <text x="256" y="278" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="188" fill="url(#gold)">VL</text>
+  <text x="256" y="378" text-anchor="middle" font-family="monospace" font-weight="700" font-size="44" letter-spacing="8" fill="#e8d7a6">VÕ LÂM</text>
+</svg>
