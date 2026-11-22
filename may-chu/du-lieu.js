@@ -17,11 +17,20 @@ const TEN_RE = /^[a-z0-9_]{3,20}$/; // tên tài khoản: chữ thường không
 const tenTk = (s) => String(s || "").trim().toLowerCase();
 const fileTk = (ten) => path.join(TK, ten + ".json");
 
+let _henDamMay = null;
+function baoDongBoDamMay() {
+  try {
+    if (!_henDamMay) _henDamMay = require("./luu-dam-may").henDongBo;
+    if (_henDamMay) _henDamMay();
+  } catch {}
+}
+
 function ghi(file, obj) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   const tmp = file + "." + process.pid + ".tmp";
   fs.writeFileSync(tmp, JSON.stringify(obj));
   fs.renameSync(tmp, file);
+  baoDongBoDamMay();
 }
 
 function docTk(ten) {
@@ -83,6 +92,7 @@ function xoaTk(ten) {
   const dich = path.join(ROOT, "da-xoa", `tk-${ten}-${Date.now()}.json`);
   fs.mkdirSync(path.dirname(dich), { recursive: true });
   fs.renameSync(fileTk(ten), dich);
+  baoDongBoDamMay();
 }
 
 // sao lưu tai-khoan/ vào sao-luu/<YYYY-MM-DD>/ (mỗi ngày 1 bản, giữ SAO_LUU_GIU bản mới nhất)
