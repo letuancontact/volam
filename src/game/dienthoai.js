@@ -503,13 +503,15 @@ export class DienThoai {
     for (const n of w.npcs || []) {
       const laRa = !!n.baiRa || !!n.pld || n.ph === "xp" || n.bhVai === "xaPhu" || (n.script && /车夫/.test(n.script)) || /^Xa phu|^Thuyền phu/i.test(n.name || "");
       if (!laRa) continue;
-      const ax = Math.round(X(n.x)), ay = Math.round(Y(n.y)), r = 3.5 * dpr;
+      const ax = Math.round(X(n.x)), ay = Math.round(Y(n.y)), r = (n.baiRa ? 3.5 : 2.5) * dpr;
       cham(n.x, n.y, r, "#4ade80");
-      const lb = n.baiRa ? "Lối ra" : (n.pld || /^Thuyền phu/i.test(n.name || "") ? "Thuyền phu" : "Xa phu");
-      g.font = `${Math.round(11 * dpr)}px "VK Sans Serif 12", "IBM Plex Mono", monospace`;
-      g.textAlign = "center"; g.textBaseline = "bottom";
-      g.fillStyle = "#000"; for (const [dx, dy] of [[-1,0],[1,0],[0,-1],[0,1]]) g.fillText(lb, ax + dx * dpr, ay - r - 3 * dpr + dy * dpr);
-      g.fillStyle = "#bbf7d0"; g.fillText(lb, ax, ay - r - 3 * dpr);
+      if (n.baiRa) {
+        const lb = "Lối ra";
+        g.font = `${Math.round(11 * dpr)}px "VK Sans Serif 12", "IBM Plex Mono", monospace`;
+        g.textAlign = "center"; g.textBaseline = "bottom";
+        g.fillStyle = "#000"; for (const [dx, dy] of [[-1,0],[1,0],[0,-1],[0,1]]) g.fillText(lb, ax + dx * dpr, ay - r - 3 * dpr + dy * dpr);
+        g.fillStyle = "#bbf7d0"; g.fillText(lb, ax, ay - r - 3 * dpr);
+      }
     }
     // cờ đích: vòng vàng ở chỗ vừa chạm — tới nơi thì bỏ
     if (B.dich && Math.hypot(p.x - B.dich[0], (p.y - B.dich[1]) * 2) < 40) B.dich = null;
