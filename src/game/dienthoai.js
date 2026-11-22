@@ -479,7 +479,7 @@ export class DienThoai {
     const im = H.mmImg, MM = H.M.minimap, s = MM.scale, p = w.player;
     // ảnh mới (vừa mở / đổi bãi / ảnh vừa tải xong) hoặc khung đổi cỡ: tính lại tỉ lệ, nhân vật ở giữa
     if (B.im !== im || B.W !== W || B.H !== Hh) {
-      const iw = im ? im.width : W, ih = im ? im.height : Hh, vua = Math.min(W / iw, Hh / ih);
+      const mw = H.mmMap && H.mmMap.w ? Math.round(H.mmMap.w * s) : 0, mh = H.mmMap && H.mmMap.h ? Math.round(H.mmMap.h * s) : 0, iw = mw || (im ? im.width : W), ih = mh || (im ? im.height : Hh), vua = Math.min(W / iw, Hh / ih);
       Object.assign(B, { im, W, H: Hh, iw, ih, k: vua >= 1 ? vua : 1, keo: vua < 1 });
       B.vx = p.x * s - W / B.k / 2; B.vy = p.y * s - Hh / B.k / 2;
     }
@@ -499,6 +499,18 @@ export class DienThoai {
     const cham = (x, y, r, mau) => { const a = Math.round(X(x)), b = Math.round(Y(y)); g.fillStyle = "#000"; g.fillRect(a - r - dpr, b - r - dpr, 2 * (r + dpr), 2 * (r + dpr)); g.fillStyle = mau; g.fillRect(a - r, b - r, 2 * r, 2 * r); };
     for (const m of w.mobs) if (m.alive) { const r = (m.boss || m.sat ? 2 : 1) * dpr; g.fillStyle = m.boss || m.sat ? "#ffb000" : "#ff3030"; g.fillRect(Math.round(X(m.x) - r), Math.round(Y(m.y) - r), 2 * r, 2 * r); }
     for (const o of w.others.values()) cham(o.x, o.y, 2 * dpr, "#4fc3ff");
+    // danh dau Loi ra / Xa phu / Thuyen phu tren ban do lon (mau xanh la) de nguoi choi cham chay ra ngoai
+    for (const n of w.npcs || []) {
+      const laRa = !!n.baiRa || !!n.pld || n.ph === "xp" || n.bhVai === "xaPhu" || (n.script && /车夫/.test(n.script)) || /^Xa phu|^Thuyền phu/i.test(n.name || "");
+      if (!laRa) continue;
+      const ax = Math.round(X(n.x)), ay = Math.round(Y(n.y)), r = 3.5 * dpr;
+      cham(n.x, n.y, r, "#4ade80");
+      const lb = n.baiRa ? "Lối ra" : (n.pld || /^Thuyền phu/i.test(n.name || "") ? "Thuyền phu" : "Xa phu");
+      g.font = `${Math.round(11 * dpr)}px "VK Sans Serif 12", "IBM Plex Mono", monospace`;
+      g.textAlign = "center"; g.textBaseline = "bottom";
+      g.fillStyle = "#000"; for (const [dx, dy] of [[-1,0],[1,0],[0,-1],[0,1]]) g.fillText(lb, ax + dx * dpr, ay - r - 3 * dpr + dy * dpr);
+      g.fillStyle = "#bbf7d0"; g.fillText(lb, ax, ay - r - 3 * dpr);
+    }
     // cờ đích: vòng vàng ở chỗ vừa chạm — tới nơi thì bỏ
     if (B.dich && Math.hypot(p.x - B.dich[0], (p.y - B.dich[1]) * 2) < 40) B.dich = null;
     if (B.dich) {

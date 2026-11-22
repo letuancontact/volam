@@ -781,6 +781,13 @@ async function loadZone(zone, opt, L) {
   const docMang = opt.revive ? null : carryDoc();
   const w = new World(P, map, zone, hero, { npcs, vcOpen: vcOpen(), canBang: luat().canBang, noiCong: luat().noiCong, kyNang: luat().kyNangPhai, quaiVC: luat().quaiVoCong, tanThu: luat().tanThu, buffs: opt.revive ? null : carryBuffs(), diem: diemQuai(zone), suKien: laThuyen(zone) || laAi(zone) || laVd(zone) || laPh(zone) || laTk(zone) || laLd(zone) || laDn(zone) || chung,
     ...(opt.revive ? { at: atOpt || revivePoint(zone, map), hp: REVIVE_HP, rest: true } : { ...cur, ...(TOWN_KINDS.has(zone.kind) ? { at: revivePoint(zone, map) } : {}), ...(atVao ? { at: atVao } : {}), ...(atOpt ? { at: atOpt } : {}), ...(opt.rest ? { rest: true } : {}) }) });
+  // Loi ra cho 37 bai luyen cong (gom Duoc Vuong Coc): dat Xa phu (baiRa: 1) tai diem vao bai de nguoi choi luon co duong ve thanh khi het Tho Dia Phu
+  if (FARM_KINDS.has(zone.kind) && !zone.chiThuyen && !laPh(zone) && !laTk(zone) && !w.npcs.some((n) => n.baiRa || n.pld || (n.script && /车夫/.test(n.script)))) {
+    const rRa = atVao || oDi([Math.round(map.w * 0.5), Math.round(map.h * 0.5)]) || [w.player.x, w.player.y];
+    const ptRa = oDi([rRa[0] + 44, rRa[1] + 18]) || rRa;
+    w.npcs.push({ name: "Xa phu (Lối ra)", type: "passerby040_4", role: "talk", kind: "npc", baiRa: 1, x: ptRa[0], y: ptRa[1], dir: 4, t: 0 });
+    P.npc.ensure("passerby040_4", "stand1").catch(() => {});
+  }
   if (docMang) w.player.poison = docMang; // độc đang dính theo sang bản đồ mới (carryDoc)
   w.chung = chung; // bản quái chung: chỉ thấy người cùng bản (nhịp s.c — may-chu/the-gioi.js)
   w.qcManh = chung ? (luat().quaiChung || {}).manh || null : null; // quái bản chung mạnh hơn (anh 03/11 — quaichung.js: sát thương, tần suất đánh)
@@ -837,6 +844,7 @@ async function loadZone(zone, opt, L) {
     // Điểm báo danh Tống Kim 325 (anh 09/11 "map vào tống kim, xa phu đi vào, có tống và kim như client"): Mộ binh quan / Quân Nhu quan mỗi phe (script client song_ / jin_ signup, shop)
     { const bd = /[\\/](song|jin)_(signup|shop)\.lua$/.exec(n.script || ""); if (bd) return tongKimNpc(bd[2] === "shop" ? { viec: "qn" } : { viec: "mo", phe: bd[1] === "jin" ? 1 : 0 }, n); }
     if (n.tk) return tongKimNpc({ viec: n.tk === "qn" ? "qn" : "mo" }, n); // Biện Kinh: Mộ binh quan (tk "mb") / Quân Nhu quan (tk "qn") — may-chu/tong-kim.js lam
+    if (n.baiRa) return baiRaNpc(n); // Lối ra bãi luyện công (Xa phu về thành miễn phí)
     if (n.ph) return phNpc(n); // Phong Hỏa Liên Thành: Quân Nhu quan / Xa phu của đại doanh (anh 04/11)
     if (n.name === "Vệ binh Thành môn" && zone.id === PH_THANH) return phongHoaVe(n); // Biện Kinh: "Tham gia chiến dịch thủ thành" lúc trận nhận báo danh
     if (n.sap) return GW && GW.cho.xemSap(n.sap); // NPC trông sạp chợ trời (chủ vắng mặt — sapTick): khung RAO BÁN
@@ -1225,10 +1233,31 @@ function npcApi() {
 
 // Bản đồ nhỏ: ảnh + đổi tọa độ bản đồ web <-> tọa độ hiện trên client (X = x logic / 256, Y = y logic / 512 — như ô tọa độ
 // của client; x logic = vùng × 512 + x màn hình, y logic = vùng × 1024 + 2 × y màn hình; bản đồ web = màn hình client × 0.75)
+// Hoi thoai Xa phu (Loi ra) o cac bai luyen cong: dua ve thanh mien phi (khong can Tho Dia Phu)
+function baiRaNpc(n) {
+  if (!NPCD || !hero || !world) return;
+  const ten = (n && n.name) || "Xa phu (Lối ra)";
+  const thanhDs = P.maps.zones.filter((z) => TOWN_KINDS.has(z.kind) && z.id !== TK_BD.z && !z.bang);
+  const opts = thanhDs.map((z) => [`Về ${z.n}`, () => { P.audio.ui("click"); xeThanh(z); }]);
+  if (!opts.length) { const t = shopTown() || townZone(); if (t) opts.push([`Về ${t.n}`, () => { P.audio.ui("click"); xeThanh(t); }]); }
+  opts.push(["Ở lại luyện công", null]);
+  NPCD.choose("msgsel", "InfoText", richText(`${ten}: Đường ra khỏi <color=yellow>${world.zone.n}<color> ở ngay đây. Đại hiệp muốn ta đưa về thành thị nào?`, hero.name, ten), opts);
+}
+// Cham xanh la danh dau Loi ra / Xa phu / Thuyen phu tren ban do nho (ghep cung DuaNgua.mm())
+function mmDiemLoiRa(w) {
+  const out = [...(DuaNgua.mm() || [])];
+  if (!w || !w.npcs) return out;
+  for (const n of w.npcs) {
+    const laRa = !!n.baiRa || !!n.pld || n.ph === "xp" || n.bhVai === "xaPhu" || (n.script && /车夫/.test(n.script)) || /^Xa phu|^Thuyền phu/i.test(n.name || "");
+    if (!laRa) continue;
+    out.push({ x: n.x, y: n.y, c: "#4ade80", r: 2.5, ten: n.baiRa ? "Lối ra" : undefined });
+  }
+  return out;
+}
 function setHudMap() {
   const m = P.maps.maps[world.zone.map], c = m && m.client, reg = c && c.region ? c.region : [0, 0], s = P.maps.scale;
   const fromClient = (X, Y) => [((X + 0.5) * 256 - reg[0] * 512) * s, (((Y + 0.5) * 512 - reg[1] * 1024) / 2) * s];
-  P.hud.setMap({ key: world.zone.map, name: world.zone.n + (world.chung ? " (chung)" : ""), toClient: (x, y) => [Math.floor((reg[0] * 512 + x / s) / 256), Math.floor((reg[1] * 1024 + (2 * y) / s) / 512)], fromClient });
+  P.hud.setMap({ key: world.zone.map, name: world.zone.n + (world.chung ? " (chung)" : ""), w: world.map.w, h: world.map.h, toClient: (x, y) => [Math.floor((reg[0] * 512 + x / s) / 256), Math.floor((reg[1] * 1024 + (2 * y) / s) / 512)], fromClient });
   world.fromClient = fromClient; // Trợ Thủ tự đánh theo tọa độ
 }
 
@@ -5282,7 +5311,7 @@ function loop(now) {
   fpsTick(now, performance.now() - t0);
   hud();
   const p = world.player;
-  P.hud.drawMinimap({ player: p, mobs: world.mobs, others: [...world.others.values()].filter((e) => !e.an || world.thayAn(e)), /* ẩn thân: không hiện chấm (anh 12/11) */ path: p.path, dong: world.dongMinh, tk: TongKim.laTo() && TongKim.st ? { phe: TongKim.st.phe, pheNguoi: TongKim.pheNguoi } : LoiDai.mm(), diem: DuaNgua.mm() }); // Tống Kim: màu chấm theo phe (hud.js); lôi đài: tuyển thủ còn sống — bên kia đỏ, bên mình xanh lá (loidai.js mm); đường đua: hộp vàng, đích xanh lá (duangua.js mm)
+  P.hud.drawMinimap({ player: p, mobs: world.mobs, others: [...world.others.values()].filter((e) => !e.an || world.thayAn(e)), /* ẩn thân: không hiện chấm (anh 12/11) */ path: p.path, dong: world.dongMinh, tk: TongKim.laTo() && TongKim.st ? { phe: TongKim.st.phe, pheNguoi: TongKim.pheNguoi } : LoiDai.mm(), diem: mmDiemLoiRa(world) }); // Tống Kim: màu chấm theo phe (hud.js); lôi đài: tuyển thủ còn sống — bên kia đỏ, bên mình xanh lá (loidai.js mm); đường đua: hộp vàng, đích xanh lá (duangua.js mm)
   if (DT) DT.tick();
   requestAnimationFrame(loop);
 }

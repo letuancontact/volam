@@ -931,14 +931,14 @@ export class Hud {
   drawMinimap(s) {
     if (!this.el || !this.mmMap) return;
     const MM = this.M.minimap, cv = this.mmCv, g = cv.getContext("2d"), k = MM.scale, p = s.player;
-    const W = cv.width, H = cv.height, im = this.mmImg, iw = im ? im.width : 0, ih = im ? im.height : 0;
+    const W = cv.width, H = cv.height, im = this.mmImg, iw = this.mmMap.w ? Math.round(this.mmMap.w * k) : (im ? im.width : 0), ih = this.mmMap.h ? Math.round(this.mmMap.h * k) : (im ? im.height : 0);
     // khung xem: theo nhân vật, hoặc chỗ đã kéo bằng chuột phải (mmFree — giữ trong ảnh)
     const F = this.mmFree, vx = Math.max(0, Math.min(iw - W, F ? F.x : p.x * k - W / 2)), vy = Math.max(0, Math.min(ih - H, F ? F.y : p.y * k - H / 2));
     this.mmView = { x: iw > W ? vx : (iw - W) / 2, y: ih > H ? vy : (ih - H) / 2 };
     if (F) { F.x = this.mmView.x; F.y = this.mmView.y; } // kéo quá mép: dừng ở mép (kéo ngược lại là đi ngay)
     const ox = -this.mmView.x, oy = -this.mmView.y;
     g.fillStyle = "#000"; g.fillRect(0, 0, W, H);
-    if (im) g.drawImage(im, Math.round(ox), Math.round(oy));
+    if (im) g.drawImage(im, Math.round(ox), Math.round(oy), iw, ih);
     if (s.path && s.path.length) {
       g.strokeStyle = rgb(MM.line); g.lineWidth = 1; g.beginPath(); g.moveTo(ox + p.x * k, oy + p.y * k);
       for (const [x, y] of s.path) g.lineTo(ox + x * k, oy + y * k);
