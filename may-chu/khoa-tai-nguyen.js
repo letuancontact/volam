@@ -19,7 +19,7 @@ const NK = require("./nhat-ky");
 const TEN = "vl_tn", HAN = 24 * 3600e3, LAM_MOI = 12 * 3600e3;
 const CUA_SO = 30 * 60e3, NGUONG = +process.env.VL_TN_NGUONG || 6000, NGUONG_NGAY = +process.env.VL_TN_NGAY || 12000, GIO = 3600e3;
 // ảnh màn chờ (ui/loading — src/game/loading.js tải sẵn 1 ảnh ngay lúc mở trang, trước khi có phiếu) cũng công khai: chỉ là tranh nền
-const CONG_KHAI = /^\/assets\/(server\.json$|ui\/dang-nhap\/|ui\/fonts\/|ui\/loading\/)/;
+const CONG_KHAI = /^\/assets\/(server\.json$|ui\/dang-nhap\/|ui\/fonts\/|ui\/hud\/font\/|ui\/loading\/)/;
 
 const KHOA = (() => {
   const f = path.join(D.ROOT, "khoa-tai-nguyen.txt");

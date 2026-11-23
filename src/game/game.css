@@ -2281,10 +2281,25 @@ body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co.dt-thap #dt .dt-nhat { top: calc(var(
 /* === VL_CHAT_SVG_EXP_END === */
 
 /* === VL_ORIG_GAME_FONT_START === */
-/* Dong bo font chu goc ban dau cua game cho toan bo man ngoai & trong game */
+/* Khai bao @font-face cho font goc cua game (VK Sans Serif 13/16) de hien dung ngay tu man hinh dang nhap */
+@font-face {
+  font-family: "VK Sans Serif 13";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/ui/hud/font/vk-sans-serif-13.ttf) format("truetype");
+}
+@font-face {
+  font-family: "VK Sans Serif 16";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/ui/hud/font/vk-sans-serif-16.ttf) format("truetype");
+}
 :root {
   --font: "VK Sans Serif 13", "IBM Plex Mono", monospace;
   --jx: "VK Sans Serif 13", "IBM Plex Mono", monospace;
+  --jx16: "VK Sans Serif 16", "VK Sans Serif 13", "IBM Plex Mono", monospace;
 }
 html, body, button, input, select, textarea,
 #s-load, #s-load *,
@@ -2308,10 +2323,28 @@ html, body, button, input, select, textarea,
 .uhq, .uhq * {
   font-family: var(--jx);
 }
+#s-load h1, #s-login h1, #s-doimk h1, #s-server h1, #s-select h1, #s-create h1, .csel h1, .cc h1, .cc-title {
+  font-family: var(--jx16);
+}
 .qch-json, pre, code {
   font-family: "IBM Plex Mono", Consolas, monospace !important;
 }
 #jxhud .jx-bar span, #jxhud .jx-lv, #jxhud .jx-rank, #dt .dt-tn b, #dt .dt-mang, #dt .dt-cap, #dt .dt-tien, .zl-p, #fps {
   font-variant-numeric: tabular-nums;
+}
+/* Thanh kinh nghiem: vach do cam khi dang am EXP do tu vong + nhay sang khi nhan EXP */
+#jxhud .jx-top .jx-bar.exp.am i,
+#dt .dt-ex.am i {
+  background: linear-gradient(180deg, #ff7b61, #c9331f 52%, #6e140a) !important;
+  box-shadow: 0 0 6px rgba(255, 92, 68, 0.55);
+}
+#dt .dt-ex { cursor: pointer; }
+@keyframes vlExpFlash {
+  0% { filter: brightness(1.55); box-shadow: 0 0 10px rgba(255, 224, 118, 0.9); }
+  100% { filter: brightness(1); }
+}
+#jxhud .jx-top .jx-bar.exp.exp-tang,
+#dt .dt-ex.exp-tang {
+  animation: vlExpFlash 0.45s ease-out;
 }
 /* === VL_ORIG_GAME_FONT_END === */

@@ -1459,7 +1459,15 @@ body.ui-modern.dt #jxhud .jx-bot > .jx-skill[data-skill="left"]::after {
 .uhq, .uhq * {
   font-family: var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace) !important;
 }
+#s-load h1, #s-login h1, #s-doimk h1, #s-server h1, #s-select h1, #s-create h1, .csel h1, .cc h1, .cc-title {
+  font-family: var(--jx16, "VK Sans Serif 16", "VK Sans Serif 13", "IBM Plex Mono", monospace) !important;
+}
 .qch-json, pre, code {
   font-family: "IBM Plex Mono", Consolas, monospace !important;
+}
+body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.exp.am i,
+body.ui-modern.dt #dt .dt-ex.am i {
+  background: linear-gradient(180deg, #ff7b61, #c9331f 52%, #6e140a) !important;
+  box-shadow: 0 0 8px rgba(255, 92, 68, 0.6) !important;
 }
 /* === VL_ORIG_MODERN_END === */
