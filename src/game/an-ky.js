@@ -16,7 +16,7 @@ export const KY = `© 2026 Võ Lâm Truyền Kỳ — phát triển bởi ${TAC_
 export const KY_NGAN = `© ${TAC_GIA} · Võ Lâm Truyền Kỳ`;
 export const CANH = "Chơi vui hoàn toàn miễn phí — chúc các đại hiệp hành tẩu giang hồ vui vẻ!";
 export const TIN_VAO = `${KY}. ${CANH}`;
-const LOGO = "assets/ui/dang-nhap/logo.webp", LOGO_NHO = "assets/ui/dang-nhap/logo-nho.png";
+const LOGO = "assets/ui/dang-nhap/logo.png", LOGO_NHO = "assets/ui/dang-nhap/logo-nho.png";
 export const bam32 = (s) => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h; };
 export const kyChuan = () => 0xdb5473f;
 // translate="no": trình duyệt tự dịch trang không đổi chữ ký
