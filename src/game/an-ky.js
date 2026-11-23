@@ -1,5 +1,5 @@
 // Ấn ký bản gốc (anh 11/11: "chữ ký và thông báo các bản nhái của game đều là ăn cắp và là hành vi đánh cắp chất xám của người khác … thêm các
-// loại chữ ký và các text không xóa được" — tên anh Võ Lâm; logo anh tạo 11/11, nền đã tách trong suốt: assets/ui/dang-nhap/logo.webp 1100
+// loại chữ ký và các text không xóa được" — tên anh Võ Lâm; logo anh tạo 11/11, nền đã tách trong suốt: assets/ui/dang-nhap/logo.png 1100
 // điểm + logo-nho.webp 440 điểm — thư mục công khai trước đăng nhập, may-chu/khoa-tai-nguyen.js CONG_KHAI). README lượt 73.
 //   Hiện: logo + chữ ký + câu cảnh báo bản nhái ở màn đăng nhập, màn chờ, trong game (ô chữ góc trái dải trên — hud.js tickInfo — + dòng tin
 //   lúc vào game) + lời chào trong bảng điều khiển của trình duyệt (F12 — người mở mã ra xem).
@@ -16,7 +16,7 @@ export const KY = `© 2026 Võ Lâm Truyền Kỳ — phát triển bởi ${TAC_
 export const KY_NGAN = `© ${TAC_GIA} · Võ Lâm Truyền Kỳ`;
 export const CANH = "Chơi vui hoàn toàn miễn phí — chúc các đại hiệp hành tẩu giang hồ vui vẻ!";
 export const TIN_VAO = `${KY}. ${CANH}`;
-const LOGO = "assets/ui/dang-nhap/logo.webp", LOGO_NHO = "assets/ui/dang-nhap/logo-nho.webp";
+const LOGO = "assets/ui/dang-nhap/logo.webp", LOGO_NHO = "assets/ui/dang-nhap/logo-nho.png";
 export const bam32 = (s) => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h; };
 export const kyChuan = () => 0xdb5473f;
 // translate="no": trình duyệt tự dịch trang không đổi chữ ký

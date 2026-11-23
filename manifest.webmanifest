@@ -16,9 +16,9 @@
       "purpose": "any maskable"
     },
     {
-      "src": "assets/ui/dang-nhap/logo-nho.webp",
+      "src": "assets/ui/dang-nhap/logo-nho.png",
       "sizes": "512x512",
-      "type": "image/webp"
+      "type": "image/png"
     }
   ]
 }
