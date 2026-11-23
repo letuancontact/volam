@@ -1453,7 +1453,7 @@ body.ui-modern.dt #jxhud .jx-bot > .jx-skill[data-skill="left"]::after {
   background-size: 86% 86%;
 }
 
-/* Thanh kinh nghiem: min-width khi co diem > 0 & mau canh bao khi bi am EXP do tu vong */
+/* Thanh kinh nghiem: min-width khi co diem > 0 & mau do cam khi dang am EXP do tu vong */
 #jxhud .jx-top .jx-bar.exp.co-exp i,
 #dt .dt-ex.co-exp i { min-width: 2px; }
 #jxhud .jx-top .jx-bar.exp.am span,
