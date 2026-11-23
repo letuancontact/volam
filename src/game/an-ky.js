@@ -10,11 +10,11 @@
 // Anh chọn 11/11 (trong 3 kiểu màn đăng nhập + 2 kiểu trong game): màn đăng nhập kiểu 2 — logo trái, khung đăng nhập phải (màn hẹp / điện thoại
 // dọc: logo trên, khung dưới) — + trong game B: thêm logo mờ góc phải trên thanh kỹ năng (máy tính; điện thoại có ô chữ ký cạnh FPS). game.css khối "ấn ký".
 const _g = (a, k) => String.fromCharCode(...a.map((c, i) => c ^ ((k + i * 7) & 0xff)));
-export const MIEN = "Võ Lâm"; // bản chia sẻ (không còn tên miền máy chủ)
-export const TAC_GIA = _g([115, 39, 38, 112, 21, 164, 28], 0x3b); // Võ Lâm
-export const KY = `© 2026 Võ Lâm — thiết kế và phát triển bởi ${TAC_GIA}`;
-export const KY_NGAN = `© ${TAC_GIA} · Võ Lâm`;
-export const CANH = "Bản chia sẻ dành cho anh chị em group Hội Quán.";
+export const MIEN = "Võ Lâm Truyền Kỳ";
+export const TAC_GIA = "Rio";
+export const KY = `© 2026 Võ Lâm Truyền Kỳ — phát triển bởi ${TAC_GIA}`;
+export const KY_NGAN = `© ${TAC_GIA} · Võ Lâm Truyền Kỳ`;
+export const CANH = "Chơi vui hoàn toàn miễn phí — chúc các đại hiệp hành tẩu giang hồ vui vẻ!";
 export const TIN_VAO = `${KY}. ${CANH}`;
 const LOGO = "assets/ui/dang-nhap/logo.webp", LOGO_NHO = "assets/ui/dang-nhap/logo-nho.webp";
 export const bam32 = (s) => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h; };
@@ -41,7 +41,7 @@ export function loiChao() {
 export function dungDangNhap() {
   const s = document.getElementById("s-login"); if (!s) return;
   if (!s.querySelector(".ak-logo")) {
-    const img = tao("img", "ak-logo"); img.src = LOGO; img.alt = "Đồ Xanh · Võ Lâm"; img.draggable = false;
+    const img = tao("img", "ak-logo"); img.src = LOGO; img.alt = "Võ Lâm Truyền Kỳ"; img.draggable = false;
     const chan = tao("div", "ak-chan"); chan.innerHTML = chanHtml();
     s.prepend(img); s.append(chan);
   }
