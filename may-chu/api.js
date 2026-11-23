@@ -300,11 +300,14 @@ function dangKy(req, res, b) {
   if (!ten || !mk) return loi(res, 400, "Nhập tên tài khoản và mật khẩu");
   if (mk.length < 6) return loi(res, 400, "Mật khẩu cần ít nhất 6 ký tự");
   if (mk.toLowerCase() === ten) return loi(res, 400, "Mật khẩu không được giống tên tài khoản");
+  const mk2 = String(b.mk2 || "").trim();
+  if (mk2) { try { BM.kiemMk2DangKy(mk, mk2); } catch (e) { return loi(res, 400, e.message); } }
   const h = dkHan.get(ip);
   if (h && t - h.t < 600000 && h.n >= 5) return loi(res, 429, "Đăng ký quá nhanh, thử lại sau 10 phút");
   let tk;
   try {
     tk = D.taoTk(ten, mk, false);
+    if (mk2) { BM.datMk2DangKy(tk, mk, mk2); D.ghiTk(tk); }
   } catch (e) {
     return loi(res, 400, (e && e.message) || "Không tạo được tài khoản");
   }
@@ -321,6 +324,35 @@ function dangKy(req, res, b) {
   guiJson(res, 200, thongTin(tk), { "Set-Cookie": [datCookie(req, tk.ten + "." + tk.phien, COOKIE_AGE), KTN.cap(req, tk.ten)] });
 }
 // Hết tự đăng ký tài khoản
+
+// Quên mật khẩu đăng nhập: tự đặt lại bằng Mật khẩu cấp 2 (Khóa an toàn — may-chu/bao-mat.js)
+const qmkHan = new Map();
+function quenMk(req, res, b) {
+  const ten = D.tenTk(b.ten), mk2 = String(b.mk2 || "").trim(), moi = String(b.moi || ""), ip = diaChi(req), t = Date.now();
+  if (!ten || !mk2 || !moi) return loi(res, 400, "Nhập tên tài khoản, mật khẩu cấp 2 (6 số) và mật khẩu mới");
+  const h = qmkHan.get(ip);
+  if (h && t < h.den && h.n >= 10) return loi(res, 429, `Thử đặt lại mật khẩu quá nhiều lần — thử lại sau ${Math.ceil((h.den - t) / 60000)} phút`);
+  const ghiHan = () => qmkHan.set(ip, { n: h && t < h.den ? h.n + 1 : 1, den: t + 15 * 60000 });
+  const tk = D.docTk(ten);
+  if (!tk) {
+    ghiHan();
+    NK.ghi("sai-mk", ten.slice(0, 20) || "?", null, "Quên mật khẩu: tài khoản không tồn tại", { ip });
+    return loi(res, 400, "Không tìm thấy tài khoản hoặc tài khoản chưa đặt Mật khẩu cấp 2 — liên hệ Quản trị viên để được hỗ trợ.");
+  }
+  const khoa = QT.khoaCon(tk);
+  if (khoa) return loi(res, 403, QT.cauKhoa(khoa), "bi-khoa");
+  if (tk.admin) return loi(res, 403, "Tài khoản quản trị không hỗ trợ tự đặt lại ngoài màn đăng nhập — vui lòng đặt lại trực tiếp trên máy chủ.");
+  try {
+    const r = BM.quenMk(tk, mk2, moi, ip);
+    qmkHan.delete(ip);
+    if (typeof KTN.thuHoi === "function") KTN.thuHoi(tk.ten);
+    online.delete(tk.ten); trongGame.delete(tk.ten);
+    guiJson(res, 200, r);
+  } catch (e) {
+    ghiHan();
+    return loi(res, e.code || 400, e.message, e.ma);
+  }
+}
 
 function taoNv(res, tk, o, b, trang) {
   if (tk.nv[o]) return loi(res, 409, "Ô này đã có nhân vật");
@@ -611,6 +643,7 @@ async function xuLyApi(req, res, p) {
     const m = req.method, body = m === "POST" || m === "PUT" ? await docBody(req) : {};
     if (p === "/api/dang-nhap" && m === "POST") return dangNhap(req, res, body);
     if (p === "/api/dang-ky" && m === "POST") return dangKy(req, res, body);
+  if (p === "/api/quen-mk" && m === "POST") return quenMk(req, res, body);
     const tk = tkPhien(req);
     if (p === "/api/anh-cho" && m === "GET") return guiJson(res, 200, { anh: anhCho() });
     // công khai (màn đăng nhập): KHÔNG kèm bảng luật (lượt 61 — bản sao đọc số cân bằng qua đây); luật gửi lúc đăng nhập / /api/toi (thongTin sv)

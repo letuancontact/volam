@@ -2791,3 +2791,20 @@ body.dt.dt-ngang #dt .dt-chidan {
   #vl-tt-modal .vtt-box { max-height: 92vh; }
 }
 /* === VL_TANTHU_GUIDE_END === */
+
+/* === VL_QUEN_MK_START === */
+#s-login .lg-links {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+#s-login .lg-link {
+  color: #f3cf7a;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+#s-login .lg-link:hover { color: #fff0b8; }
+#s-login .lg-err.ok { color: #7ef2a6 !important; }
+/* === VL_QUEN_MK_END === */

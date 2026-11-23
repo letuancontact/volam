@@ -35,10 +35,12 @@
     <h1>Võ Lâm Truyền Kỳ</h1>
     <div class="lg-sv" id="lg-sv"></div>
     <label>Tài khoản<input id="lg-name" name="username" autocomplete="username" maxlength="20" autocapitalize="off" spellcheck="false"></label>
-    <label>Mật khẩu<input id="lg-pass" name="password" type="password" autocomplete="current-password" maxlength="64"></label>
-    <label id="lg-pass2-row" style="display:none">Nhập lại mật khẩu<input id="lg-pass2" type="password" autocomplete="new-password" maxlength="64"></label>
+    <label id="lg-mk2-row" style="display:none"><span id="lg-mk2-lbl">Mật khẩu cấp 2 (6 số)</span><input id="lg-mk2" type="password" inputmode="numeric" maxlength="6" autocomplete="off" placeholder="6 chữ số"></label>
+    <label id="lg-pass-row"><span id="lg-pass-lbl">Mật khẩu</span><input id="lg-pass" name="password" type="password" autocomplete="current-password" maxlength="64"></label>
+    <label id="lg-pass2-row" style="display:none"><span id="lg-pass2-lbl">Nhập lại mật khẩu</span><input id="lg-pass2" type="password" autocomplete="new-password" maxlength="64"></label>
     <div class="lg-err" id="lg-err"></div>
     <div class="row end"><button class="ghost" type="button" id="lg-mode">Đăng ký</button><button class="main" type="submit" id="lg-ok">Đăng nhập</button></div>
+    <div class="lg-links"><a href="#" class="lg-link" id="lg-forgot">Quên mật khẩu?</a></div>
     <p class="lg-note" id="lg-note">Chưa có tài khoản? Bấm <b>Đăng ký</b> để tạo tài khoản mới ngay (3–20 ký tự chữ thường, số, dấu _).</p>
     <div class="lg-chiase">Võ Lâm Truyền Kỳ — Chơi vui hoàn toàn miễn phí, chúc các đại hiệp hành tẩu giang hồ vui vẻ!</div>
   </form>

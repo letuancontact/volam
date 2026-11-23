@@ -336,41 +336,73 @@ function loginScreen(err = "") {
   $("#lg-sv").textContent = (SERVERS.find((s) => s.id === P.only) || {}).n || "";
   if ($("#lg-ungho")) $("#lg-ungho").remove(); // trang chủ: Ủng hộ duy trì máy chủ (anh 13/11)
   if ($("#cs-ungho")) $("#cs-ungho").remove(); // màn Chọn nhân vật (anh 13/11 tối — game tự đăng nhập lại nên ít người thấy trang đăng nhập)
-  let cheDoDk = false;
-  const row2 = $("#lg-pass2-row"), inp2 = $("#lg-pass2"), nutMode = $("#lg-mode"), note = $("#lg-note");
-  const datCheDo = (dk) => {
-    cheDoDk = !!dk;
-    $("#lg-err").textContent = "";
-    $("#lg-ok").textContent = cheDoDk ? "Tạo tài khoản" : "Đăng nhập";
-    if (nutMode) nutMode.textContent = cheDoDk ? "Quay lại đăng nhập" : "Đăng ký";
-    if (row2) row2.style.display = cheDoDk ? "" : "none";
+  let cheDo = "login"; // "login" | "register" | "forgot"
+  const row2 = $("#lg-pass2-row"), inp2 = $("#lg-pass2"), rowMk2 = $("#lg-mk2-row"), inpMk2 = $("#lg-mk2");
+  const lblMk2 = $("#lg-mk2-lbl"), lblPass = $("#lg-pass-lbl"), lblPass2 = $("#lg-pass2-lbl");
+  const nutMode = $("#lg-mode"), nutForgot = $("#lg-forgot"), note = $("#lg-note"), errEl = $("#lg-err");
+  const datBao = (msg, ok = false) => { errEl.textContent = msg || ""; errEl.classList.toggle("ok", !!ok); };
+  const datCheDo = (mode, giuBao = false) => {
+    cheDo = mode === "register" || mode === "forgot" ? mode : "login";
+    if (!giuBao) datBao("");
+    const dk = cheDo === "register", qmk = cheDo === "forgot";
+    $("#lg-ok").textContent = dk ? "Tạo tài khoản" : qmk ? "Đặt lại mật khẩu" : "Đăng nhập";
+    if (nutMode) nutMode.textContent = cheDo === "login" ? "Đăng ký" : "Quay lại đăng nhập";
+    if (nutForgot) nutForgot.style.display = cheDo === "login" ? "" : "none";
+    if (row2) row2.style.display = (dk || qmk) ? "" : "none";
+    if (rowMk2) rowMk2.style.display = (dk || qmk) ? "" : "none";
+    if (lblMk2) lblMk2.textContent = qmk ? "Mật khẩu cấp 2 (6 chữ số)" : "Mật khẩu cấp 2 (6 số — tùy chọn)";
+    if (inpMk2) { inpMk2.value = ""; inpMk2.placeholder = qmk ? "Nhập 6 số Khóa an toàn" : "Để khôi phục khi quên mật khẩu"; }
+    if (lblPass) lblPass.textContent = qmk ? "Mật khẩu mới" : "Mật khẩu";
+    if (lblPass2) lblPass2.textContent = qmk ? "Nhập lại mật khẩu mới" : "Nhập lại mật khẩu";
     if (inp2) inp2.value = "";
-    $("#lg-pass").autocomplete = cheDoDk ? "new-password" : "current-password";
-    if (note) note.innerHTML = cheDoDk
-      ? "Tên tài khoản <b>3–20 ký tự</b> (chữ thường không dấu, số, dấu _). Mật khẩu ít nhất <b>6 ký tự</b>."
-      : "Chưa có tài khoản? Bấm <b>Đăng ký</b> để tạo tài khoản mới ngay (3–20 ký tự chữ thường, số, dấu _).";
+    $("#lg-pass").autocomplete = (dk || qmk) ? "new-password" : "current-password";
+    if (note) note.innerHTML = dk
+      ? "Tên tài khoản <b>3–20 ký tự</b> (chữ thường, số, _). Nên nhập thêm <b>Mật khẩu cấp 2</b> (6 chữ số) để tự lấy lại tài khoản khi quên mật khẩu."
+      : qmk
+        ? "Dùng <b>Mật khẩu cấp 2</b> (Khóa an toàn 6 số) để tự đặt lại mật khẩu. Nếu tài khoản chưa đặt mật khẩu cấp 2, vui lòng liên hệ <b>Quản trị viên</b> hỗ trợ."
+        : "Chưa có tài khoản? Bấm <b>Đăng ký</b> để tạo tài khoản mới ngay (3–20 ký tự chữ thường, số, dấu _).";
   };
-  if (nutMode) nutMode.onclick = () => { if (P.audio) P.audio.ui("click"); datCheDo(!cheDoDk); $("#lg-name").focus(); };
-  datCheDo(false);
+  if (nutMode) nutMode.onclick = () => { if (P.audio) P.audio.ui("click"); datCheDo(cheDo === "login" ? "register" : "login"); $("#lg-name").focus(); };
+  if (nutForgot) nutForgot.onclick = (e) => { e.preventDefault(); if (P.audio) P.audio.ui("click"); datCheDo("forgot"); ($("#lg-name").value ? inpMk2 : $("#lg-name")).focus(); };
+  datCheDo("login", !!err);
   $("#lg-form").onsubmit = async (e) => {
     e.preventDefault();
-    const ten = $("#lg-name").value.trim(), mk = $("#lg-pass").value;
-    if (!ten || !mk) { $("#lg-err").textContent = "Nhập tên tài khoản và mật khẩu"; return; }
-    if (cheDoDk) {
-      if (!/^[a-z0-9_]{3,20}$/i.test(ten)) { $("#lg-err").textContent = "Tên tài khoản 3–20 ký tự: chữ thường không dấu, số, dấu _"; return; }
-      if (mk.length < 6) { $("#lg-err").textContent = "Mật khẩu cần ít nhất 6 ký tự"; return; }
-      if (mk.toLowerCase() === ten.toLowerCase()) { $("#lg-err").textContent = "Mật khẩu không được giống tên tài khoản"; return; }
-      if (inp2 && mk !== inp2.value) { $("#lg-err").textContent = "Mật khẩu nhập lại không khớp"; return; }
+    const ten = $("#lg-name").value.trim(), mk = $("#lg-pass").value, mk2 = inpMk2 ? inpMk2.value.trim() : "";
+    if (!ten || !mk) { datBao(cheDo === "forgot" ? "Nhập tên tài khoản, mật khẩu cấp 2 và mật khẩu mới" : "Nhập tên tài khoản và mật khẩu"); return; }
+    if (cheDo === "register") {
+      if (!/^[a-z0-9_]{3,20}$/i.test(ten)) { datBao("Tên tài khoản 3–20 ký tự: chữ thường không dấu, số, dấu _"); return; }
+      if (mk.length < 6) { datBao("Mật khẩu cần ít nhất 6 ký tự"); return; }
+      if (mk.toLowerCase() === ten.toLowerCase()) { datBao("Mật khẩu không được giống tên tài khoản"); return; }
+      if (inp2 && mk !== inp2.value) { datBao("Mật khẩu nhập lại không khớp"); return; }
+      if (mk2) {
+        if (!/^\d{6}$/.test(mk2)) { datBao("Mật khẩu cấp 2 phải gồm đúng 6 chữ số"); return; }
+        if (mk2 === mk) { datBao("Mật khẩu cấp 2 không được trùng mật khẩu đăng nhập"); return; }
+      }
+    } else if (cheDo === "forgot") {
+      if (!/^\d{6}$/.test(mk2)) { datBao("Nhập đúng Mật khẩu cấp 2 gồm 6 chữ số"); return; }
+      if (mk.length < 6) { datBao("Mật khẩu mới cần ít nhất 6 ký tự"); return; }
+      if (mk.toLowerCase() === ten.toLowerCase()) { datBao("Mật khẩu mới không được giống tên tài khoản"); return; }
+      if (mk === mk2) { datBao("Mật khẩu mới không được trùng Mật khẩu cấp 2"); return; }
+      if (inp2 && mk !== inp2.value) { datBao("Mật khẩu nhập lại không khớp"); return; }
     }
-    $("#lg-ok").disabled = true; $("#lg-err").textContent = "";
+    $("#lg-ok").disabled = true; datBao("");
     try {
-      if (cheDoDk) await Net.register(ten, mk);
+      if (cheDo === "forgot") {
+        const r = await Net.forgotPassword(ten, mk2, mk);
+        $("#lg-pass").value = ""; if (inp2) inp2.value = ""; if (inpMk2) inpMk2.value = "";
+        if (P.audio) P.audio.ui("click");
+        datCheDo("login", true);
+        datBao((r && r.msg) || "Đã đặt lại mật khẩu thành công — hãy đăng nhập bằng mật khẩu mới!", true);
+        $("#lg-pass").focus();
+        return;
+      }
+      if (cheDo === "register") await Net.register(ten, mk, mk2);
       else await Net.login(ten, mk);
-      $("#lg-pass").value = ""; if (inp2) inp2.value = "";
+      $("#lg-pass").value = ""; if (inp2) inp2.value = ""; if (inpMk2) inpMk2.value = "";
       if (P.audio) P.audio.ui("click");
       vaoSauDangNhap();
     }
-    catch (er) { $("#lg-err").textContent = er.message; }
+    catch (er) { datBao(er.message); }
     finally { $("#lg-ok").disabled = false; }
   };
   ($("#lg-name").value ? $("#lg-pass") : $("#lg-name")).focus();

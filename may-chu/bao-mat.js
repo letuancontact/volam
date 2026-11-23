@@ -220,4 +220,41 @@ function baoSai(tk, trang) {
   return { luc: b.luc, ip: b.ip, n: b.n };
 }
 
-module.exports = { qtMo, lam, chan, trangCua, daMo, trangThai, khoaLai, khoaTrang, xoaSai, xoaMk2, tomTat, baoSai, loiMa, MK2_RE, SAI_MAX, SAI_KHOA, MK1_MIN };
+// Mật khẩu cấp 2 dễ đoán không nhận khi đặt lúc đăng ký
+const MK2_YEU_DK = new Set(["012345", "123456", "234567", "345678", "456789", "567890", "098765", "987654", "876543", "765432", "654321", "543210", "123123", "112233", "121212"]);
+function kiemMk2DangKy(mk1, mk2) {
+  const m = String(mk2 || "").trim();
+  if (!MK2_RE.test(m)) loi("Mật khẩu cấp 2 phải gồm đúng 6 chữ số");
+  if (/^(\d)\1{5}$/.test(m) || MK2_YEU_DK.has(m)) loi("Mật khẩu cấp 2 quá dễ đoán (tránh 111111, 123456…) — chọn số khác");
+  if (m === String(mk1 || "")) loi("Mật khẩu cấp 2 không được trùng mật khẩu đăng nhập");
+  return m;
+}
+function datMk2DangKy(tk, mk1, mk2) {
+  const m = kiemMk2DangKy(mk1, mk2);
+  tk.mk2 = bam(m);
+  tk.mk2Luc = Date.now();
+  return tk;
+}
+// Tự đặt lại mật khẩu đăng nhập ngoài màn hình login bằng Mật khẩu cấp 2 (Khóa an toàn)
+function quenMk(tk, mk2, moi, ip) {
+  if (!tk || !tk.mk2) loi("Tài khoản chưa đặt Mật khẩu cấp 2 (Khóa an toàn) nên không thể tự khôi phục — hãy liên hệ Quản trị viên để được hỗ trợ đặt lại mật khẩu.");
+  chanKhoaNhap(tk);
+  const m2 = String(mk2 || "").trim();
+  if (!MK2_RE.test(m2) || !dung(tk.mk2, m2)) {
+    const msg = ghiSai(tk, ip, "mật khẩu cấp 2 (quên mật khẩu)");
+    D.ghiTk(tk);
+    loi(msg);
+  }
+  const s = kiemMk1(tk, moi);
+  hetSai(tk);
+  tk.bam = bam(s);
+  tk.mkLuc = Date.now();
+  delete tk.batDoiMk;
+  tk.phien = null;
+  khoaLai(tk.ten);
+  D.ghiTk(tk);
+  NK.ghi("mk", tk.ten, null, "Tự đặt lại mật khẩu đăng nhập bằng mật khẩu cấp 2", { ip });
+  return { msg: "Đã đặt lại mật khẩu thành công — hãy đăng nhập bằng mật khẩu mới." };
+}
+
+module.exports = {qtMo, lam, chan, trangCua, daMo, trangThai, khoaLai, khoaTrang, xoaSai, xoaMk2, tomTat, baoSai, loiMa, MK2_RE, SAI_MAX, SAI_KHOA, MK1_MIN, kiemMk2DangKy, datMk2DangKy, quenMk };
