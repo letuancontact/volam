@@ -61,13 +61,13 @@ h1 { font-size: 22px; margin: 0 0 14px; color: var(--gold2); font-weight: 600; l
 
 /* ---------- font giao diện của bản 2: IBM Plex Mono (assets/ui/fonts, SIL OFL 1.1) ---------- */
 @font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url(../../assets/ui/fonts/ibm-plex-mono-400-vietnamese.woff2) format("woff2");
+  src: url(/assets/ui/fonts/ibm-plex-mono-400-vietnamese.woff2) format("woff2");
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
 @font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url(../../assets/ui/fonts/ibm-plex-mono-400-latin-ext.woff2) format("woff2");
+  src: url(/assets/ui/fonts/ibm-plex-mono-400-latin-ext.woff2) format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url(../../assets/ui/fonts/ibm-plex-mono-400-latin.woff2) format("woff2");
+  src: url(/assets/ui/fonts/ibm-plex-mono-400-latin.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 :root { --font-co: "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif; --font: var(--font-co); }
 html, body, button, input, select { font-family: var(--font); }
@@ -2144,22 +2144,22 @@ body.dt .poster .pt-goi { font-size: 11px; }
 
 /* === VL_CODIEN_VOMCUNG_START === */
 @font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url(../../assets/ui/fonts/vl-codien-400-vietnamese.woff2) format("woff2");
+  src: url(/assets/ui/fonts/vl-codien-400-vietnamese.woff2) format("woff2");
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
 @font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url(../../assets/ui/fonts/vl-codien-400-latin-ext.woff2) format("woff2");
+  src: url(/assets/ui/fonts/vl-codien-400-latin-ext.woff2) format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url(../../assets/ui/fonts/vl-codien-400-latin.woff2) format("woff2");
+  src: url(/assets/ui/fonts/vl-codien-400-latin.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 @font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url(../../assets/ui/fonts/vl-codien-700-vietnamese.woff2) format("woff2");
+  src: url(/assets/ui/fonts/vl-codien-700-vietnamese.woff2) format("woff2");
   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
 @font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url(../../assets/ui/fonts/vl-codien-700-latin-ext.woff2) format("woff2");
+  src: url(/assets/ui/fonts/vl-codien-700-latin-ext.woff2) format("woff2");
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 @font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url(../../assets/ui/fonts/vl-codien-700-latin.woff2) format("woff2");
+  src: url(/assets/ui/fonts/vl-codien-700-latin.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 :root { --font-co: "VL Co Dien", Georgia, "Times New Roman", serif; }
 
@@ -2335,3 +2335,26 @@ html, body, button, input, select, textarea,
   animation: vlExpFlash 0.45s ease-out;
 }
 /* === VL_GLOBAL_FONT_EXP_END === */
+
+/* === VL_LOGIN_FONT_FIX_START === */
+:root {
+  --font-co: "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif;
+  --font: var(--font-co);
+  --jx: var(--font-co);
+}
+html, body,
+#s-load, #s-load *,
+.zl, .zl *,
+#s-login, #s-login *,
+#s-doimk, #s-doimk *,
+#s-server, #s-server *,
+#s-select, #s-select *,
+#s-create, #s-create *,
+.csel, .csel *,
+.cc, .cc * {
+  font-family: "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif !important;
+}
+.qch-json, pre, code {
+  font-family: "IBM Plex Mono", Consolas, monospace !important;
+}
+/* === VL_LOGIN_FONT_FIX_END === */

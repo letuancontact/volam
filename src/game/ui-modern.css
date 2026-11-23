@@ -1494,3 +1494,17 @@ body.ui-modern.dt #dt .dt-ex.am i {
   box-shadow: 0 0 8px rgba(255, 92, 68, 0.6) !important;
 }
 /* === VL_GLOBAL_FONT_MODERN_END === */
+
+/* === VL_LOGIN_FONT_MODERN_START === */
+#s-load, #s-load *,
+.zl, .zl *,
+#s-login, #s-login *,
+#s-doimk, #s-doimk *,
+#s-server, #s-server *,
+#s-select, #s-select *,
+#s-create, #s-create *,
+.csel, .csel *,
+.cc, .cc * {
+  font-family: "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif !important;
+}
+/* === VL_LOGIN_FONT_MODERN_END === */
