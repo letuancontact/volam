@@ -700,19 +700,27 @@ export class DienThoai {
       const dx = R[vong] * Math.cos(a), dy = R[vong] * Math.sin(a);
       return [s, Math.round(CR - dx - s / 2), Math.round(CB + dy + s / 2)];
     };
+    let maxY1 = 0, maxY2 = 0;
     for (const [sel, s0, vong, g] of O_VONG) {
       const o = this.H.bot.querySelector(sel); if (!o) continue;
       const [s, r, y] = pos(s0, vong, g);
       o.style.setProperty("--dt-s", s + "px");
       o.style.setProperty("--dt-r", r + "px");
       o.style.setProperty("--dt-y", y + "px");
+      if (vong <= 1 && y > maxY1) maxY1 = y;
+      if (y > maxY2) maxY2 = y;
     }
     const B = document.body.style;
     const [okS, okR, okY] = pos(...OK_VONG);
     const [ngS, ngR, ngY] = pos(...NGUA_VONG);
+    if (okY > maxY2) maxY2 = okY;
+    if (ngY > maxY2) maxY2 = ngY;
     B.setProperty("--dt-oks", okS + "px"); B.setProperty("--dt-okr", okR + "px"); B.setProperty("--dt-okt", okY + "px");
     B.setProperty("--dt-ngs", ngS + "px"); B.setProperty("--dt-ngr", ngR + "px"); B.setProperty("--dt-ngt", ngY + "px");
     B.setProperty("--dt-cum", Math.round(CR + R[2] + okS / 2 + 8) + "px");
+    // Chieu cao nut Noi chuyen / Xem sap / Nhat do: cao 44px + 12px khoang thoang tren dinh cao nhat cua vom cung
+    B.setProperty("--dt-noi-y", (maxY2 + 56) + "px");
+    B.setProperty("--dt-noi-y1", (maxY1 + 56) + "px");
   }
   // màn ngang: vòng cung 2 tầng đồng bộ với màn dọc (T lớn góc dưới phải; vòng trong P,1,2,3; vòng ngoài 4,5,6 + Ngựa + Ổ khóa)
   _vong(H) {

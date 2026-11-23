@@ -2232,28 +2232,28 @@ body.dt:not(.dt-ngang).dt-thap #dt .dt-ngua,
 body.dt:not(.dt-ngang).dt-luoi #dt .dt-ngua {
   display: none;
 }
-/* Nhac nut Noi chuyen / Nhat do / Xem sap len tren vom cung ngoai de khong de phim */
+/* Nhac nut Noi chuyen / Nhat do / Xem sap len tren dinh vom cung (+12px thoang, khong bao gio de phim) */
 body.dt:not(.dt-ngang) #dt .dt-noi,
 body.dt:not(.dt-ngang) #dt .dt-nhat,
-body.dt:not(.dt-ngang) #dt .dt-sap { top: calc(var(--dt-day) - 246px); }
+body.dt:not(.dt-ngang) #dt .dt-sap { top: calc(var(--dt-day) - var(--dt-noi-y, 264px)); z-index: 6; }
 body.dt:not(.dt-ngang).dt-luoi #dt .dt-noi,
 body.dt:not(.dt-ngang).dt-thap #dt .dt-noi,
 body.dt:not(.dt-ngang).dt-luoi #dt .dt-nhat,
 body.dt:not(.dt-ngang).dt-thap #dt .dt-nhat,
 body.dt:not(.dt-ngang).dt-luoi #dt .dt-sap,
-body.dt:not(.dt-ngang).dt-thap #dt .dt-sap { top: calc(var(--dt-day) - 198px); }
+body.dt:not(.dt-ngang).dt-thap #dt .dt-sap { top: calc(var(--dt-day) - var(--dt-noi-y1, 218px)); }
 body.dt:not(.dt-ngang).dt-noi-co #dt .dt-nhat,
 body.dt:not(.dt-ngang).dt-noi-co #dt .dt-sap,
-body.dt:not(.dt-ngang).dt-sap-co #dt .dt-nhat { top: calc(var(--dt-day) - 298px); }
+body.dt:not(.dt-ngang).dt-sap-co #dt .dt-nhat { top: calc(var(--dt-day) - var(--dt-noi-y, 264px) - 52px); }
 body.dt:not(.dt-ngang).dt-noi-co.dt-luoi #dt .dt-nhat,
 body.dt:not(.dt-ngang).dt-noi-co.dt-thap #dt .dt-nhat,
 body.dt:not(.dt-ngang).dt-noi-co.dt-luoi #dt .dt-sap,
 body.dt:not(.dt-ngang).dt-noi-co.dt-thap #dt .dt-sap,
 body.dt:not(.dt-ngang).dt-sap-co.dt-luoi #dt .dt-nhat,
-body.dt:not(.dt-ngang).dt-sap-co.dt-thap #dt .dt-nhat { top: calc(var(--dt-day) - 250px); }
-body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co #dt .dt-nhat { top: calc(var(--dt-day) - 350px); }
+body.dt:not(.dt-ngang).dt-sap-co.dt-thap #dt .dt-nhat { top: calc(var(--dt-day) - var(--dt-noi-y1, 218px) - 52px); }
+body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co #dt .dt-nhat { top: calc(var(--dt-day) - var(--dt-noi-y, 264px) - 104px); }
 body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co.dt-luoi #dt .dt-nhat,
-body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co.dt-thap #dt .dt-nhat { top: calc(var(--dt-day) - 302px); }
+body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co.dt-thap #dt .dt-nhat { top: calc(var(--dt-day) - var(--dt-noi-y1, 218px) - 104px); }
 /* === VL_CODIEN_VOMCUNG_END === */
 
 /* === VL_CHAT_SVG_EXP_START === */
