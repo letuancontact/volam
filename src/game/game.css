@@ -2353,3 +2353,441 @@ html, body, button, input, select, textarea,
   animation: vlExpFlash 0.45s ease-out;
 }
 /* === VL_ORIG_GAME_FONT_END === */
+
+/* === VL_TANTHU_GUIDE_START === */
+/* Cam nang Tan thu: nut mo nhanh + the nhac Mobile co nut hanh dong + bang lo trinh 8 buoc */
+#vl-tt-fab {
+  position: fixed;
+  left: 50%;
+  top: 6px;
+  transform: translateX(-50%);
+  z-index: 6;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  padding: 0 10px 0 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 168, 86, 0.78);
+  background: linear-gradient(180deg, rgba(34, 24, 12, 0.92), rgba(14, 10, 6, 0.94));
+  color: #ffe49c;
+  font: 13px/22px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
+  text-shadow: 1px 1px 0 #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 226, 148, 0.2);
+  cursor: pointer;
+  pointer-events: auto;
+  white-space: nowrap;
+}
+#vl-tt-fab:hover {
+  border-color: #ffd875;
+  background: linear-gradient(180deg, rgba(58, 40, 18, 0.95), rgba(22, 15, 8, 0.96));
+  color: #fff4cf;
+}
+#vl-tt-fab > i {
+  display: inline-grid;
+  place-items: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffd875, #b67e22);
+  color: #1c1205;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 15px;
+  text-shadow: none;
+}
+#vl-tt-fab.co-buoc {
+  box-shadow: 0 0 10px rgba(255, 206, 94, 0.45), 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+/* Mobile doc: dat nut Cam nang goc trai top 172px doi xung nut Tu danh (phai top 172px), the nhac o 200px */
+body.dt:not(.dt-ngang) #vl-tt-fab {
+  left: 6px;
+  top: 172px;
+  transform: none;
+  height: 24px;
+  padding: 0 8px 0 5px;
+  border-radius: 4px;
+}
+body.dt.dt-ngang #vl-tt-fab.dt-co-bar { display: none !important; }
+body.dt-cs #vl-tt-fab, body.dt-chat #vl-tt-fab, body.dt-luoi #vl-tt-fab { display: none !important; }
+
+/* The nhac tan thu tren Mobile: ro mat, co nut hanh dong bam 1 cham */
+#dt .dt-chidan {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 200px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 26px 6px 9px;
+  background: linear-gradient(180deg, rgba(22, 18, 12, 0.93), rgba(10, 12, 11, 0.94));
+  border: 1px solid rgba(212, 168, 86, 0.78);
+  border-radius: 6px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.65);
+  pointer-events: auto;
+  z-index: 6;
+}
+#dt .dt-chidan .dt-cd-main {
+  min-width: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+#dt .dt-chidan .dt-cd-main b {
+  color: #ffe08a;
+  font: 13px/15px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#dt .dt-chidan .dt-cd-main span {
+  color: #e6eee8;
+  font: 12px/14px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#dt .dt-chidan .dt-cd-ops {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+#dt .dt-chidan .dt-cd-go {
+  padding: 4px 9px;
+  border-radius: 4px;
+  border: 1px solid #ffd875;
+  background: linear-gradient(180deg, #c98e2c, #74490f);
+  color: #fff8e2;
+  font: 12px/15px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
+  text-shadow: 1px 1px 0 #000;
+  white-space: nowrap;
+  cursor: pointer;
+}
+#dt .dt-chidan .dt-cd-ing {
+  padding: 3px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(114, 198, 152, 0.6);
+  background: rgba(18, 46, 34, 0.85);
+  color: #8df2b0;
+  font: 12px/15px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
+  white-space: nowrap;
+}
+#dt .dt-chidan .dt-cd-book {
+  padding: 4px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(145, 168, 156, 0.6);
+  background: rgba(20, 32, 28, 0.9);
+  color: #d6eadf;
+  font: 12px/15px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
+  white-space: nowrap;
+  cursor: pointer;
+}
+#dt .dt-chidan-x {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  font-style: normal;
+  color: #b9b2a0;
+  cursor: pointer;
+}
+body.dt.dt-ngang #dt .dt-chidan {
+  left: 50%;
+  right: auto;
+  top: 6px;
+  width: min(460px, 54vw);
+  transform: translateX(-50%);
+  padding: 4px 24px 4px 8px;
+}
+
+/* Bang Cam nang Tan thu (#vl-tt-modal) */
+#vl-tt-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 92;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  box-sizing: border-box;
+  background: rgba(5, 7, 6, 0.72);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  pointer-events: auto;
+}
+#vl-tt-modal.on { display: flex; }
+#vl-tt-modal .vtt-box {
+  width: min(640px, 96vw);
+  max-height: min(86vh, 660px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  border: 1px solid rgba(212, 168, 86, 0.85);
+  background: linear-gradient(180deg, #171a18 0%, #0d1110 100%);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.82), inset 0 1px 0 rgba(255, 224, 146, 0.22);
+  color: #e9e4d4;
+  overflow: hidden;
+  font-family: var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
+}
+#vl-tt-modal .vtt-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  background: linear-gradient(180deg, rgba(64, 44, 16, 0.55), rgba(20, 16, 10, 0.65));
+  border-bottom: 1px solid rgba(201, 154, 74, 0.45);
+}
+#vl-tt-modal .vtt-title { display: flex; flex-direction: column; gap: 2px; }
+#vl-tt-modal .vtt-title b {
+  font-family: var(--jx16, "VK Sans Serif 16", "VK Sans Serif 13", "IBM Plex Mono", monospace);
+  font-size: 18px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #ffe28e;
+  text-shadow: 1px 1px 0 #000;
+}
+#vl-tt-modal .vtt-title span { font-size: 12px; color: #c7bfa8; }
+#vl-tt-modal .vtt-x {
+  width: 28px;
+  height: 28px;
+  border-radius: 5px;
+  border: 1px solid rgba(201, 154, 74, 0.5);
+  background: rgba(24, 20, 14, 0.85);
+  color: #f3d796;
+  font-size: 14px;
+  cursor: pointer;
+}
+#vl-tt-modal .vtt-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(8, 12, 10, 0.6);
+  border-bottom: 1px solid rgba(90, 122, 106, 0.35);
+}
+#vl-tt-modal .vtt-tabs button {
+  flex: 1 1 0;
+  padding: 6px 8px;
+  border-radius: 5px;
+  border: 1px solid rgba(94, 130, 112, 0.45);
+  background: rgba(18, 28, 24, 0.72);
+  color: #b7d2c3;
+  font-size: 13px;
+  cursor: pointer;
+}
+#vl-tt-modal .vtt-tabs button.on {
+  border-color: #e6ba62;
+  background: linear-gradient(180deg, rgba(140, 96, 28, 0.65), rgba(66, 42, 12, 0.78));
+  color: #fff2c6;
+  text-shadow: 1px 1px 0 #000;
+}
+#vl-tt-modal .vtt-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 12px 14px;
+  scrollbar-width: thin;
+  scrollbar-color: #7c6234 transparent;
+}
+#vl-tt-modal .vtt-prog { margin-bottom: 10px; }
+#vl-tt-modal .vtt-prog-txt {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: #c8d6cc;
+}
+#vl-tt-modal .vtt-prog-txt b { color: #ffe08a; font-weight: 400; }
+#vl-tt-modal .vtt-prog-bar {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(201, 154, 74, 0.35);
+  overflow: hidden;
+}
+#vl-tt-modal .vtt-prog-bar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #d89b32, #ffe282);
+  transition: width 0.25s ease;
+}
+#vl-tt-modal .vtt-cur {
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(235, 188, 92, 0.8);
+  background: linear-gradient(180deg, rgba(84, 58, 18, 0.36), rgba(22, 20, 14, 0.8));
+}
+#vl-tt-modal .vtt-cur.xong {
+  border-color: rgba(98, 214, 142, 0.65);
+  background: linear-gradient(180deg, rgba(24, 76, 48, 0.36), rgba(14, 24, 18, 0.8));
+}
+#vl-tt-modal .vtt-cur-tag { font-size: 12px; color: #f6c967; margin-bottom: 3px; }
+#vl-tt-modal .vtt-cur-title {
+  font-family: var(--jx16, "VK Sans Serif 16", "VK Sans Serif 13", "IBM Plex Mono", monospace);
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff6d2;
+  margin-bottom: 4px;
+}
+#vl-tt-modal .vtt-cur-desc { font-size: 13px; line-height: 18px; color: #ddd6c4; margin-bottom: 9px; }
+#vl-tt-modal .vtt-cur-btns { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+#vl-tt-modal .vtt-btn-go {
+  padding: 6px 14px;
+  border-radius: 5px;
+  border: 1px solid #ffe08a;
+  background: linear-gradient(180deg, #cf9430, #774b10);
+  color: #fff9e6;
+  font-size: 13px;
+  text-shadow: 1px 1px 0 #000;
+  cursor: pointer;
+}
+#vl-tt-modal .vtt-btn-sec {
+  padding: 6px 12px;
+  border-radius: 5px;
+  border: 1px solid rgba(132, 174, 152, 0.65);
+  background: rgba(20, 38, 32, 0.88);
+  color: #d6f0e2;
+  font-size: 13px;
+  cursor: pointer;
+}
+#vl-tt-modal .vtt-badge-ing {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(102, 214, 142, 0.55);
+  background: rgba(16, 48, 32, 0.85);
+  color: #8bf5b0;
+  font-size: 13px;
+}
+#vl-tt-modal .vtt-list { display: flex; flex-direction: column; gap: 6px; }
+#vl-tt-modal .vtt-step {
+  display: flex;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(90, 114, 102, 0.32);
+  background: rgba(16, 22, 20, 0.72);
+}
+#vl-tt-modal .vtt-step.now {
+  border-color: rgba(235, 188, 92, 0.72);
+  background: rgba(54, 40, 16, 0.32);
+}
+#vl-tt-modal .vtt-step.done { opacity: 0.72; }
+#vl-tt-modal .vtt-num {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  border: 1px solid rgba(145, 168, 156, 0.5);
+  color: #d2dcd6;
+  background: rgba(24, 34, 30, 0.85);
+}
+#vl-tt-modal .vtt-step.done .vtt-num {
+  border-color: #54d684;
+  background: rgba(24, 86, 48, 0.85);
+  color: #8df7b4;
+}
+#vl-tt-modal .vtt-step.now .vtt-num {
+  border-color: #ffd875;
+  background: linear-gradient(180deg, #cf9430, #7a4d10);
+  color: #fff8e2;
+}
+#vl-tt-modal .vtt-step-body { min-width: 0; flex: 1 1 auto; }
+#vl-tt-modal .vtt-step-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+#vl-tt-modal .vtt-step-head b { font-size: 13px; color: #f6e7bd; font-weight: 400; }
+#vl-tt-modal .vtt-step-head em { font-style: normal; font-size: 11px; color: #9ab3a6; }
+#vl-tt-modal .vtt-step.done .vtt-step-head em { color: #6de89c; }
+#vl-tt-modal .vtt-step.now .vtt-step-head em { color: #ffd875; }
+#vl-tt-modal .vtt-step-body p { margin: 0; font-size: 12px; line-height: 17px; color: #c8cfc8; }
+
+#vl-tt-modal .vtt-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+#vl-tt-modal .vtt-card {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(112, 146, 128, 0.35);
+  background: rgba(14, 22, 19, 0.78);
+}
+#vl-tt-modal .vtt-card h3 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #ffe08a;
+  border-bottom: 1px solid rgba(201, 154, 74, 0.3);
+  padding-bottom: 4px;
+}
+#vl-tt-modal .vtt-card ul { margin: 0; padding-left: 16px; display: flex; flex-direction: column; gap: 6px; }
+#vl-tt-modal .vtt-card li { font-size: 12.5px; line-height: 17px; color: #d8dfd8; }
+#vl-tt-modal .vtt-card li b { color: #ffe49c; font-weight: 400; }
+
+#vl-tt-modal .vtt-tips { display: flex; flex-direction: column; gap: 8px; }
+#vl-tt-modal .vtt-tip {
+  padding: 9px 11px;
+  border-radius: 6px;
+  border: 1px solid rgba(112, 146, 128, 0.35);
+  background: rgba(14, 22, 19, 0.78);
+}
+#vl-tt-modal .vtt-tip b { display: block; font-size: 13.5px; color: #ffe08a; font-weight: 400; margin-bottom: 3px; }
+#vl-tt-modal .vtt-tip p { margin: 0; font-size: 12.5px; line-height: 17px; color: #d4dcd5; }
+
+#vl-tt-modal .vtt-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(10, 12, 11, 0.85);
+  border-top: 1px solid rgba(201, 154, 74, 0.35);
+}
+#vl-tt-modal .vtt-ft-left { display: flex; flex-wrap: wrap; gap: 6px; }
+#vl-tt-modal .vtt-ft-btn {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(124, 154, 138, 0.5);
+  background: rgba(20, 32, 28, 0.88);
+  color: #cfe6d9;
+  font-size: 12px;
+  cursor: pointer;
+}
+#vl-tt-modal .vtt-ft-btn.hi {
+  border-color: #e6ba62;
+  color: #ffe28e;
+}
+#vl-tt-modal .vtt-ft-close {
+  padding: 5px 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(201, 154, 74, 0.7);
+  background: linear-gradient(180deg, #523b18, #2b1e0c);
+  color: #ffe9b0;
+  font-size: 13px;
+  cursor: pointer;
+}
+@media (max-width: 520px) {
+  #dt .dt-chidan .dt-cd-book { display: none; }
+  #vl-tt-modal { padding: 6px; }
+  #vl-tt-modal .vtt-box { max-height: 92vh; }
+}
+/* === VL_TANTHU_GUIDE_END === */
