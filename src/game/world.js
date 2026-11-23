@@ -1783,7 +1783,7 @@ export class World {
       ctx.restore();
     } catch {}
   }
-  // Hao quang danh hieu duoi chan (Bang chu/Quan tri, Ho Bang, Truong lao/Duong chu, Cao thu >= 80)
+  // Hao quang danh hieu duoi chan (Bang chu/Quan tri, Ho Bang, Truong lao/Duong chu, Cao thu >= 80) — kieu chan khi kiem hiep 2.5D
   _drawAura(ctx, e) {
     try {
       if (typeof document === "undefined" || !document.body || !document.body.classList.contains("ui-modern")) return;
@@ -1791,21 +1791,155 @@ export class World {
       const cv = other ? e.bhc : (this.bhMinh && this.bhMinh.cv);
       const nhan = String((other ? e.bh : (this.bhMinh && this.bhMinh.nhan)) || "");
       const isChu = cv === "chu" || (other ? !!e.qt : !!this.laQt);
-      const isHoBang = /hộ bang/i.test(nhan);
-      const isQuan = cv === "lao" || cv === "duong";
-      const isCaoThu = !other && !!(this.hero && (this.hero.lvl | 0) >= 80);
+      const isHoBang = !isChu && /hộ bang/i.test(nhan);
+      const isQuan = !isChu && !isHoBang && (cv === "lao" || cv === "duong");
+      const isCaoThu = !isChu && !isHoBang && !isQuan && !other && !!(this.hero && (this.hero.lvl | 0) >= 80);
       if (!isChu && !isHoBang && !isQuan && !isCaoThu) return;
-      const r = (e.look && e.look.horse) || e.horse ? 33 : 24;
-      const pulse = 0.72 + 0.28 * Math.sin(this.time * 3.4 + (e.x || 0) * 0.02);
-      const c = isChu ? [255, 214, 92] : isHoBang ? [94, 234, 212] : isQuan ? [132, 232, 174] : [220, 214, 178];
-      const rgba = (a) => "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a.toFixed(3) + ")";
+
+      const t = this.time || 0;
+      const seed = ((e.uid || 0) * 1.37 + (e.x || 0) * 0.013) % 6.283;
+      const ride = !!((e.look && e.look.horse) || e.horse);
+      const r = ride ? 36 : 26;
+      const pulse = 0.84 + 0.16 * Math.sin(t * 2.6 + seed);
+      const pal = isChu
+        ? { c1: [255, 224, 122], c2: [255, 168, 48], core: [255, 250, 214] }
+        : isHoBang
+          ? { c1: [94, 240, 218], c2: [24, 176, 158], core: [216, 255, 248] }
+          : isQuan
+            ? { c1: [126, 240, 178], c2: [44, 182, 118], core: [224, 255, 236] }
+            : { c1: [232, 222, 190], c2: [168, 154, 118], core: [255, 250, 236] };
+      const rgba = (rgb, a) => "rgba(" + rgb[0] + "," + rgb[1] + "," + rgb[2] + "," + Math.max(0, Math.min(1, a)).toFixed(3) + ")";
+      const cx = e.x, cy = e.y + 3;
+
       ctx.save();
-      const gr = ctx.createRadialGradient(e.x, e.y + 3, r * 0.2, e.x, e.y + 3, r * 1.18);
-      gr.addColorStop(0, rgba(0.14 * pulse)); gr.addColorStop(0.72, rgba(0.30 * pulse)); gr.addColorStop(1, rgba(0));
-      ctx.fillStyle = gr; ctx.beginPath(); ctx.ellipse(e.x, e.y + 3, r * 1.18, r * 0.54, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = rgba(0.76 * pulse); ctx.lineWidth = isChu ? 1.8 : 1.3;
-      ctx.beginPath(); ctx.ellipse(e.x, e.y + 3, r, r * 0.46, 0, 0, Math.PI * 2); ctx.stroke();
-      if (isChu) { ctx.strokeStyle = "rgba(255,244,192," + (0.42 * pulse).toFixed(3) + ")"; ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(e.x, e.y + 3, r + 4.5, (r + 4.5) * 0.46, 0, 0, Math.PI * 2); ctx.stroke(); }
+      ctx.globalCompositeOperation = "lighter";
+
+      // Lop 1: Mat phang chan khi 2.5D (nen truc Y = 0.48 de gradient & hoa van om sat mat dat)
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.scale(1, 0.48);
+
+      // 1a. Quang khi nen mem
+      const outerR = r * (isChu ? 1.42 : 1.24);
+      const gr = ctx.createRadialGradient(0, 0, r * 0.12, 0, 0, outerR);
+      gr.addColorStop(0, rgba(pal.core, (isChu ? 0.16 : 0.10) * pulse));
+      gr.addColorStop(0.56, rgba(pal.c1, (isChu ? 0.24 : 0.16) * pulse));
+      gr.addColorStop(0.84, rgba(pal.c2, (isChu ? 0.14 : 0.08) * pulse));
+      gr.addColorStop(1, rgba(pal.c2, 0));
+      ctx.fillStyle = gr;
+      ctx.beginPath(); ctx.arc(0, 0, outerR, 0, Math.PI * 2); ctx.fill();
+
+      // 1b. Hoa van lien hoa 8 canh mem xoay cham (rieng Bang chu / Quan tri)
+      if (isChu) {
+        const rot0 = t * 0.52 + seed;
+        ctx.save();
+        ctx.rotate(rot0);
+        ctx.strokeStyle = rgba(pal.c1, 0.34 * pulse);
+        ctx.lineWidth = 1.25;
+        ctx.beginPath();
+        const petals = 8, rIn = r * 0.56, rOut = r * 0.94;
+        for (let i = 0; i < petals; i++) {
+          const a0 = (i / petals) * Math.PI * 2;
+          const aMid = ((i + 0.5) / petals) * Math.PI * 2;
+          const a1 = ((i + 1) / petals) * Math.PI * 2;
+          if (i === 0) ctx.moveTo(Math.cos(a0) * rIn, Math.sin(a0) * rIn);
+          ctx.quadraticCurveTo(Math.cos(aMid) * rOut, Math.sin(aMid) * rOut, Math.cos(a1) * rIn, Math.sin(a1) * rIn);
+        }
+        ctx.closePath();
+        ctx.stroke();
+
+        // 8 diem kim chau quanh vanh ngoai
+        for (let i = 0; i < petals; i++) {
+          const a = (i / petals) * Math.PI * 2;
+          const px = Math.cos(a) * (r * 1.12), py = Math.sin(a) * (r * 1.12);
+          ctx.fillStyle = rgba(pal.core, (0.55 + 0.35 * Math.sin(t * 4 + i)) * pulse);
+          ctx.beginPath(); ctx.arc(px, py, i % 2 === 0 ? 2.1 : 1.35, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.restore();
+      } else if (isHoBang) {
+        ctx.save();
+        ctx.rotate(t * 0.45 + seed);
+        for (let i = 0; i < 4; i++) {
+          const a = (i / 4) * Math.PI * 2;
+          ctx.fillStyle = rgba(pal.core, 0.65 * pulse);
+          ctx.beginPath(); ctx.arc(Math.cos(a) * (r * 1.04), Math.sin(a) * (r * 1.04), 1.8, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.restore();
+      }
+
+      // 1c. Vanh chinh & vanh phu tinh te
+      ctx.strokeStyle = rgba(pal.c1, (isChu ? 0.58 : 0.42) * pulse);
+      ctx.lineWidth = isChu ? 1.7 : 1.25;
+      ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.stroke();
+
+      if (isChu || isHoBang || isQuan) {
+        ctx.strokeStyle = rgba(pal.core, (isChu ? 0.32 : 0.22) * pulse);
+        ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.arc(0, 0, r * 0.72, 0, Math.PI * 2); ctx.stroke();
+      }
+
+      // 1d. Hai dai lua chan khi xoay nguoc chieu (dau sang, duoi mo dan)
+      const drawArcStreak = (rad, baseA, span, dir, width, alpha) => {
+        const segs = 7;
+        for (let k = 0; k < segs; k++) {
+          const f0 = k / segs, f1 = (k + 1) / segs;
+          const a0 = baseA + dir * span * f0, a1 = baseA + dir * span * f1;
+          ctx.strokeStyle = rgba(k === segs - 1 ? pal.core : pal.c1, alpha * f1 * f1);
+          ctx.lineWidth = width * (0.45 + 0.55 * f1);
+          ctx.beginPath();
+          ctx.arc(0, 0, rad, dir > 0 ? a0 : a1, dir > 0 ? a1 : a0);
+          ctx.stroke();
+        }
+        const tipA = baseA + dir * span;
+        ctx.fillStyle = rgba(pal.core, Math.min(0.95, alpha * 1.25));
+        ctx.beginPath(); ctx.arc(Math.cos(tipA) * rad, Math.sin(tipA) * rad, width * 0.95, 0, Math.PI * 2); ctx.fill();
+      };
+
+      const rotCW = t * (isChu ? 1.55 : 1.15) + seed;
+      const rotCCW = -t * (isChu ? 1.05 : 0.8) - seed * 0.7;
+      const arcSpan = isChu ? 1.35 : isHoBang ? 1.1 : 0.85;
+      drawArcStreak(r * 1.03, rotCW, arcSpan, 1, isChu ? 2.1 : 1.6, (isChu ? 0.78 : 0.56) * pulse);
+      drawArcStreak(r * 1.03, rotCW + Math.PI, arcSpan, 1, isChu ? 2.1 : 1.6, (isChu ? 0.78 : 0.56) * pulse);
+      if (isChu || isHoBang) {
+        drawArcStreak(r * 0.78, rotCCW, 1.0, -1, isChu ? 1.5 : 1.2, (isChu ? 0.58 : 0.42) * pulse);
+        drawArcStreak(r * 0.78, rotCCW + Math.PI, 1.0, -1, isChu ? 1.5 : 1.2, (isChu ? 0.58 : 0.42) * pulse);
+      }
+      ctx.restore();
+
+      // Lop 2: Hat kim quang & luong khi bay len (khong nen truc Y)
+      const moteN = isChu ? 6 : isHoBang ? 4 : isQuan ? 3 : 0;
+      const riseH = isChu ? 42 : 28;
+      for (let i = 0; i < moteN; i++) {
+        const ph = (t * (0.42 + (i % 3) * 0.09) + i * 0.173 + seed * 0.2) % 1;
+        const ang = seed + i * (Math.PI * 2 / moteN) + ph * 1.4;
+        const dist = r * (0.68 + 0.34 * Math.sin(i * 1.9 + ph * 3.1));
+        const mx = cx + Math.cos(ang) * dist;
+        const my = cy + Math.sin(ang) * dist * 0.48 - ph * riseH;
+        const fade = Math.sin(ph * Math.PI);
+        const sz = (isChu ? 1.9 : 1.45) * (0.65 + 0.45 * fade);
+        ctx.fillStyle = rgba(i % 2 === 0 ? pal.core : pal.c1, fade * (isChu ? 0.85 : 0.62));
+        ctx.beginPath(); ctx.arc(mx, my, sz, 0, Math.PI * 2); ctx.fill();
+      }
+      if (isChu) {
+        for (let i = 0; i < 2; i++) {
+          const ph = (t * 0.65 + i * 0.5 + seed * 0.15) % 1;
+          const ang = rotCW * 0.55 + i * Math.PI;
+          const bx = cx + Math.cos(ang) * (r * 0.82), by = cy + Math.sin(ang) * (r * 0.82) * 0.48;
+          const topY = by - 16 - ph * 22;
+          const fade = Math.sin(ph * Math.PI) * 0.48;
+          const gl = ctx.createLinearGradient(bx, topY, bx, by);
+          gl.addColorStop(0, rgba(pal.core, 0));
+          gl.addColorStop(0.55, rgba(pal.c1, fade));
+          gl.addColorStop(1, rgba(pal.c2, 0));
+          ctx.strokeStyle = gl;
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(bx, by);
+          ctx.quadraticCurveTo(bx + Math.sin(t * 3 + i * 2) * 6, (by + topY) * 0.5, bx, topY);
+          ctx.stroke();
+        }
+      }
+
       ctx.restore();
     } catch {}
   }
