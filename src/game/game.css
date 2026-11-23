@@ -76,7 +76,7 @@ html, body, button, input, select { font-family: var(--font); }
 .screen.csel { flex-direction: column; justify-content: space-between; color: #f5ebd2; overflow-x: hidden; overflow-y: auto; padding: 16px 12px 18px;
   background: radial-gradient(ellipse at 50% 60%, rgba(4,18,14,.3) 0%, rgba(2,10,8,.92) 100%), url(../../assets/ui/chon_nv/nen_van_ngoc.webp) center / cover no-repeat #071412; }
 .csel .cs-top { text-align: center; }
-.csel h1 { margin: 2px 0 0; font-size: clamp(24px, 4vw, 36px); letter-spacing: 4px; color: #ffe090; text-shadow: 0 0 15px #c8902a, 0 2px 4px #000; font-weight: bold; text-transform: uppercase; }
+.csel h1 { margin: 2px 0 0; font-size: clamp(24px, 4vw, 36px); letter-spacing: 4px; color: #ffe090; text-shadow: 0 0 15px #c8902a, 0 2px 4px #000; font-weight: bold; text-transform: none; }
 .csel .cs-sub { font-size: 13px; color: #dac48c; letter-spacing: 1.5px; margin-top: 2px; }
 .csel .cs-row { display: flex; gap: clamp(16px, 4vw, 56px); justify-content: center; align-items: flex-end; width: 100%; max-width: 960px; flex: 1; min-height: 0; padding-top: 10px; }
 .csel .cs-slot { flex: 1; max-width: 270px; display: flex; flex-direction: column; align-items: center; cursor: pointer; position: relative; padding: 0 4px 10px;
@@ -122,7 +122,7 @@ html, body, button, input, select { font-family: var(--font); }
   background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,0) 22%, rgba(0,0,0,0) 72%, rgba(0,0,0,.4)),
     url(../../assets/ui/tao_nv/newchar.webp) center / cover no-repeat #000; }
 .cc-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px 0; }
-.cc-title { font-size: clamp(16px, 2.2vw, 22px); font-weight: bold; color: #fce49f; letter-spacing: 3px; text-shadow: 0 0 10px #b8781a, 0 2px 4px #000; text-transform: uppercase; }
+.cc-title { font-size: clamp(16px, 2.2vw, 22px); font-weight: bold; color: #fce49f; letter-spacing: 3px; text-shadow: 0 0 10px #b8781a, 0 2px 4px #000; text-transform: none; }
 .cc-ver { font-size: 13px; color: #d8ccb0; opacity: .85; letter-spacing: 1px; }
 .cc-mid { flex: 1; display: flex; align-items: center; justify-content: space-around; position: relative; padding: 0 2vw; max-height: calc(100vh - 160px); }
 @keyframes ccWalk { from { transform: translateX(0); } to { transform: translateX(-100%); } }
@@ -2281,18 +2281,18 @@ body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co.dt-thap #dt .dt-nhat { top: calc(var(
 /* === VL_CHAT_SVG_EXP_END === */
 
 /* === VL_ORIG_GAME_FONT_START === */
-/* Khai bao @font-face cho font goc cua game (VK Sans Serif 13/16) de hien dung ngay tu man hinh dang nhap */
+/* Khai bao @font-face cho font goc cua game (VK Sans Serif 13/16), dung font-weight: 100 900 de tat faux-bold gay vo net */
 @font-face {
   font-family: "VK Sans Serif 13";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   font-display: swap;
   src: url(/assets/ui/hud/font/vk-sans-serif-13.ttf) format("truetype");
 }
 @font-face {
   font-family: "VK Sans Serif 16";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 100 900;
   font-display: swap;
   src: url(/assets/ui/hud/font/vk-sans-serif-16.ttf) format("truetype");
 }
@@ -2322,9 +2322,14 @@ html, body, button, input, select, textarea,
 .dv, .dv *,
 .uhq, .uhq * {
   font-family: var(--jx);
+  font-synthesis: none;
 }
+/* Giu dung Title Case (khong ep UPPERCASE) de VK Sans Serif 16 du 100% dau tieng Viet, khong loi chu "Chon Nhan Vat" / "Hung Ba Thien Ha" */
 #s-load h1, #s-login h1, #s-doimk h1, #s-server h1, #s-select h1, #s-create h1, .csel h1, .cc h1, .cc-title {
   font-family: var(--jx16);
+  font-weight: 400;
+  font-synthesis: none;
+  text-transform: none;
 }
 .qch-json, pre, code {
   font-family: "IBM Plex Mono", Consolas, monospace !important;
