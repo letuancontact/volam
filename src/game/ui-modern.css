@@ -1376,3 +1376,42 @@ body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot .jx-qa {
   font-weight: 700 !important;
   letter-spacing: 1.5px !important;
 }
+
+/* === VL_CODIEN_MODERN_START === */
+/* Ap font co kiem hiep (assets/ui/fonts/vl-codien-*.woff2) cho man tai tai nguyen, man cho, dang nhap va chon nhan vat */
+#s-load, #s-load *,
+.zl, .zl *,
+#s-login, #s-login *,
+#s-doimk, #s-doimk *,
+#s-server, #s-server *,
+#s-select, #s-select *,
+#s-create, #s-create *,
+.csel, .csel *,
+.cc, .cc * {
+  font-family: "VL Co Dien", Georgia, "Times New Roman", serif !important;
+}
+#s-login h1,
+#s-doimk h1,
+#s-server h1,
+#s-select h1,
+#s-create h1,
+.csel h1,
+.cc h1 {
+  font-family: "VL Co Dien", Georgia, "Times New Roman", serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+}
+/* Bo sung nut Khoa & Ngua tron dong bo voi cum phim vom cung 2 tang */
+body.ui-modern.dt #dt .dt-okhoa,
+body.ui-modern.dt #dt .dt-ngua {
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 38% 26%, var(--m-jade-hi), var(--m-jade-lo)) !important;
+  border: 2px solid rgba(232, 194, 102, 0.78) !important;
+  box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.8), 0 3px 8px rgba(0, 0, 0, 0.65) !important;
+}
+/* Tinh chinh nhan phim T lon hon nhe cho noi bat tam vom cung */
+body.ui-modern.dt #jxhud .jx-bot > .jx-skill[data-skill="left"]::after {
+  font-size: 11px !important;
+  padding: 1px 8px !important;
+}
+/* === VL_CODIEN_MODERN_END === */

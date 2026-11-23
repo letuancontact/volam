@@ -53,14 +53,21 @@ const NGANG_CAO = 500; // xoay ngang mà bề cao ≤ chừng này = điện tho
 const MT_RONG = 800; // máy tính: cửa sổ dựng dọc hẹp hơn chừng này -> giao diện điện thoại (giao diện máy tính 1024 phải thu dưới ~78%)
 const RAY = 72; // màn ngang: cột thẻ bên trái của trang chức năng
 // màn ngang — vòng kỹ năng góc phải dưới (tâm cách góc 62 điểm): [chọn ô, cỡ, vòng (0 giữa · 1 trong · 2 ngoài), góc (180 = bên trái tâm, 90 = trên)]
-const O_VONG = [['.jx-skill[data-skill="left"]', 70, 0, 0], ['.jx-skill[data-skill="right"]', 52, 1, 180], ['.jx-slot[data-slot="2"]', 46, 1, 135],
-  ['.jx-slot[data-slot="3"]', 46, 1, 90], ['.jx-slot[data-slot="0"]', 42, 2, 172], ['.jx-slot[data-slot="1"]', 42, 2, 150],
-  ['.jx-slot[data-slot="4"]', 42, 2, 106], ['.jx-slot[data-slot="5"]', 42, 2, 84]];
+const O_VONG = [
+  ['.jx-skill[data-skill="left"]', 68, 0, 0],
+  ['.jx-skill[data-skill="right"]', 50, 1, 185],
+  ['.jx-slot[data-slot="0"]', 44, 1, 150],
+  ['.jx-slot[data-slot="1"]', 44, 1, 116],
+  ['.jx-slot[data-slot="2"]', 44, 1, 83],
+  ['.jx-slot[data-slot="3"]', 42, 2, 162],
+  ['.jx-slot[data-slot="4"]', 42, 2, 134],
+  ['.jx-slot[data-slot="5"]', 42, 2, 106]
+];
 // nút Lên / xuống ngựa (anh 10/11: "đưa nút lên xuống ngựa, thu nhỏ xíu ra màn hình chính để tiện thao tác trên mobile ngang dọc"): màn ngang = ô
 // tròn vòng ngoài, chỗ nút Tự đánh cũ (Tự đánh lên thanh dưới tên bãi như màn dọc — anh: "chỗ bật/tắt tự đánh chưa có trên màn hình chính");
 // màn dọc = bên trái nút khóa ô kỹ năng (--dt-ngr / --dt-ngt — _xepO). Chỉ hiện khi nhân vật đang mặc ngựa
-const NGUA_VONG = [40, 2, 128];
-const OK_VONG = [36, 2, 194]; // nút khóa ô kỹ năng (datOKhoa): vòng ngoài, dưới ô 1
+const NGUA_VONG = [36, 2, 83];
+const OK_VONG = [34, 2, 186]; // nút khóa ô kỹ năng: vòng ngoài, cạnh trái ô P
 // ổ khóa của nút khóa ô kỹ năng: quai đóng (.k — khóa: chỉ dùng) / quai nhấc, chân trái ra khỏi thân (.m — mở: chỉ gắn); game.css .dt-okhoa
 const KHOA_SVG = '<svg viewBox="0 0 20 20" width="20" height="20"><path class="k" d="M6.5 9V6.5a3.5 3.5 0 0 1 7 0V9"/><path class="m" d="M13.5 9V4.5a3.5 3.5 0 0 0-7 0V6"/><rect x="4" y="9" width="12" height="8.5" rx="1.5"/><rect class="lo" x="9" y="11.5" width="2" height="3.5" rx="1"/></svg>';
 // cỡ giao diện điện thoại (Trợ Thủ → Khác — nhớ ở máy): 1 = như cũ; CO_MD = mặc định khi chưa chọn (anh 30/10 chọn 80% — ảnh so
@@ -111,8 +118,11 @@ function ic(k, s, f = 0) {
 // 8 ô của thanh dưới máy tính giữ lại trên cảnh (góc phải dưới, 2 hàng × 4): hàng trên ô T, P, 5, 6 (anh 31/10 "2 ô trái phải nên để vào đây
 // cho dễ" — chỗ ô 3, 4 cũ: kéo ngắm chiêu từ đó còn chỗ cho vòng điều khiển), hàng dưới ô 1–4; [chọn ô, chữ góc, cột tính từ phải, hàng tính từ dưới]
 // — chỗ, cỡ: _xepO
-const O_NHANH = [['.jx-slot[data-slot="3"]', "4", 0, 0], ['.jx-slot[data-slot="2"]', "3", 1, 0], ['.jx-slot[data-slot="1"]', "2", 2, 0], ['.jx-slot[data-slot="0"]', "1", 3, 0],
-  ['.jx-slot[data-slot="5"]', "6", 0, 1], ['.jx-slot[data-slot="4"]', "5", 1, 1], ['.jx-skill[data-skill="right"]', "P", 2, 1], ['.jx-skill[data-skill="left"]', "T", 3, 1]];
+const O_NHANH = [
+  ['.jx-skill[data-skill="left"]', "T", 0, 0], ['.jx-skill[data-skill="right"]', "P", 1, 0],
+  ['.jx-slot[data-slot="0"]', "1", 2, 0], ['.jx-slot[data-slot="1"]', "2", 3, 0], ['.jx-slot[data-slot="2"]', "3", 4, 0],
+  ['.jx-slot[data-slot="3"]', "4", 0, 1], ['.jx-slot[data-slot="4"]', "5", 1, 1], ['.jx-slot[data-slot="5"]', "6", 2, 1]
+];
 // nút việc làm của món (anh 29/10: "chưa mang được đồ — quy tắc trên máy tính khác trên điện thoại, thiết kế cách mang đồ khác"): đọc từ dòng
 // gợi ý của ô xem món (windows.js tipHint) — "Bấm: cầm lên · Chuột phải: mặc · Ctrl + chuột phải: bán" -> [Mặc] [Cầm lên] [Bán]; bấm nút =
 // gửi đúng sự kiện chuột đó vào món (việc của chuột phải lên đầu). "Cầm lên" không thành nút: kéo món (30/10 — _cham)
@@ -683,26 +693,37 @@ export class DienThoai {
   // tách riêng (hở HO), nút khóa bên trái hàng vật phẩm; màn hẹp thì ô nhỏ lại cho cần còn chỗ. Mỗi ô: --dt-r (cách mép phải), --dt-y (đỉnh ô cách
   // đáy cảnh), --dt-s (cỡ); nút khóa: --dt-okr / --dt-okt; --dt-cum = bề rộng cụm tính từ mép phải (vùng cần dừng trước đó — game.css)
   _xepO(W) {
-    const S = W >= 440 ? 56 : W >= 400 ? 52 : 48, I = W >= 400 ? 46 : 44, GS = 6, GI = 8, LE = 8, K = 34, DAY = 14, HO = 16;
-    for (const [sel, , cot, hang] of O_NHANH) {
+    const k = W >= 430 ? 1 : W >= 380 ? 0.92 : 0.84;
+    const sT = Math.round(68 * k), CR = Math.round(12 + sT / 2), CB = Math.round(16 + sT / 2);
+    const R = [0, Math.round(90 * k), Math.round(140 * k)];
+    const pos = (s0, vong, g) => {
+      const s = Math.round(s0 * k), a = (g * Math.PI) / 180;
+      const dx = R[vong] * Math.cos(a), dy = R[vong] * Math.sin(a);
+      return [s, Math.round(CR - dx - s / 2), Math.round(CB + dy + s / 2)];
+    };
+    for (const [sel, s0, vong, g] of O_VONG) {
       const o = this.H.bot.querySelector(sel); if (!o) continue;
-      const s = hang ? S : I;
-      o.style.setProperty("--dt-s", s + "px"); o.style.setProperty("--dt-r", LE + cot * (s + (hang ? GS : GI)) + "px");
-      o.style.setProperty("--dt-y", (hang ? DAY + I + HO + S : DAY + I) + "px");
+      const [s, r, y] = pos(s0, vong, g);
+      o.style.setProperty("--dt-s", s + "px");
+      o.style.setProperty("--dt-r", r + "px");
+      o.style.setProperty("--dt-y", y + "px");
     }
-    const vat = 4 * I + 3 * GI, B = document.body.style;
-    B.setProperty("--dt-okr", LE + vat + GI + "px"); B.setProperty("--dt-okt", DAY + (I + K) / 2 + "px");
-    B.setProperty("--dt-cum", LE + Math.max(4 * S + 3 * GS, vat + GI + K) + "px");
-    B.setProperty("--dt-ngr", LE + vat + GI + K + 6 + "px"); B.setProperty("--dt-ngt", DAY + (I + 36) / 2 + "px"); // nút ngựa: trái nút khóa, giữa hàng vật phẩm
+    const B = document.body.style;
+    const [okS, okR, okY] = pos(...OK_VONG);
+    const [ngS, ngR, ngY] = pos(...NGUA_VONG);
+    B.setProperty("--dt-oks", okS + "px"); B.setProperty("--dt-okr", okR + "px"); B.setProperty("--dt-okt", okY + "px");
+    B.setProperty("--dt-ngs", ngS + "px"); B.setProperty("--dt-ngr", ngR + "px"); B.setProperty("--dt-ngt", ngY + "px");
+    B.setProperty("--dt-cum", Math.round(CR + R[2] + okS / 2 + 8) + "px");
   }
-  // màn ngang: chỗ các ô của vòng kỹ năng (--ng-r / --ng-b = cách mép phải / mép dưới, --ng-s = cỡ) quanh tâm cách góc phải dưới 62 điểm; vòng
-  // ngoài co lại khi màn thấp (thanh trình duyệt) cho khỏi đè tên bãi dưới bản đồ nhỏ
+  // màn ngang: vòng cung 2 tầng đồng bộ với màn dọc (T lớn góc dưới phải; vòng trong P,1,2,3; vòng ngoài 4,5,6 + Ngựa + Ổ khóa)
   _vong(H) {
-    const R = [0, 88, Math.max(130, Math.min(150, H - 209))];
+    const R = [0, Math.max(76, Math.min(88, Math.round((H - 170) * 0.44))), Math.max(124, Math.min(142, H - 196))];
     const dat = (el, s, vong, g) => {
       if (!el) return;
       const a = (g * Math.PI) / 180, dx = R[vong] * Math.cos(a), dy = R[vong] * Math.sin(a);
-      el.style.setProperty("--ng-r", Math.round(62 - dx - s / 2) + "px"); el.style.setProperty("--ng-b", Math.round(62 + dy - s / 2) + "px"); el.style.setProperty("--ng-s", s + "px");
+      el.style.setProperty("--ng-r", Math.round(48 - dx - s / 2) + "px");
+      el.style.setProperty("--ng-b", Math.round(48 + dy - s / 2) + "px");
+      el.style.setProperty("--ng-s", s + "px");
     };
     for (const [sel, s, vong, g] of O_VONG) dat(this.H.bot.querySelector(sel), s, vong, g);
     dat(this.el.querySelector(".dt-ngua"), ...NGUA_VONG);
