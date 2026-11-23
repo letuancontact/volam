@@ -1,7 +1,7 @@
 {
-  "name": "Võ Lâm Idle",
+  "name": "Võ Lâm Truyền Kỳ",
   "short_name": "Võ Lâm",
-  "description": "Võ Lâm Truyền Kỳ Idle trên web & di động",
+  "description": "Võ Lâm Truyền Kỳ trên web & di động",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

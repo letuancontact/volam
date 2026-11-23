@@ -1,15 +1,15 @@
 {
- "_goc": "Võ Lâm Idle - HuyHuyy — bản chia sẻ",
+ "_goc": "Võ Lâm Truyền Kỳ — phát triển bởi Rio",
  "_ghiChu": "Tin cập nhật cho người chơi (Esc → Tin cập nhật — khung Nhật ký / Cập nhật sự kiện của client, windows.js _tin). Tin mới nhất để đầu, id tăng dần (không dùng lại id): người chơi chưa xem tin có id lớn hơn hero.auto.tinXem thì vào game được nhắc + dấu Mới. ten: dòng ở danh sách bên trái (ngắn). noi: mỗi phần tử 1 dòng — '• ' gạch đầu dòng, '## ' tiêu đề nhỏ, *chữ* tô vàng (src/game/giupdo.js giupHtml). Sửa tệp này rồi gửi lên máy chủ, người chơi F5 là thấy (không cần khởi động lại).",
  "tin": [
   {
    "id": 88,
    "ngay": "18/11",
-   "ten": "Chào mừng đến với Võ Lâm Idle - HuyHuyy",
+   "ten": "Chào mừng đến với Võ Lâm Truyền Kỳ",
    "noi": [
-    "• Đây là bản chia sẻ của Võ Lâm Idle, có đủ các chức năng tới *Tống Kim* (chiến trường theo lịch, bot như người chơi, Quân Nhu quan).",
-    "• Tạo tài khoản: bấm *Tao_Tai_Khoan.bat* trong thư mục game — tài khoản đầu tiên là quản trị (bảng F10, công cụ thử phím `).",
-    "• Nếu bạn yêu thích bản game của mình thì hãy chung tay chia sẻ cho anh em khác trong group để ai cũng có thể trải nghiệm. Cảm ơn anh chị em group *Hội Quán* rất nhiều!"
+    "• Chào mừng các đại hiệp đến với *Võ Lâm Truyền Kỳ*, đầy đủ tính năng luyện công, tổ đội, săn Boss và chiến trường *Tống Kim*.",
+    "• Phiên bản chơi vui hoàn toàn miễn phí — chúc anh em có những giờ phút hành tẩu giang hồ thật thư giãn.",
+    "• Mở *Trợ Thủ (phím K)* để cài đặt tự đánh, uống thuốc, theo dõi thống kê Farm và bật chế độ treo máy tiết kiệm pin."
    ]
   },
   {

@@ -39,7 +39,7 @@ const BL_MAX = 8; // bùa lợi đang có (của mình + đồng đội dùng l�
 // lệnh bí mật chỉ máy chủ bản gốc có (anh 11/11 — chống bản nhái, README lượt 73): KHÔNG nằm trong mã trình duyệt, KHÔNG ghi tin cập nhật. Gõ đúng
 // chuỗi này vào ô chat -> chỉ người gõ thấy dòng xác nhận bản gốc, không phát cho ai. Server nhái gõ mà cũng hiện = họ đang có mã máy chủ của anh
 const GOC_LENH = "#goc-hbee67", GOC_BAT = Date.now();
-const gocCau = () => { const d = new Date(GOC_BAT + 7 * 3600e3).toISOString(); return `Võ Lâm Idle · S2 Đồ Xanh — bản gốc của Heo Búy · s343clgt.duckdns.org · DX·S2·5630e77e · máy chủ bật ${d.slice(11, 16)} ${d.slice(8, 10)}/${d.slice(5, 7)}`; };
+const gocCau = () => { const d = new Date(GOC_BAT + 7 * 3600e3).toISOString(); return `Võ Lâm Truyền Kỳ — phát triển bởi Rio · máy chủ bật ${d.slice(11, 16)} ${d.slice(8, 10)}/${d.slice(5, 7)}`; };
 const PT_MAX = 8; // phân thân đang theo gửi cho người cùng bãi: người chơi tối đa phanThan.toiDa (2 — phan-than.js chặn lúc gọi), quản trị không giới hạn (anh 18/11) — gửi tối đa 8
 
 const ben = new Map(); // tên tài khoản -> người đang trong game
