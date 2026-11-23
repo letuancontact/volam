@@ -56,6 +56,6 @@ export function dungManCho(zl) {
 }
 // trong game: logo mờ góc phải (CSS chỉ hiện khi #hud.on, máy tính, không chặn bấm). Soát: ô chữ góc trái phải có chữ ký
 export function dungTrongGame(hud) {
-  if (!document.querySelector(".ak-goc")) { const img = tao("img", "ak-goc"); img.src = LOGO_NHO; img.alt = ""; img.draggable = false; document.body.append(img); }
+  document.querySelectorAll(".ak-goc").forEach((e) => e.remove());
   if (hud && (!hud.info || (hud.info() || {}).ky !== KY_NGAN)) voKy("trong game");
 }

@@ -177,7 +177,8 @@ export class Hud {
       at(Y({ ...M.channel, w: 20, h: 20 }), "jx-chbtn", "");
     M.items.forEach((r, i) => (html += at(Y(r), "jx-slot", "", {}, ` data-slot="${i}"`)));
     for (const side of ["left", "right"]) html += at(Y(M.skills[side]), "jx-slot jx-skill", "", {}, ` data-skill="${side}"`);
-    for (const [k, b] of btns) html += `<div class="jx-btn" data-k="${k}" title="${esc(b.tip)}" style="${css({ left: b.x, top: b.y - y0, width: b.w, height: b.h, ...img(b, b.up) })}"></div>`;
+    const CHAT_SVG = '<svg class="vl-chat-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 4.5h13.6a2.7 2.7 0 0 1 2.7 2.7v7.6a2.7 2.7 0 0 1-2.7 2.7H11l-4.6 3.1c-.5.35-1.2 0-1.2-.6v-2.5A2.7 2.7 0 0 1 2.5 14.8V7.2a2.7 2.7 0 0 1 2.7-2.7Z" fill="rgba(255,222,128,0.16)" stroke="#f6d884" stroke-width="1.8" stroke-linejoin="round"/><circle cx="8.6" cy="11" r="1.25" fill="#fff2c2"/><circle cx="12" cy="11" r="1.25" fill="#fff2c2"/><circle cx="15.4" cy="11" r="1.25" fill="#fff2c2"/></svg>';
+    for (const [k, b] of btns) html += `<div class="jx-btn" data-k="${k}" title="${esc(b.tip)}" style="${css({ left: b.x, top: b.y - y0, width: b.w, height: b.h, ...img(b, b.up) })}">${k === "ChatRoom" ? CHAT_SVG : ""}</div>`;
     // trung tâm tin hệ thống (client 系统消息.ini KUiSysMsgCentre: biểu tượng [MsgIcon_*] 24 × 24 ở mép phải, dòng chữ [MsgText] bên trái — anh 06/11
     // chiều "cái icon này bỏ góc này đi em", mũi tên trong ảnh: từ cuối dòng ô tin hệ thống sang góc phải dưới, ngay trên nút Bảo vật): biểu tượng
     // 组队 (moiDoi) + bảng dòng lời mời bên trái biểu tượng, đáy ngang đáy biểu tượng (bấm biểu tượng: hiện / ẩn — moiIcon)
@@ -414,7 +415,7 @@ export class Hud {
       [s.server, L.color],
       [`Trực tuyến: ${s.online}`, L.color],
       [s.ping == null ? net.msg : `${net.msg} ${Math.round(s.ping)} ms`, net.color],
-      ...(s.ky ? [[s.ky, L.color]] : []), // chữ ký bản gốc (anh 11/11 — an-ky.js KY_NGAN)
+      // da an chu ky goc man hinh trong game
     ];
     const [t, c] = items[this.infoI % items.length], el = this.top.querySelector(".jx-logo");
     if (force && (!s.ky || ((kyChuan() ^ 0x5a5a1234) >>> 0) !== 1475302667)) voKy("dải trên");
@@ -644,9 +645,20 @@ export class Hud {
     this.top.querySelector(".jx-rank").textContent = s.rank ?? "?";
     const vals = { stamina: [s.stamina, s.staminaMax], life: [s.life, s.lifeMax], mana: [s.mana, s.manaMax], exp: [s.exp, s.expMax] };
     this.top.querySelectorAll(".jx-bar").forEach((el, i) => {
-      const k = M.bars[i].key, [v, mx] = vals[k], r = mx > 0 ? Math.max(0, Math.min(1, v / mx)) : 0;
-      el.firstChild.style.width = Math.round(r * M.bars[i].w) + "px";
-      el.lastChild.textContent = k === "exp" ? (r * 100).toFixed(2) + "%" : `${Math.ceil(v)}/${mx}`;
+      const k = M.bars[i].key, [v0, mx0] = vals[k];
+      const v = Number.isFinite(+v0) ? +v0 : 0, mx = Number.isFinite(+mx0) && +mx0 > 0 ? +mx0 : 0;
+      const rawR = mx > 0 ? v / mx : 0, r = Math.max(0, Math.min(1, rawR));
+      let px = Math.round(r * M.bars[i].w);
+      if (k === "exp" && v > 0 && px < 2) px = 2;
+      el.firstChild.style.width = px + "px";
+      if (k === "exp") {
+        el.classList.toggle("am", v < 0);
+        el.classList.toggle("co-exp", v > 0);
+        el.lastChild.textContent = (rawR * 100).toFixed(2) + "%";
+        el.title = `Kinh nghiệm: ${Math.round(v).toLocaleString("vi-VN")} / ${Math.round(mx).toLocaleString("vi-VN")} (${(rawR * 100).toFixed(2)}%)${v < 0 ? " — đang âm kinh nghiệm do tử vong" : ""}`;
+      } else {
+        el.lastChild.textContent = `${Math.ceil(v)}/${mx}`;
+      }
     });
   }
 

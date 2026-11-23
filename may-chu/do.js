@@ -921,6 +921,7 @@ function doiDo(A, B) {
 // ---------- kinh nghiệm / ngân lượng / rơi đồ ----------
 const xo = new Map(); // tài khoản -> { n: lượt báo giết còn, at, sinceBoss }
 function lenCap(h) {
+  if (!Number.isFinite(+h.exp)) h.exp = 0;
   let up = 0;
   while (h.lvl < MAX_LEVEL && h.exp >= need(h.lvl)) { h.exp -= need(h.lvl); h.lvl++; up++; }
   if (h.lvl >= MAX_LEVEL) h.exp = Math.min(h.exp, need(h.lvl) - 1);
@@ -986,8 +987,8 @@ function motCon(h, Z, id, L, boss, se, luck, kx = 1, ta = false, chia = null, sa
   // với cấp thật con quái, Tiên Thảo Lộ): knNhan; có đội: chia như engine KPlayer::AddExp (chiaDoi)
   const KB = !sat && Z && FARM.has(Z.kind) ? knBai(G || Z) : null;
   const e0 = (KB ?? (at(S.exp) || 0)) * CFG.kinhNghiem * (CB.kinhNghiem ?? 1) * (TR ? TR.kinhNghiem ?? 1 : 1) * (TA ? TA.kn : 1) * PLD().heSoKn(Z) * hk;
-  const e = chia ? chia(e0, L, Z) : knNhan(h, e0, L, Z, kx);
-  h.exp += e;
+  const e0n = chia ? chia(e0, L, Z) : knNhan(h, e0, L, Z, kx), e = Number.isFinite(e0n) ? e0n : 0;
+  h.exp = (Number.isFinite(+h.exp) ? +h.exp : 0) + e;
   const len = lenCap(h);
   // ngân lượng: trùm + tinh anh cấp × trum × hệ số tiền của bãi (như cũ); quái thường theo mốc cấp (tienQuai — anh 28/10 lần 7)
   const g = Math.round((boss || TA ? L * CFG.tien.trum * (CB.tien ?? 1) : tienQuai(L)) * hs);

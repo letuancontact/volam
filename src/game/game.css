@@ -2255,3 +2255,47 @@ body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co #dt .dt-nhat { top: calc(var(--dt-day
 body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co.dt-luoi #dt .dt-nhat,
 body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co.dt-thap #dt .dt-nhat { top: calc(var(--dt-day) - 302px); }
 /* === VL_CODIEN_VOMCUNG_END === */
+
+/* === VL_CHAT_SVG_EXP_START === */
+/* An logo mo goc phai va o chu ky trong game */
+.ak-goc, #hud.on ~ .ak-goc, #dt .dt-mang > .dt-ky { display: none !important; }
+
+/* Icon Chat SVG trong suot dong bo Mobile & PC */
+.vl-chat-svg { display: block; flex: none; pointer-events: none; transition: transform .12s ease, filter .15s ease; }
+#dt .dt-nutt { gap: 5px; padding: 0 11px 0 8px; }
+#dt .dt-nutt .vl-chat-svg { width: 17px; height: 17px; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.85)); }
+#dt .dt-nutt:active .vl-chat-svg { transform: scale(0.9); }
+
+#jxhud .jx-bot .jx-btn[data-k="ChatRoom"] {
+  background-image: none !important;
+  display: grid !important;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 26%, rgba(44, 72, 60, 0.92), rgba(16, 28, 23, 0.94)) !important;
+  border: 1.5px solid rgba(232, 194, 102, 0.82);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.78), 0 2px 6px rgba(0, 0, 0, 0.55);
+}
+#jxhud .jx-bot .jx-btn[data-k="ChatRoom"] .vl-chat-svg {
+  width: 19px;
+  height: 19px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.9));
+}
+#jxhud .jx-bot .jx-btn[data-k="ChatRoom"]:hover .vl-chat-svg {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 6px rgba(255, 224, 130, 0.85));
+}
+#jxhud .jx-bot .jx-btn[data-k="ChatRoom"]:active .vl-chat-svg {
+  transform: scale(0.92);
+}
+#jxhud .jx-bot .jx-chbtn {
+  border-radius: 50%;
+  overflow: hidden;
+  background-size: 86% 86%;
+}
+
+/* Thanh kinh nghiem: min-width khi co diem > 0 & mau canh bao khi bi am EXP do tu vong */
+#jxhud .jx-top .jx-bar.exp.co-exp i,
+#dt .dt-ex.co-exp i { min-width: 2px; }
+#jxhud .jx-top .jx-bar.exp.am span,
+#dt .dt-ex.am b { color: #ff9c8a !important; }
+/* === VL_CHAT_SVG_EXP_END === */

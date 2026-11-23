@@ -1601,6 +1601,7 @@ function applyServer(j, at) {
   if (j.nv) {
     const up = j.nv.lvl - (hero.lvl || 1);
     Object.assign(hero, j.nv);
+    if (!Number.isFinite(+hero.exp)) hero.exp = 0;
     if (world && up > 0) world.levelUp(up);
     else if (world && up < 0) { fixPoints(hero); world.refreshStats(false); haChieu(); }
     ccKiem(); // anh 16/11 — Báo Đáp Ân Sư: Nhất Kỷ / Càn khôn (nv.ccKn) vừa thêm / hết -> tính lại chỉ số, bảng Võ công
@@ -5379,8 +5380,8 @@ function hud() {
   // phe Kim mở rương ở hậu doanh mình là khung đóng ngay)
   if (GW && GW.storeOpen) { const p0 = world.player, gan = world.npcs.reduce((d, n) => (n.viec === "ruong" ? Math.min(d, ldist(p0.x, p0.y, n.x, n.y)) : d), Infinity); if (gan > 220) GW.W.get("store").hide(); }
   (mocNhan = mocNhan || new MocNhanPanel(P)).update(world, false, !!(GW && GW.W.get("shop").visible)); // bảng mộc nhân: hiện khi đứng gần (ẩn khi mở cửa hàng — cùng góc trái)
-  const p = world.player, need = P.chr.exp[hero.lvl - 1] || 1;
-  P.hud.update({ lvl: hero.lvl, life: p.hp, lifeMax: p.hpMax, mana: p.mp, manaMax: p.mpMax, stamina: p.st, staminaMax: p.stMax, exp: hero.exp || 0, expMax: need, rank: hangCap ?? "?" });
+  const p = world.player, expArr = (P.chr && P.chr.exp) || [], lvIdx = Math.max(0, Math.min(expArr.length - 1, (hero.lvl | 0) - 1)), need = expArr[lvIdx] || 1, curExp = Number.isFinite(+hero.exp) ? +hero.exp : 0;
+  P.hud.update({ lvl: hero.lvl, life: p.hp, lifeMax: p.hpMax, mana: p.mp, manaMax: p.mpMax, stamina: p.st, staminaMax: p.stMax, exp: curExp, expMax: need, rank: hangCap ?? "?" });
 }
 
 // ---------- lưu ----------

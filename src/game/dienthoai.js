@@ -39,7 +39,6 @@ import { BieuCam } from "./bieucam.js";
 import { chuMau } from "./npcdlg.js"; // tin hệ thống có thẻ màu <color=…> (anh 13/11 mẫu C — soát: dải 2 dòng tin của điện thoại hiện thẻ thô)
 import { kindOf } from "./vocong.js";
 import { XUC_XAC, bauCuaChu } from "./baucua.js";
-import { KY_NGAN } from "./an-ky.js"; // chữ ký bản gốc (anh 11/11) — ô nhỏ cùng hàng FPS / mạng / trực tuyến
 
 const A = "assets/";
 const TREN = 68, TAB = 58; // cao thanh trên / dải thẻ dưới
@@ -227,7 +226,7 @@ export class DienThoai {
   <div class="dt-nt" data-a="toan" style="right:6px"><i class="dt-toan"></i></div>
 </div>
 <div class="dt-bd"><span></span><em></em></div>
-<div class="dt-mang"><b class="dt-fps"></b><b class="dt-ping"></b><b class="dt-onl"></b><b class="dt-ky" translate="no"></b></div>
+<div class="dt-mang"><b class="dt-fps"></b><b class="dt-ping"></b><b class="dt-onl"></b></div>
 <div class="dt-mm" data-a="mm"><canvas></canvas></div>
 <div class="dt-tudanh" data-a="tudanh"></div>
 <div class="dt-ngua" data-a="ngua">${ic("ngua", 28)}</div>
@@ -235,7 +234,7 @@ export class DienThoai {
 <div class="dt-kat" data-a="khoaat"></div>
 <div class="dt-tmnut" data-a="tumau"><i></i><span>Túi tử mẫu</span></div>
 <div class="dt-tin"></div>
-<div class="dt-nutt" data-a="chat">${ic("chat", 20)}Chat</div>
+<div class="dt-nutt" data-a="chat"><svg class="vl-chat-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 4.5h13.6a2.7 2.7 0 0 1 2.7 2.7v7.6a2.7 2.7 0 0 1-2.7 2.7H11l-4.6 3.1c-.5.35-1.2 0-1.2-.6v-2.5A2.7 2.7 0 0 1 2.5 14.8V7.2a2.7 2.7 0 0 1 2.7-2.7Z" fill="rgba(255,222,128,0.16)" stroke="#f6d884" stroke-width="1.8" stroke-linejoin="round"/><circle cx="8.6" cy="11" r="1.25" fill="#fff2c2"/><circle cx="12" cy="11" r="1.25" fill="#fff2c2"/><circle cx="15.4" cy="11" r="1.25" fill="#fff2c2"/></svg><span>Chat</span></div>
 <div class="dt-moidoi" data-a="moidoi" style="display:none"><i style="background-image:url('${A}ui/hud/btn/tin_doi.png')"></i><b></b><div class="dt-moip" data-a="moip" style="display:none"></div></div>
 <div class="dt-can"><b><i></i></b></div>
 <div class="dt-okhoa" data-a="okhoa">${KHOA_SVG}</div>
@@ -872,7 +871,18 @@ export class DienThoai {
     };
     thanh(".dt-hp", s.life, s.lifeMax, () => `${Math.ceil(s.life || 0)}/${s.lifeMax || 0}`);
     thanh(".dt-mp", s.mana, s.manaMax, () => `${Math.ceil(s.mana || 0)}/${s.manaMax || 0}`);
-    thanh(".dt-ex", s.exp, s.expMax, (r) => `Kinh nghiệm ${(r * 100).toFixed(1).replace(".", ",")}%`);
+    {
+      const expArr = (P.chr && P.chr.exp) || [], lvIdx = Math.max(0, Math.min(expArr.length - 1, ((s.lvl ?? h.lvl ?? 1) | 0) - 1));
+      const curExp = Number.isFinite(+(s.exp ?? h.exp)) ? +(s.exp ?? h.exp) : 0;
+      const maxExp = s.expMax > 0 ? s.expMax : (expArr[lvIdx] || 1);
+      const rawR = maxExp > 0 ? curExp / maxExp : 0, fillR = Math.max(0, Math.min(1, rawR));
+      const b = this.el.querySelector(".dt-ex"), wpc = (fillR * 100).toFixed(2) + "%";
+      if (b.firstChild.style.width !== wpc) b.firstChild.style.width = wpc;
+      b.classList.toggle("am", curExp < 0);
+      b.classList.toggle("co-exp", curExp > 0);
+      const txt = `Kinh nghiệm ${(rawR * 100).toFixed(2).replace(".", ",")}%`;
+      if (b.lastChild.textContent !== txt) b.lastChild.textContent = txt;
+    }
     this._chu(".dt-tien span", fmtMoney(h.gold || 0).replace(/ lượng$/, ""));
   }
   // trên cảnh: tên bãi + tọa độ, bản đồ nhỏ (chép từ bản đồ nhỏ của máy tính — hud.js vẽ mỗi khung), tự đánh, 2 dòng tin cuối (+ câu cảnh báo)
@@ -891,7 +901,6 @@ export class DienThoai {
       this._chu(".dt-fps", `FPS ${this.api.fps()}`);
       this._chu(".dt-ping", ms == null ? "Mất kết nối" : `Mạng ${Math.round(ms)} ms`);
       this._chu(".dt-onl", `Trực tuyến ${Math.max(1, (this.api.online && this.api.online()) | 0)}`);
-      this._chu(".dt-ky", KY_NGAN);
       const lop = ms == null || ms >= 400 ? "mat" : ms >= 150 ? "cham" : "";
       if (el.dataset.lop !== lop) { el.dataset.lop = lop; el.classList.toggle("mat", lop === "mat"); el.classList.toggle("cham", lop === "cham"); }
     }
