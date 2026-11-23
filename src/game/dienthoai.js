@@ -514,7 +514,7 @@ export class DienThoai {
       const ax = Math.round(X(n.x)), ay = Math.round(Y(n.y)), r = 3.5 * dpr;
       cham(n.x, n.y, r, "#4ade80");
       const lb = "Lối ra";
-      g.font = `${Math.round(11 * dpr)}px "VK Sans Serif 12", "IBM Plex Mono", monospace`;
+      g.font = `${Math.round(11 * dpr)}px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif`;
       g.textAlign = "center"; g.textBaseline = "bottom";
       g.fillStyle = "#000"; for (const [dx, dy] of [[-1,0],[1,0],[0,-1],[0,1]]) g.fillText(lb, ax + dx * dpr, ay - r - 3 * dpr + dy * dpr);
       g.fillStyle = "#bbf7d0"; g.fillText(lb, ax, ay - r - 3 * dpr);
@@ -872,16 +872,33 @@ export class DienThoai {
     thanh(".dt-hp", s.life, s.lifeMax, () => `${Math.ceil(s.life || 0)}/${s.lifeMax || 0}`);
     thanh(".dt-mp", s.mana, s.manaMax, () => `${Math.ceil(s.mana || 0)}/${s.manaMax || 0}`);
     {
-      const expArr = (P.chr && P.chr.exp) || [], lvIdx = Math.max(0, Math.min(expArr.length - 1, ((s.lvl ?? h.lvl ?? 1) | 0) - 1));
-      const curExp = Number.isFinite(+(s.exp ?? h.exp)) ? +(s.exp ?? h.exp) : 0;
-      const maxExp = s.expMax > 0 ? s.expMax : (expArr[lvIdx] || 1);
+      const expArr = (P.chr && P.chr.exp) || [], lvNow = (h.lvl ?? s.lvl ?? 1) | 0;
+      const lvIdx = Math.max(0, Math.min(expArr.length - 1, lvNow - 1));
+      const curExp = Number.isFinite(+h.exp) ? +h.exp : (Number.isFinite(+s.exp) ? +s.exp : 0);
+      const maxExp = (expArr[lvIdx] > 0 ? expArr[lvIdx] : 0) || (s.expMax > 0 ? s.expMax : 1);
       const rawR = maxExp > 0 ? curExp / maxExp : 0, fillR = Math.max(0, Math.min(1, rawR));
-      const b = this.el.querySelector(".dt-ex"), wpc = (fillR * 100).toFixed(2) + "%";
-      if (b.firstChild.style.width !== wpc) b.firstChild.style.width = wpc;
+      const b = this.el.querySelector(".dt-ex"), barI = b.querySelector("i") || b.firstChild, barT = b.querySelector("b") || b.lastChild;
+      let wpc = "0%";
+      if (curExp > 0) wpc = (fillR * 100).toFixed(2) + "%";
+      else if (curExp < 0) {
+        const debtRef = Math.max(1, Math.min(maxExp, 500000));
+        wpc = Math.max(3, Math.min(100, (Math.abs(curExp) / debtRef) * 100)).toFixed(2) + "%";
+      }
+      if (barI.style.width !== wpc) barI.style.width = wpc;
       b.classList.toggle("am", curExp < 0);
       b.classList.toggle("co-exp", curExp > 0);
-      const txt = `Kinh nghiệm ${(rawR * 100).toFixed(2).replace(".", ",")}%`;
-      if (b.lastChild.textContent !== txt) b.lastChild.textContent = txt;
+      const pct = rawR * 100, dec = curExp !== 0 && Math.abs(pct) < 1 ? 4 : 2;
+      const pctTxt = pct.toFixed(dec).replace(".", ",") + "%";
+      const txt = `Kinh nghiệm ${pctTxt}`;
+      if (barT.textContent !== txt) barT.textContent = txt;
+      b.dataset.tip = `Kinh nghiệm cấp ${lvNow}: ${Math.round(curExp).toLocaleString("vi-VN")} / ${Math.round(maxExp).toLocaleString("vi-VN")} (${pctTxt})${curExp < 0 ? " — đang cày bù âm kinh nghiệm" : ""}`;
+      if (!b.dataset.tapEx) {
+        b.dataset.tapEx = "1";
+        b.onclick = () => { if (b.dataset.tip) this.H.canh(b.dataset.tip); };
+      }
+      const tang = this._expPrev != null && (curExp > this._expPrev || lvNow > (this._lvlPrev | 0));
+      this._expPrev = curExp; this._lvlPrev = lvNow;
+      if (tang) { b.classList.remove("exp-tang"); void b.offsetWidth; b.classList.add("exp-tang"); }
     }
     this._chu(".dt-tien span", fmtMoney(h.gold || 0).replace(/ lượng$/, ""));
   }

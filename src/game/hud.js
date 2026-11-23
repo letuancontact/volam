@@ -72,7 +72,8 @@ export class Hud {
     // thì chữ các thẻ lệch, khoảng cách không đều (anh 01/11 "bố cục text các kênh lệch")
     const T = meta.chat.tabs;
     if (!T.list.some((t) => t.label === "Đội ngũ")) T.list.splice(2, 0, { label: "Đội ngũ", type: 1, mask: 0 });
-    for (const f of meta.fonts) document.fonts.add(await new FontFace(f.family, `url(${BASE}${f.file})`).load()); // nạp trước khi vẽ chữ lên canvas
+    for (const f of meta.fonts) document.fonts.add(await new FontFace(f.family, `url(${BASE}${f.file})`).load());
+    try { await Promise.all([document.fonts.load('400 13px "VL Co Dien"', "Võ Lâm Truyền Kỳ 0123456789%"), document.fonts.load('700 16px "VL Co Dien"', "Võ Lâm Truyền Kỳ 0123456789%")]); } catch {} // nạp trước khi vẽ chữ lên canvas
     const hud = new Hud(meta);
     // biểu tượng ngũ hành cạnh tên quái (vẽ trên canvas nên nạp sẵn)
     hud.seriesImgs = ((meta.npc && meta.npc.series) || []).map((s) => { if (!s) return null; const im = new Image(); im.src = BASE + s.file; return im; });
@@ -104,7 +105,7 @@ export class Hud {
       at(M.level, "jx-lv") +
       M.bars.map((b) => at(b, `jx-bar ${b.key}`, `<i style="${css({ background: grad(b.color) })}"></i><span></span>`)).join("") +
       at(M.rank, "jx-rank");
-    top.querySelectorAll(".jx-bar").forEach((el, i) => (el.title = M.bars[i].n));
+    top.querySelectorAll(".jx-bar").forEach((el, i) => { el.title = M.bars[i].n; if (M.bars[i].key === "exp") { el.style.cursor = "pointer"; el.onclick = () => { if (el.title) this.canh(el.title); }; } });
     top.querySelector(".jx-lv").title = "Cấp";
     // ô Hạng: thứ tự cấp trong máy chủ (nhịp — may-chu/xep-hang.js); bấm: khung xếp hạng của client (排名.ini — anh 27/10, bước 7)
     const rk = top.querySelector(".jx-rank"); rk.title = "Hạng cấp trong máy chủ — bấm: bảng xếp hạng"; rk.onclick = () => cb.onButton && cb.onButton("XepHang");
@@ -647,17 +648,28 @@ export class Hud {
     this.top.querySelectorAll(".jx-bar").forEach((el, i) => {
       const k = M.bars[i].key, [v0, mx0] = vals[k];
       const v = Number.isFinite(+v0) ? +v0 : 0, mx = Number.isFinite(+mx0) && +mx0 > 0 ? +mx0 : 0;
+      const barI = el.querySelector("i") || el.firstChild, barT = el.querySelector("span") || el.lastChild;
       const rawR = mx > 0 ? v / mx : 0, r = Math.max(0, Math.min(1, rawR));
-      let px = Math.round(r * M.bars[i].w);
-      if (k === "exp" && v > 0 && px < 2) px = 2;
-      el.firstChild.style.width = px + "px";
       if (k === "exp") {
+        let px = 0;
+        if (v > 0) px = Math.max(2, Math.round(r * M.bars[i].w));
+        else if (v < 0) {
+          const debtRef = Math.max(1, Math.min(mx || 500000, 500000));
+          px = Math.max(4, Math.min(M.bars[i].w, Math.round((Math.abs(v) / debtRef) * M.bars[i].w)));
+        }
+        barI.style.width = px + "px";
         el.classList.toggle("am", v < 0);
         el.classList.toggle("co-exp", v > 0);
-        el.lastChild.textContent = (rawR * 100).toFixed(2) + "%";
-        el.title = `Kinh nghiệm: ${Math.round(v).toLocaleString("vi-VN")} / ${Math.round(mx).toLocaleString("vi-VN")} (${(rawR * 100).toFixed(2)}%)${v < 0 ? " — đang âm kinh nghiệm do tử vong" : ""}`;
+        const pct = rawR * 100, dec = v !== 0 && Math.abs(pct) < 1 ? 4 : 2;
+        const pctTxt = pct.toFixed(dec) + "%";
+        barT.textContent = pctTxt;
+        el.title = `Kinh nghiệm cấp ${s.lvl}: ${Math.round(v).toLocaleString("vi-VN")} / ${Math.round(mx).toLocaleString("vi-VN")} (${pctTxt})${v < 0 ? " — đang cày bù âm kinh nghiệm do tử vong" : ""}`;
+        const tang = this._expPrev != null && (v > this._expPrev || (s.lvl | 0) > (this._lvlPrev | 0));
+        this._expPrev = v; this._lvlPrev = s.lvl | 0;
+        if (tang) { el.classList.remove("exp-tang"); void el.offsetWidth; el.classList.add("exp-tang"); }
       } else {
-        el.lastChild.textContent = `${Math.ceil(v)}/${mx}`;
+        barI.style.width = Math.round(r * M.bars[i].w) + "px";
+        barT.textContent = `${Math.ceil(v)}/${mx}`;
       }
     });
   }
@@ -979,7 +991,7 @@ export class Hud {
     for (const d of s.diem || []) {
       const x = Math.round(ox + d.x * k), y = Math.round(oy + d.y * k), r = d.r || 2; g.fillStyle = "#000"; g.fillRect(x - r - 1, y - r - 1, r * 2 + 3, r * 2 + 3); g.fillStyle = d.c || "#ffd94e"; g.fillRect(x - r, y - r, r * 2 + 1, r * 2 + 1);
       if (d.ten) {
-        const ty = d.duoi ? y + r + 3 : y - r - 3; g.font = `12px "VK Sans Serif 12", "IBM Plex Mono", monospace`; g.textAlign = "center"; g.textBaseline = d.duoi ? "top" : "bottom";
+        const ty = d.duoi ? y + r + 3 : y - r - 3; g.font = '12px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif'; g.textAlign = "center"; g.textBaseline = d.duoi ? "top" : "bottom";
         g.fillStyle = "#000"; for (const [a, b] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) g.fillText(d.ten, x + a, ty + b);
         g.fillStyle = "#fff"; g.fillText(d.ten, x, ty);
       }

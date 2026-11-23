@@ -460,7 +460,7 @@ export class GameWindows {
     // dung-khung-cua-hang.mjs) -> viết như tiêu đề các khung khác của client (Phần thưởng nhiệm vụ: chữ sáng ~155–190 xanh xám, đậm, viền đen 1 điểm)
     // bằng Vn.fon 16 của game, giữa 2 đồng tiền trang trí của dải
     const tieuDe = document.createElement("div");
-    Object.assign(tieuDe.style, { position: "absolute", left: "215px", top: "27px", width: "146px", height: "16px", font: '16px/16px "VK Sans Serif 16", monospace', letterSpacing: "1px",
+    Object.assign(tieuDe.style, { position: "absolute", left: "215px", top: "27px", width: "146px", height: "16px", font: '16px/16px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif', letterSpacing: "1px",
       // chữ đậm như tiêu đề client: vẽ lặp lệch 1 điểm (font điểm ảnh không có kiểu đậm) + viền đen bao cả 2 lớp
       color: "rgb(170,196,185)", textAlign: "center", whiteSpace: "pre", pointerEvents: "none", textShadow: "1px 0 0 rgb(170,196,185),2px 0 #010101,-1px 0 #010101,0 1px #010101,0 -1px #010101,1px 1px #010101,1px -1px #010101,2px 1px #010101,2px -1px #010101,-1px 1px #010101,-1px -1px #010101" });
     tieuDe.textContent = "Kỳ Trân Các";
@@ -470,7 +470,7 @@ export class GameWindows {
       const d = document.createElement("div");
       // cùng font với thẻ / nút của khung và các khung khác: Vn.fon 13 đúng cỡ 13 điểm (anh 27/10 "font lệch với game" — bản trước cỡ 12 làm font
       // điểm ảnh bị co, nhòe), không viền như ini, mép trên dòng chữ ở Top của ini
-      Object.assign(d.style, { position: "absolute", left: s.x + "px", top: s.y + "px", width: (s.w || 60) + "px", height: "13px", font: '13px/13px "VK Sans Serif 13", monospace', color: c(s.color || [255, 255, 255]),
+      Object.assign(d.style, { position: "absolute", left: s.x + "px", top: s.y + "px", width: (s.w || 60) + "px", height: "13px", font: '13px/13px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif', color: c(s.color || [255, 255, 255]),
         textAlign: s.hAlign === 1 ? "center" : s.hAlign === 2 ? "right" : "left", whiteSpace: "pre", overflow: "hidden", pointerEvents: "none", ...extra });
       d.innerHTML = html; return d;
     };
@@ -1998,7 +1998,7 @@ export class GameWindows {
       w.on("ContinuouslyDivide", () => { const E = this._slEl; E.het = !E.het; w.check("ContinuouslyDivide", E.het); this.api.P.audio.ui("click"); });
       w._paint(cb);
     }
-    const txt = (y, h, mau, co) => { const d = document.createElement("div"); Object.assign(d.style, { position: "absolute", left: "4px", top: y + "px", width: (sec.Main.w - 8) + "px", height: h + "px", lineHeight: h + "px", textAlign: "center", whiteSpace: "nowrap", overflow: "hidden", pointerEvents: "none", font: co + 'px/' + h + 'px "VK Sans Serif 13", monospace', color: mau, textShadow: "1px 0 #000,-1px 0 #000,0 1px #000,0 -1px #000" }); w.el.appendChild(d); return d; };
+    const txt = (y, h, mau, co) => { const d = document.createElement("div"); Object.assign(d.style, { position: "absolute", left: "4px", top: y + "px", width: (sec.Main.w - 8) + "px", height: h + "px", lineHeight: h + "px", textAlign: "center", whiteSpace: "nowrap", overflow: "hidden", pointerEvents: "none", font: co + 'px/' + h + 'px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif', color: mau, textShadow: "1px 0 #000,-1px 0 #000,0 1px #000,0 -1px #000" }); w.el.appendChild(d); return d; };
     const tieuDe = txt(5, 18, "rgb(243,231,190)", 13), thong = txt(74, 16, c(sec.ItemName.color || [255, 253, 122]), 12);
     const inp = document.createElement("input");
     inp.className = "jw-num"; inp.maxLength = 4; inp.inputMode = "numeric"; inp.spellcheck = false; inp.autocomplete = "off"; inp.name = "sl-" + Math.random().toString(36).slice(2);

@@ -26,7 +26,7 @@
 
   const style = document.createElement("style");
   style.textContent = `
-    #vl-qkbar { position: fixed; left: 6px; top: 112px; z-index: 12; display: none; gap: 5px; pointer-events: auto; font-family: var(--jx), "IBM Plex Mono", monospace; }
+    #vl-qkbar { position: fixed; left: 6px; top: 112px; z-index: 12; display: none; gap: 5px; pointer-events: auto; font-family: var(--font-co, "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif); }
     body:not(.dt) #vl-qkbar { left: 8px; top: 24px; }
     body.dt.dt-ngang #vl-qkbar { left: 6px; top: 88px; }
     #vl-qkbar button { padding: 3px 9px; border-radius: 999px; border: 1px solid rgba(212,175,92,.62); background: rgba(11,19,16,.78); color: #f6e3ad; font: 12px/16px var(--jx), monospace; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.6); backdrop-filter: blur(4px); }
@@ -42,10 +42,10 @@
     #vl-farm .vf-box b { color: #fff6d6; font-weight: 600; }
     #vl-farm .vf-list { margin-top: 7px; padding-top: 6px; border-top: 1px dashed rgba(212,175,92,.3); max-height: 112px; overflow-y: auto; }
     #vl-farm .vf-it { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; line-height: 17px; }
-    #vl-afk { position: fixed; inset: 0; z-index: 95; display: none; flex-direction: column; justify-content: space-between; align-items: center; padding: max(22px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom)); background: #030504; color: #d5d0be; font-family: var(--jx), "IBM Plex Mono", monospace; user-select: none; -webkit-user-select: none; touch-action: manipulation; }
+    #vl-afk { position: fixed; inset: 0; z-index: 95; display: none; flex-direction: column; justify-content: space-between; align-items: center; padding: max(22px, env(safe-area-inset-top)) 18px max(24px, env(safe-area-inset-bottom)); background: #030504; color: #d5d0be; font-family: var(--font-co, "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif); user-select: none; -webkit-user-select: none; touch-action: manipulation; }
     #vl-afk.on { display: flex; }
     #vl-afk .va-top { text-align: center; width: 100%; max-width: 420px; }
-    #vl-afk .va-clock { font-size: 38px; line-height: 42px; color: #f0d793; letter-spacing: 2px; font-family: "IBM Plex Mono", monospace; }
+    #vl-afk .va-clock { font-size: 38px; line-height: 42px; color: #f0d793; letter-spacing: 2px; font-family: var(--font-co, "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif); font-variant-numeric: tabular-nums; }
     #vl-afk .va-sub { margin-top: 4px; font-size: 13px; color: #8fb4a2; }
     #vl-afk .va-card { width: 100%; max-width: 420px; padding: 14px; border-radius: 16px; border: 1px solid rgba(212,175,92,.32); background: rgba(15,24,20,.65); }
     #vl-afk .va-name { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: #ffe291; margin-bottom: 10px; }

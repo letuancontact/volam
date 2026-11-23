@@ -146,7 +146,7 @@ body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot .ui-m-hk {
   position: absolute;
   right: 2px;
   top: 1px;
-  font: 700 10px/11px system-ui, -apple-system, sans-serif;
+  font: 700 10px/11px var(--font-co);
   color: var(--m-gold-hi);
   background: rgba(24, 34, 28, 0.72);
   padding: 0 3px;
@@ -209,7 +209,7 @@ body.ui-modern:not(.dt) #jxhud .jx-bot .jx-skill .ui-m-sktag {
   background: linear-gradient(180deg, #594118, #241908);
   border: 1px solid var(--m-gold-hi);
   color: var(--m-gold-hi);
-  font: 700 9.5px/11px system-ui, -apple-system, sans-serif;
+  font: 700 9.5px/11px var(--font-co);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8), 0 0 6px rgba(255, 214, 102, 0.45);
 }
 
@@ -480,7 +480,7 @@ body.ui-modern.dt #jxhud .jx-bot > .dt-o::after {
   background: linear-gradient(180deg, #523c16, #1d1408);
   border: 1px solid var(--m-gold-hi);
   color: var(--m-gold-hi);
-  font: 700 10px/13px system-ui, -apple-system, sans-serif;
+  font: 700 10px/13px var(--font-co);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
 }
 
@@ -794,7 +794,7 @@ body.ui-modern #kat .kat-nut {
 
 /* 1. Làm đẹp toàn diện màn Chọn máy chủ (#s-server) — cân đối cả 1 server lẫn nhiều server, mobile & PC */
 #s-server .box {
-  font-family: var(--jx), "IBM Plex Mono", monospace;
+  font-family: var(--font-co);
   width: min(760px, 92vw);
   padding: 28px 26px 24px;
   background: linear-gradient(165deg, rgba(20, 24, 28, 0.9), rgba(10, 12, 16, 0.94)) !important;
@@ -1064,7 +1064,7 @@ body.ui-modern.dt #dt .dt-o[data-a="l15"] .dt-ic {
 /* 1. Đồng bộ màn Đăng nhập (#s-login) & Đổi mật khẩu (#s-doimk) */
 body.ui-modern #s-login .box,
 body.ui-modern #s-doimk .box {
-  font-family: var(--jx), "IBM Plex Mono", monospace;
+  font-family: var(--font-co);
   width: min(410px, 92vw);
   padding: 28px 26px 24px;
   background: linear-gradient(165deg, rgba(20, 24, 28, 0.9), rgba(10, 12, 16, 0.94)) !important;
@@ -1154,7 +1154,7 @@ body.ui-modern #s-login .lg-chiase {
 
 /* 2. Đồng bộ màn Chọn nhân vật (#s-select / .csel) */
 body.ui-modern .csel {
-  font-family: var(--jx), "IBM Plex Mono", monospace;
+  font-family: var(--font-co);
 }
 
 body.ui-modern .csel h1 {
@@ -1206,7 +1206,7 @@ body.ui-modern .csel .cs-btns button.go {
 
 /* 3. Đồng bộ màn Tạo nhân vật (#s-create / .cc) */
 body.ui-modern .cc {
-  font-family: var(--jx), "IBM Plex Mono", monospace;
+  font-family: var(--font-co);
 }
 
 body.ui-modern .cc .cc-desc,
@@ -1282,13 +1282,13 @@ body.ui-modern #s-doimk .box,
 body.ui-modern #s-server .box,
 body.ui-modern .csel,
 body.ui-modern .cc {
-  font-family: var(--jx), "IBM Plex Mono", monospace !important;
+  font-family: var(--font-co) !important;
 }
 body.ui-modern .csel h1,
 body.ui-modern #s-login h1,
 body.ui-modern #s-doimk h1,
 body.ui-modern #s-server h1 {
-  font-family: "VK Sans Serif 16", var(--jx), monospace !important;
+  font-family: var(--font-co) !important;
   letter-spacing: 1px;
 }
 body.ui-modern .csel .cs-panel {
@@ -1362,7 +1362,7 @@ body.ui-modern:not(.dt) #jxhud .jx-bot .jx-slot .jx-qa {
 #s-create, #s-create *,
 .csel, .csel *,
 .cc, .cc * {
-  font-family: var(--jx), "IBM Plex Mono", monospace !important;
+  font-family: var(--font-co) !important;
 }
 /* Tieu de H1 viet HOA (CHON NHAN VAT, DANG NHAP, CHON MAY CHU...): dung IBM Plex Mono (font co san trong game, du 100% dau hoa tieng Viet khong bi lech chu O/A nang) */
 #s-login h1,
@@ -1459,3 +1459,38 @@ body.ui-modern.dt #jxhud .jx-bot > .jx-skill[data-skill="left"]::after {
 #jxhud .jx-top .jx-bar.exp.am span,
 #dt .dt-ex.am b { color: #ff9c8a !important; }
 /* === VL_CHAT_SVG_EXP_END === */
+
+/* === VL_GLOBAL_FONT_MODERN_START === */
+/* Ep dong bo font co "VL Co Dien" cho toan bo giao dien ngoai & trong game (tru o sua JSON .qch-json) */
+html, body,
+body button, body input, body select, body textarea,
+#s-load, #s-load *,
+.zl, .zl *,
+#s-login, #s-login *,
+#s-doimk, #s-doimk *,
+#s-server, #s-server *,
+#s-select, #s-select *,
+#s-create, #s-create *,
+.csel, .csel *,
+.cc, .cc *,
+#jxhud, #jxhud *,
+#dt, #dt *,
+#jxwin, #jxwin *:not(.qch-json):not(pre):not(code),
+.jx-menu, .jx-menu *,
+.jx-skpick, .jx-skpick *,
+.jx-tip, .jx-tip *,
+#kat, #kat *,
+.mn, .mn *,
+.dv, .dv *,
+.uhq, .uhq * {
+  font-family: var(--font-co, "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif) !important;
+}
+.qch-json, pre, code {
+  font-family: "IBM Plex Mono", Consolas, monospace !important;
+}
+body.ui-modern:not(.dt) #jxhud .jx-top .jx-bar.exp.am i,
+body.ui-modern.dt #dt .dt-ex.am i {
+  background: linear-gradient(180deg, #ff7b61, #c9331f 52%, #6e140a) !important;
+  box-shadow: 0 0 8px rgba(255, 92, 68, 0.6) !important;
+}
+/* === VL_GLOBAL_FONT_MODERN_END === */
