@@ -4,7 +4,7 @@
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; height: 100%; overflow: hidden; background: var(--bg); color: var(--text);
-  font: 14px/1.45 var(--font-co, "VL Co Dien", "IBM Plex Mono", Georgia, serif); user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+  font: 14px/1.45 "VK Sans Serif 13", "IBM Plex Mono", monospace; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
 /* anh 09/11 (người chơi iPad "đè vào nó nó copy"): iOS chỉ hiểu tiền tố -webkit-, trước chỉ body.dt có. Ô nhập chữ giữ chọn được để gõ; hình không nhấc lên kéo khi đè (iPadOS) */
 input, textarea, [contenteditable] { user-select: text; -webkit-user-select: text; -webkit-touch-callout: default; }
 #jxwin img, #jxhud img { -webkit-user-drag: none; }
@@ -69,7 +69,7 @@ h1 { font-size: 22px; margin: 0 0 14px; color: var(--gold2); font-weight: 600; l
 @font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap;
   src: url(/assets/ui/fonts/ibm-plex-mono-400-latin.woff2) format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-:root { --font-co: "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif; --font: var(--font-co); }
+:root { --font: "VK Sans Serif 13", "IBM Plex Mono", monospace; }
 html, body, button, input, select { font-family: var(--font); }
 
 /* ---------- màn chọn nhân vật (theo bản 2 js/csel.js) ---------- */
@@ -171,7 +171,7 @@ html, body, button, input, select { font-family: var(--font); }
 .cc-err { color: #ff9a7a; font-size: 13px; min-height: 18px; margin-top: 6px; text-shadow: 0 1px 2px #000; }
 
 /* ---------- giao diện trong game giống client PC (src/game/hud.js, assets/ui/hud) ---------- */
-:root { --jx: var(--font-co, "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif); }
+:root { --jx: "VK Sans Serif 13", "IBM Plex Mono", monospace; }
 #jxhud { position: fixed; inset: 0; pointer-events: none; z-index: 3; font: 13px/13px var(--jx); color: #fff; }
 #jxhud .jx-top { position: absolute; top: 0; left: 50%; transform-origin: top center; background-repeat: no-repeat; pointer-events: auto; }
 #jxhud .jx-bot { position: absolute; bottom: 0; left: 50%; transform-origin: bottom center; background-repeat: no-repeat; pointer-events: none; }
@@ -496,7 +496,7 @@ body.dt .bc-chon > div > i { transform: scale(1.5); }
 #jxhud .jx-st img { position: absolute; left: 0; top: 0; width: 24px; height: 24px; image-rendering: pixelated; }
 #jxhud .jx-st.hoi img { filter: grayscale(1) brightness(.7); } /* chiêu tự phát đang hồi (anh 17/11 — main.js trigCd) */
 #jxhud .jx-st.hoi span { color: #ffd54a; }
-#jxhud .jx-st span { position: absolute; left: -6px; top: 21px; width: 36px; height: 12px; font: 13px/12px var(--font-co); text-align: center; color: rgb(55,231,63);
+#jxhud .jx-st span { position: absolute; left: -6px; top: 21px; width: 36px; height: 12px; font: 13px/12px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); text-align: center; color: rgb(55,231,63);
   text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000; white-space: nowrap; }
 #jxhud .jx-chatbox { position: absolute; bottom: 0; left: 0; transform-origin: bottom left; pointer-events: none; }
 /* bảng đội ngũ góc trái (hud.js setDoi — anh 29/10; client 队伍一览信息.ini: mỗi người 1 ô 135 × 17, chữ cỡ 12 màu 165,255,203 canh giữa, nền
@@ -557,15 +557,15 @@ body.bc-dang-keo, body.bc-dang-keo * { cursor: move !important; user-select: non
 #jxhud .jx-mmbox > .jx-mm-shadow { pointer-events: none; }
 /* dòng đếm giờ thuyền Phong Lăng Độ (hud.js setThuyen) — kiểu dòng tin chạy client 新闻消息来了.ini: y 30, chữ 14 màu 255,253,122, nền đen trong 80/255 */
 #jxhud .jx-thuyen { position: absolute; top: 30px; left: 50%; transform: translateX(-50%); padding: 2px 11px; white-space: nowrap; pointer-events: none;
-  font: 14px/16px var(--font-co); color: rgb(255,253,122); background: rgba(0,0,0,.31); text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000; }
+  font: 14px/16px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: rgb(255,253,122); background: rgba(0,0,0,.31); text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000; }
 #jxhud .jx-mmbox > .jx-mm-input { display: none; }
 #jxwin .jw-clip { position: absolute; overflow: hidden; }
 #jxwin .jw-face { position: absolute; background-size: 100% 100%; cursor: pointer; }
 #jxwin .jw-face.on { outline: 2px solid rgb(255,217,78); outline-offset: -2px; }
-#jxwin .jw-list { overflow: hidden; font: 13px/13px var(--font-co); }
+#jxwin .jw-list { overflow: hidden; font: 13px/13px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); }
 #jxwin .jw-row { display: flex; justify-content: space-between; padding: 0 10px 0 28px; }
 #jxwin .jw-row b { font-weight: normal; color: rgb(255,217,78); }
-#jxwin .jw-note { position: absolute; text-align: center; font: 13px/16px var(--font-co); color: #c9bfa5; text-shadow: 1px 1px #000; pointer-events: none; }
+#jxwin .jw-note { position: absolute; text-align: center; font: 13px/16px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: #c9bfa5; text-shadow: 1px 1px #000; pointer-events: none; }
 #jxwin .jw { overflow: hidden; } /* như client: phần con vẽ ra ngoài khung cửa sổ bị cắt */
 #jxwin .jw-mem { line-height: 14px; height: 14px; text-align: center; white-space: nowrap; }
 /* Giúp đỡ (khung HỖ TRỢ 详细帮助界面.ini) + Tin cập nhật (khung Nhật ký 任务记事.ini) — anh 29/10, windows.js _giupDo / _tin: mục bên trái (đang
@@ -586,9 +586,9 @@ body.bc-dang-keo, body.bc-dang-keo * { cursor: move !important; user-select: non
 #jxwin .jw-gd .tin-ngay2 { padding: 0 4px 4px; color: rgb(170,196,185); }
 /* khung hình của Giúp đỡ (bảng phím / bảng ngũ hành 800 × 600 của client — nền trong suốt): lót nền tối, bấm vào hình để đóng */
 #jxwin .jw.jw-hinh { background-color: rgba(8,12,10,.9); box-shadow: 0 0 0 1px #000, 0 0 0 3px rgba(170,196,185,.45); cursor: pointer; }
-#jxwin .jw-hinh-nhac { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font: 13px/16px var(--font-co); color: rgb(170,196,185); text-shadow: 1px 1px #000; pointer-events: none; }
+#jxwin .jw-hinh-nhac { position: absolute; left: 0; right: 0; bottom: 8px; text-align: center; font: 13px/16px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: rgb(170,196,185); text-shadow: 1px 1px #000; pointer-events: none; }
 /* tiêu đề viết lại (nền đã xóa chữ vẽ sẵn): như tiêu đề Kỳ Trân Các — chữ sáng đậm (vẽ lặp lệch 1 điểm) viền đen, giữa 2 đồng tiền trang trí */
-#jxwin .jw-tieude13 { position: absolute; left: 149px; top: 4px; width: 120px; height: 14px; font: 13px/14px var(--font-co); color: rgb(170,196,185);
+#jxwin .jw-tieude13 { position: absolute; left: 149px; top: 4px; width: 120px; height: 14px; font: 13px/14px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: rgb(170,196,185);
   text-align: center; white-space: pre; pointer-events: none;
   text-shadow: 1px 0 0 rgb(170,196,185), 2px 0 #010101, -1px 0 #010101, 0 1px #010101, 0 -1px #010101, 1px 1px #010101, 1px -1px #010101, 2px 1px #010101, 2px -1px #010101, -1px 1px #010101, -1px -1px #010101; }
 /* nút Tin cập nhật của bảng Esc (nền không chữ — cong-cu/dung-khung-cua-hang.mjs): chữ đậm đen viền vàng nhạt như 4 nút kia (đo ảnh: chữ 2,2,1,
@@ -604,7 +604,7 @@ body.bc-dang-keo, body.bc-dang-keo * { cursor: move !important; user-select: non
 #jxwin .jw-xep { width: 50px; height: 12px; background-repeat: no-repeat; background-position: -50px 0; cursor: pointer; z-index: 3; }
 #jxwin .jw-xep:hover { background-position: -100px 0; }
 #jxwin .jw-xep:active { background-position: 0 0; }
-#jxwin .jw-xepchu { position: absolute; inset: 0; text-align: center; white-space: nowrap; pointer-events: none; font: 13px/12px var(--font-co); color: rgb(131,181,153); }
+#jxwin .jw-xepchu { position: absolute; inset: 0; text-align: center; white-space: nowrap; pointer-events: none; font: 13px/12px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: rgb(131,181,153); }
 #jxwin .jw-xep:hover .jw-xepchu { color: #fff; }
 #jxwin .jw-xep:active .jw-xepchu { color: rgb(156,156,156); }
 body.dt #jxwin .jw-xep::before { content: ""; position: absolute; inset: -8px -4px -3px; }
@@ -614,7 +614,7 @@ body.dt #jxwin .jw-xep::before { content: ""; position: absolute; inset: -8px -4
 body.jxcur, body.jxcur * { cursor: var(--jxcur) !important; }
 body.jxcur input, body.jxcur textarea { cursor: text !important; }
 /* bộ đo FPS góc trái trên (src/game/main.js fpsTick) */
-#fps { position: fixed; left: 4px; top: 2px; z-index: 9; font: 13px/13px var(--font-co); color: rgb(0,255,0);
+#fps { position: fixed; left: 4px; top: 2px; z-index: 9; font: 13px/13px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: rgb(0,255,0);
   text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000; pointer-events: none; white-space: nowrap; }
 #fps.low { color: rgb(255,200,0); }
 /* dải trên lấn chỗ (cửa sổ hẹp / không phóng to): main.js datFps đặt top ngay dưới dải + hud.datLech đẩy cột bên trái xuống */
@@ -763,8 +763,8 @@ body.dt #dt > * { position: absolute; pointer-events: auto; }
   box-shadow: inset 0 -2px 0 #7f9f90, inset 0 -3px 0 #000, 0 3px 8px #000c; }
 #dt .dt-tren > * { position: absolute; }
 #dt .dt-chan { left: 6px; top: 6px; width: 54px; height: 54px; border: 2px solid #8fae9f; box-shadow: 0 0 0 1px #000, inset 0 0 0 1px #000; background: #111 center 25% / cover no-repeat; }
-#dt .dt-cap { position: absolute; left: -4px; bottom: -6px; padding: 0 5px; height: 17px; border: 1px solid #8fae9f; background: #13201b; font: 16px/15px var(--font-co); color: #ffe48a; font-weight: normal; }
-#dt .dt-ten { left: 68px; top: 4px; right: 46px; white-space: nowrap; overflow: hidden; font: 16px/18px var(--font-co); color: #ffe48a; text-shadow: 1px 1px 0 #000; }
+#dt .dt-cap { position: absolute; left: -4px; bottom: -6px; padding: 0 5px; height: 17px; border: 1px solid #8fae9f; background: #13201b; font: 16px/15px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: #ffe48a; font-weight: normal; }
+#dt .dt-ten { left: 68px; top: 4px; right: 46px; white-space: nowrap; overflow: hidden; font: 16px/18px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: #ffe48a; text-shadow: 1px 1px 0 #000; }
 #dt .dt-phai { display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid #3d6a5c; background: #0b1a16; font: 13px/15px var(--jx); vertical-align: 1px; }
 #dt .dt-h2, #dt .dt-h3 { left: 68px; display: flex; gap: 4px; align-items: center; }
 #dt .dt-h2 { top: 26px; right: 46px; } /* bên phải còn nút Toàn màn hình (Nhận thưởng vào bảng Giang hồ — 30/10 lần 3) */
@@ -780,7 +780,7 @@ body.dt #dt > * { position: absolute; pointer-events: auto; }
 #dt .dt-toan { display: block; width: 16px; height: 16px; --c: linear-gradient(currentColor, currentColor); background: var(--c) 0 0/6px 2px, var(--c) 0 0/2px 6px, var(--c) 100% 0/6px 2px, var(--c) 100% 0/2px 6px,
   var(--c) 0 100%/6px 2px, var(--c) 0 100%/2px 6px, var(--c) 100% 100%/6px 2px, var(--c) 100% 100%/2px 6px; background-repeat: no-repeat; }
 /* trên cảnh */
-#dt .dt-bd { left: 50%; top: 90px; transform: translateX(-50%); max-width: calc(100% - 210px); padding: 1px 10px; background: #000a; border: 1px solid #58756a; white-space: nowrap; overflow: hidden; color: #ffe48a; font: 16px/20px var(--font-co); }
+#dt .dt-bd { left: 50%; top: 90px; transform: translateX(-50%); max-width: calc(100% - 210px); padding: 1px 10px; background: #000a; border: 1px solid #58756a; white-space: nowrap; overflow: hidden; color: #ffe48a; font: 16px/20px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); }
 #dt .dt-bd em { font: 13px/20px var(--jx); font-style: normal; color: #9fd8ff; margin-left: 6px; }
 /* FPS · Mạng · Trực tuyến (dienthoai.js _game — anh 30/10 lần 2): ô riêng cùng 1 hàng ở mép trái ngay dưới chân dung / ô cấp, trên hàng biểu
    tượng trạng thái (anh 31/10 "tách thành 2 cái khác nhau đặt ngay" — ảnh mũi tên — rồi "vẫn tách nhưng nằm chung hàng ngang" + số người trực
@@ -809,7 +809,7 @@ body.dt.dt-ngang:not(.dt-gon) #dt .dt-mang { display: none; } /* mở trang ch�
   border: 2px solid #8fae9f; box-shadow: 0 0 0 1px #000, 0 6px 18px #000a; }
 #dt .dt-bdl.mo { display: flex; }
 #dt .dt-bdl-dau { position: relative; flex: none; height: 32px; display: flex; align-items: center; gap: 8px; padding: 0 48px 0 10px; background: linear-gradient(#22302b, #0d1512);
-  border-bottom: 1px solid #58756a; color: #ffe48a; font: 16px/32px var(--font-co); white-space: nowrap; overflow: hidden; }
+  border-bottom: 1px solid #58756a; color: #ffe48a; font: 16px/32px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); white-space: nowrap; overflow: hidden; }
 #dt .dt-bdl-dau em { font: 13px/32px var(--jx); font-style: normal; color: #9fd8ff; }
 #dt .dt-bdl-dau b { position: absolute; right: 0; top: 0; width: 44px; height: 32px; display: grid; place-items: center; font: 18px/32px var(--jx); color: #ffe48a; cursor: pointer;
   border-left: 1px solid #58756a; background: #0c1210; }
@@ -891,7 +891,7 @@ body.dt-cando #dt .dt-nutt { top: calc(var(--dt-day) - 346px); }
 body.dt-gon #dt .dt-bang { display: none; }
 #dt .dt-dau { display: flex; align-items: center; justify-content: space-between; height: 30px; padding: 0 8px; margin-top: 6px; }
 #dt .dt-bien, #dt .dt-nutda { height: 24px; color: #1b1a16; background: linear-gradient(#cfcec1, #9d9c90 55%, #7d7c71); border: 1px solid #23231f; box-shadow: inset 0 1px 0 #efeee2; white-space: nowrap; }
-#dt .dt-bien { position: relative; padding: 0 24px; font: 16px/23px var(--font-co); }
+#dt .dt-bien { position: relative; padding: 0 24px; font: 16px/23px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); }
 #dt .dt-bien::before, #dt .dt-bien::after { content: ""; position: absolute; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(#77766c 30%, #3b3a34 72%); box-shadow: 0 0 0 1px #23231f; }
 #dt .dt-bien::before { left: 5px; }
 #dt .dt-bien::after { right: 5px; }
@@ -975,7 +975,7 @@ body.dt #dt-hanh { position: fixed; left: 50%; transform: translateX(-50%) scale
 /* hàng nút việc làm ở máy tính bảng (anh 09/11 — src/game/chamgiu.js), cùng kiểu #dt-hanh của điện thoại */
 #cg-hanh { display: none; position: fixed; z-index: 9; transform: translateX(-50%) scale(1.35); transform-origin: 50% 0; width: max-content; max-width: calc((100% - 12px) / 1.35); flex-wrap: wrap; justify-content: center; gap: 4px; cursor: pointer; }
 #dt-hanh .dt-hn, #cg-hanh .dt-hn { position: relative; height: 20px; box-sizing: border-box; padding: 0 8px; text-align: center; white-space: nowrap; color: rgb(225,213,43);
-  background: no-repeat 0 0; font: 13px/20px var(--font-co); }
+  background: no-repeat 0 0; font: 13px/20px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); }
 #dt-hanh .dt-hn.dt-hphu, #cg-hanh .dt-hn.dt-hphu { color: rgb(169,211,190); }
 #dt-hanh .dt-hn:active, #cg-hanh .dt-hn:active { background-position: calc(var(--w) * -2) 0; color: rgb(124,255,125); }
 #dt-hanh .dt-hn::before, #cg-hanh .dt-hn::before { content: ""; position: absolute; inset: -9px -2px; }
@@ -1007,7 +1007,7 @@ body.dt-noi-co.dt-sap-co #dt .dt-nhat { top: calc(var(--dt-day) - 300px); }
 body.dt-noi-co.dt-sap-co.dt-luoi #dt .dt-nhat, body.dt-noi-co.dt-sap-co.dt-thap #dt .dt-nhat { top: calc(var(--dt-day) - 216px); }
 #dt .dt-noi > i, #dt .dt-nhat > i, #dt .dt-sap > i { flex: none; width: 32px; height: 32px; background: no-repeat center; }
 #dt .dt-noi > span, #dt .dt-nhat > span, #dt .dt-sap > span { min-width: 0; display: flex; flex-direction: column; }
-#dt .dt-noi b, #dt .dt-nhat b, #dt .dt-sap b { font: 16px/18px var(--font-co); font-weight: normal; color: #ffe48a; text-shadow: 1px 1px 0 #000; white-space: nowrap; }
+#dt .dt-noi b, #dt .dt-nhat b, #dt .dt-sap b { font: 16px/18px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); font-weight: normal; color: #ffe48a; text-shadow: 1px 1px 0 #000; white-space: nowrap; }
 #dt .dt-noi em, #dt .dt-nhat em, #dt .dt-sap em { font: 13px/15px var(--jx); font-style: normal; color: #cfe9dc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 /* nút client thừa ở điện thoại dọc (dienthoai.js — Trở lại của bảng Hệ thống: đã có Đóng ✕) */
 body.dt .dt-thua { display: none !important; }
@@ -1057,7 +1057,7 @@ body.dt.dt-ngang #dt .dt-nt::after { position: absolute; left: 50%; top: 42px; t
 body.dt.dt-ngang #dt .dt-nt[data-a="toan"]::after { content: "Toàn màn"; }
 #dt .dt-mo { display: none; }
 body.dt.dt-ngang.dt-gon #dt .dt-mo { display: grid; place-items: center; right: 104px; top: 6px; width: 40px; height: 40px; border: 1px solid #ffe48a; background: linear-gradient(#2c3d35, #0d1512); box-shadow: 0 0 0 1px #000; }
-#dt .dt-mo > i { font: 24px/24px var(--font-co); font-style: normal; color: #ffe48a; text-shadow: 1px 1px 0 #000; }
+#dt .dt-mo > i { font: 24px/24px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); font-style: normal; color: #ffe48a; text-shadow: 1px 1px 0 #000; }
 #dt .dt-mo > i::before { content: "«"; }
 body.dt-hang #dt .dt-mo > i::before { content: "»"; }
 #dt .dt-mo::after { content: "Mở rộng"; position: absolute; left: 50%; top: 42px; transform: translateX(-50%); font: 12px/14px var(--jx); color: #e9e3cf; text-shadow: 1px 1px 0 #000; }
@@ -1098,7 +1098,7 @@ body.dt.dt-ngang:not(.dt-gon):not(.dt-chat) #dt .dt-tab { left: 0; top: 0; botto
 body.dt.dt-ngang:not(.dt-gon):not(.dt-chat) #dt .dt-tab > .on::before { left: 0; right: auto; top: 12px; bottom: 12px; width: 3px; height: auto; }
 body.dt.dt-ngang #dt .dt-dau { margin: 6px 6px 0 80px; }
 body.dt.dt-ngang.dt-cs #dt .dt-bien { visibility: hidden; }
-body.dt.dt-ngang.dt-cs #dt .dt-nutda { width: 36px; height: 36px; padding: 0; text-align: center; font: 20px/34px var(--font-co); }
+body.dt.dt-ngang.dt-cs #dt .dt-nutda { width: 36px; height: 36px; padding: 0; text-align: center; font: 20px/34px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); }
 body.dt.dt-ngang #dt .dt-luoi { margin-left: 80px; padding: 14px 16px 0 0; gap: 12px 0; }
 body.dt.dt-ngang #dt .dt-viec { margin: 16px 16px 0 80px; }
 body.dt.dt-ngang.dt-chat #dt .dt-bang { right: auto; width: 46%; box-shadow: 2px 0 0 #7f9f90, 3px 0 0 #000, 6px 0 12px #000c; }
@@ -1333,7 +1333,7 @@ body.dt #tkcb-nut { z-index: 4; padding: 4px 0; text-align: center; }
 #tkcb .song, #tkkq .song { color: #ffa85e; }
 #tkcb .kim, #tkkq .kim { color: #ff92ff; }
 #tkcb.a { z-index: 3; width: 750px; height: 350px; background: rgba(0,30,19,.74); box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none;
-  font: 12px/14px var(--font-co); color: rgb(255,255,255); }
+  font: 12px/14px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: rgb(255,255,255); }
 #tkcb.a .ab { position: absolute; left: 2px; right: 2px; display: flex; white-space: nowrap; }
 #tkcb.a .ab > span { flex: none; overflow: hidden; text-overflow: ellipsis; }
 #tkcb.a .dg { position: absolute; left: 14px; right: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1346,7 +1346,7 @@ body.dt #tkcb-nut { z-index: 4; padding: 4px 0; text-align: center; }
 #tkcb.a th:first-child, #tkcb.a td:first-child { text-align: left; }
 #tkcb.a tr.chan td { color: rgb(255,255,80); }
 #tkkq.a { z-index: 5; width: 250px; height: 428px; background: url(../../assets/ui/tongkim/cb_bang.png); }
-#tkkq.a .o { position: absolute; width: 111px; height: 17px; background: url(../../assets/ui/tongkim/cb_o.png); font: 12px/17px var(--font-co); text-align: center;
+#tkkq.a .o { position: absolute; width: 111px; height: 17px; background: url(../../assets/ui/tongkim/cb_o.png); font: 12px/17px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); text-align: center;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: rgb(228,225,150); }
 #tkkq.a .o.ten { color: rgb(200,200,120); }
 #tkkq.a .o.song { color: #ffa85e; }
@@ -1360,7 +1360,7 @@ body.dt #tkcb-nut { z-index: 4; padding: 4px 0; text-align: center; }
 /* khung 任务记事 trong 75% (cửa sổ Tin cập nhật có thêm trang trong — chiến báo không có): lót tối dưới phần trong cho cảnh / bảng gọn sau lưng khỏi lộ qua chữ */
 #tkcb.b { width: 433px; height: 300px; background: url(../../assets/ui/win/img/tin_nen.png) 0 0 no-repeat, linear-gradient(rgba(8,8,6,.72), rgba(8,8,6,.72)) 4px 4px / 425px 292px no-repeat; }
 #tkkq.b { z-index: 5; width: 480px; height: 300px; background: url(../../assets/ui/win/img/x_28e872de.png); }
-#tkcb.b .tieu { position: absolute; left: 0; right: 0; top: 2px; text-align: center; font: 16px/16px var(--font-co); color: rgb(255,217,78); letter-spacing: 1px; }
+#tkcb.b .tieu { position: absolute; left: 0; right: 0; top: 2px; text-align: center; font: 16px/16px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: rgb(255,217,78); letter-spacing: 1px; }
 #tkcb.b .dai { position: absolute; left: 24px; right: 24px; top: 24px; height: 16px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #tkcb.b .than { position: absolute; left: 26px; top: 44px; width: 380px; }
 #tkcb.b .lu { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; }
@@ -1377,7 +1377,7 @@ body.dt #tkcb-nut { z-index: 4; padding: 4px 0; text-align: center; }
 #tkcb.b .dong:active { background-position: -205px 0; }
 #tkkq.b .cot1 { position: absolute; left: 22px; top: 25px; width: 162px; height: 248px; overflow: hidden; }
 #tkkq.b .cot2 { position: absolute; left: 198px; top: 25px; width: 260px; height: 248px; overflow: hidden; }
-#tkkq.b .dau { margin: 2px 0 0 4px; font: 16px/18px var(--font-co); }
+#tkkq.b .dau { margin: 2px 0 0 4px; font: 16px/18px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); }
 #tkkq.b .dg { padding-left: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 #tkkq.b .h { margin-left: 4px; }
 #tkkq.b .qua { display: flex; gap: 4px; padding: 2px 4px; }
@@ -1386,7 +1386,7 @@ body.dt #tkcb-nut { z-index: 4; padding: 4px 0; text-align: center; }
 #tkkq.b .oT img { display: block; max-width: 40px; max-height: 40px; }
 #tkkq.b .oT b { position: absolute; right: 2px; bottom: 1px; font: 13px/13px var(--jx); font-weight: normal; color: #fff; }
 #tkkq.b .oT.rong { width: 96px; }
-#tkkq.b .oT.rong em { display: block; font: 16px/18px var(--font-co); font-style: normal; color: #7dff8a; }
+#tkkq.b .oT.rong em { display: block; font: 16px/18px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); font-style: normal; color: #7dff8a; }
 #tkkq.b .oT.rong span { color: #c9b27a; }
 #tkkq.b .oT.mat { opacity: .4; }
 #tkkq.b .dong { position: absolute; left: 164px; top: 277px; width: 151px; height: 19px; background: url(../../assets/ui/win/img/x_a1013727.png) 0 0; cursor: pointer; }
@@ -1404,7 +1404,7 @@ body.dt #tkcb-nut { z-index: 4; padding: 4px 0; text-align: center; }
 body.dt #phkq { top: 140px; font-size: 12px; min-width: 0; }
 /* kết quả boss thế giới (windows.js ketQuaBoss — khung 排名.ini, cửa sổ "btgkq"): cột phải — tên boss, hạng của mình, phần thưởng ô 48 × 48 (kinh
    nghiệm: hình PictureList của client; món: icon + số góc dưới phải như ô dùng nhanh) */
-#jxwin .bk-dau { margin: 2px 0 2px 4px; font: 16px/18px var(--font-co); color: rgb(255,217,78); text-shadow: 1px 1px 0 #000; }
+#jxwin .bk-dau { margin: 2px 0 2px 4px; font: 16px/18px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: rgb(255,217,78); text-shadow: 1px 1px 0 #000; }
 #jxwin .bk-dong { padding-left: 4px; line-height: 16px; }
 #jxwin .bk-day { margin-top: 4px; color: #ff6a5a; }
 #jxwin .bk-tieu { margin: 5px 4px 2px; padding-bottom: 2px; border-bottom: 1px solid #5a5340; color: rgb(255,253,122); }
@@ -1439,7 +1439,7 @@ body.dt #jxhud .jx-slot { touch-action: none; }
   background: #c6281d; border: 1px solid #000; color: #fff; font: 11px/13px var(--jx); font-weight: normal; text-align: center; pointer-events: none; }
 /* ---------- Hướng dẫn hoạt động (anh 05/11 — src/game/huongdan.js): khung client uiactivityguide\activityguide.ini 650 × 450 (hình: cong-cu/
    dung-huong-dan.mjs); chỗ các phần trong trang lịch theo activitycalendar.ini (gốc 19, 54). Chữ client cỡ 12 -> VK Sans Serif 13, viền đen ---------- */
-#jxwin .hd-khung { color: rgb(169,211,190); font: 13px/13px var(--font-co); }
+#jxwin .hd-khung { color: rgb(169,211,190); font: 13px/13px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); }
 #jxwin .hd-khung .hd-ngay { position: absolute; left: 440px; top: 12px; width: 200px; height: 16px; white-space: nowrap; color: rgb(255,250,196); pointer-events: none;
   text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000; }
 /* 612 × 373 ở (19, 54) = đúng ô trong suốt của hình khung hd_nen.png (đo 13/11: hàng 54–426 trong suốt, 427 viền tối của thanh Đóng) — không thu nhỏ (lượt 88 thử
@@ -1467,7 +1467,7 @@ body.dt #jxhud .jx-slot { touch-action: none; }
 #jxwin .hd-r .c2, #jxwin .hd-cot .c2 { width: 129px; flex: none; }
 #jxwin .hd-r .c3, #jxwin .hd-cot .c3 { width: 113px; flex: none; }
 #jxwin .hd-ten { left: 405px; width: 207px; color: rgb(240,127,80); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#jxwin .hd-ct { left: 405px; top: 58px; width: 193px; height: 142px; overflow: hidden auto; scrollbar-width: none; font: 13px/17px var(--font-co); white-space: normal;
+#jxwin .hd-ct { left: 405px; top: 58px; width: 193px; height: 142px; overflow: hidden auto; scrollbar-width: none; font: 13px/17px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); white-space: normal;
   overflow-wrap: anywhere; }
 #jxwin .hd-ct p { margin: 0 0 3px; }
 #jxwin .hd-o { left: 406px; width: 203px; height: 35px; background: url(../../assets/ui/win/img/hd_o.png) no-repeat; cursor: pointer; }
@@ -1485,12 +1485,12 @@ body.dt #jxhud .jx-slot { touch-action: none; }
 #jxwin .hd-xem:hover { color: #fff; }
 /* Tra cứu / Phần thưởng: ô tìm, mục bên trái, nội dung bên phải */
 #jxwin .hd-o-tim { left: 90px; top: 5px; width: 300px; height: 22px; box-sizing: border-box; padding: 0 6px; background: #0e0c08; border: 1px solid #6a5a35; color: #fff;
-  font: 13px/20px var(--font-co); outline: none; user-select: text; text-shadow: none; }
+  font: 13px/20px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); outline: none; user-select: text; text-shadow: none; }
 #jxwin .hd-o-tim:focus { border-color: #c9a95a; }
 #jxwin .hd-idx { top: 38px; width: 186px; height: 323px; } /* 19 dòng × 17 — không dòng nào bị cắt ngang */
 #jxwin .hd-idx .hd-r { padding-left: 4px; display: block; overflow: hidden; text-overflow: ellipsis; }
 #jxwin .hd-idx .hd-r.n { color: rgb(255,250,0); padding-left: 2px; cursor: default; background: none; margin-top: 3px; }
-#jxwin .hd-noi { left: 198px; top: 38px; width: 408px; height: 335px; overflow: hidden auto; scrollbar-width: none; font: 13px/17px var(--font-co);
+#jxwin .hd-noi { left: 198px; top: 38px; width: 408px; height: 335px; overflow: hidden auto; scrollbar-width: none; font: 13px/17px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
   white-space: normal; overflow-wrap: anywhere; color: rgb(169,211,190); user-select: text; -webkit-user-select: text; }
 #jxwin .hd-noi p, #hd-dt .hd-dt-ct2 p { margin: 2px 0 5px; }
 #jxwin .hd-noi ul, #hd-dt .hd-dt-ct2 ul { margin: 2px 0 5px; padding-left: 16px; }
@@ -1506,7 +1506,7 @@ body.dt #jxhud .jx-slot { touch-action: none; }
 .hd-bang tr:not(.h) td.r:nth-child(2) { color: rgb(110,255,110); }
 /* điện thoại dọc (anh 05/11 chọn chữ 16 px): lớp hết màn dưới cửa sổ client (#jxwin cùng z-index, đứng sau trong trang) */
 #hd-dt { position: fixed; inset: 0; z-index: 4; display: flex; flex-direction: column; background: rgba(12,10,6,.97); color: rgb(169,211,190);
-  font: 16px/21px var(--font-co); text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000; touch-action: pan-y; user-select: none; }
+  font: 16px/21px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000; touch-action: pan-y; user-select: none; }
 #hd-dt .hd-dt-dau { position: relative; flex: none; height: 40px; line-height: 40px; text-align: center; color: rgb(255,250,196); border-bottom: 1px solid #6a5a35;
   background: linear-gradient(#3c3420, #1c170e); }
 #hd-dt .hd-dt-x { position: absolute; right: 8px; top: 5px; width: 30px; height: 30px; line-height: 28px; box-sizing: border-box; border: 1px solid #c9a95a; color: #ffe48a; font-weight: normal; }
@@ -1526,7 +1526,7 @@ body.dt #jxhud .jx-slot { touch-action: none; }
 #hd-dt .hd-xem { color: rgb(255,217,78); }
 #hd-dt .hd-dt-tim { padding: 6px 8px 4px; }
 #hd-dt .hd-dt-tim input { width: 100%; height: 40px; box-sizing: border-box; padding: 0 10px; background: #0e0c08; border: 1px solid #6a5a35; color: #fff;
-  font: 16px/38px var(--font-co); outline: none; user-select: text; }
+  font: 16px/38px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); outline: none; user-select: text; }
 #hd-dt .hd-dt-chip { display: flex; flex-wrap: wrap; gap: 5px; padding: 2px 8px 8px; }
 #hd-dt .hd-dt-chip > span { padding: 0 10px; line-height: 32px; border: 1px solid #4a4030; background: #14110b; }
 #hd-dt .hd-dt-chip > span.on { color: rgb(255,250,0); border-color: #c9a95a; background: #2a2214; }
@@ -1558,7 +1558,7 @@ body.dt #jxhud .jx-slot { touch-action: none; }
 #jxwin .zl-qr p { margin: 8px 0 6px; font-size: 13px; line-height: 16px; color: rgb(255,246,180); }
 #jxwin .zl-qr .tt-b { display: inline-block; padding: 3px 16px; }
 /* Phân Thân (anh 05/11 — src/game/phanthan.js, Kiểu 2: bố cục khung Lập nhóm, nền pt_nen.png đã che chữ in sẵn — chữ mới viết ở đây) */
-#jxwin .pt-khung > div:not(.jw-i):not(.jw-page) { position: absolute; box-sizing: border-box; font: 13px/13px var(--font-co); white-space: nowrap; overflow: hidden; }
+#jxwin .pt-khung > div:not(.jw-i):not(.jw-page) { position: absolute; box-sizing: border-box; font: 13px/13px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); white-space: nowrap; overflow: hidden; }
 #jxwin .pt-khung .pt-tieude { display: flex; align-items: center; justify-content: center; font-weight: bold; color: #3a2208; letter-spacing: 1px; }
 #jxwin .pt-khung .pt-dau { display: flex; align-items: center; padding-left: 4px; color: #ffe9b0; text-shadow: 1px 1px #000; }
 #jxwin .pt-khung .pt-nhan { display: flex; align-items: center; padding-left: 4px; color: #ffe9b0; text-shadow: 1px 1px #000; }
@@ -2022,12 +2022,12 @@ body.dt .jx-menu.bh-menu div { padding: 9px 16px; }
 #ldtt .bang { display: inline-flex; align-items: stretch; background: rgba(0,0,0,.62); border: 1px solid #6b5a2e; box-shadow: 0 0 0 1px #000; }
 #ldtt .ben { display: flex; align-items: center; gap: 7px; padding: 3px 10px; min-width: 150px; }
 #ldtt .ben.p { justify-content: flex-end; }
-#ldtt .ben b { font: 16px/18px var(--font-co); font-weight: normal; letter-spacing: 1px; }
-#ldtt .ben em { font: 22px/24px var(--font-co); font-style: normal; color: #fff; min-width: 16px; }
+#ldtt .ben b { font: 16px/18px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); font-weight: normal; letter-spacing: 1px; }
+#ldtt .ben em { font: 22px/24px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); font-style: normal; color: #fff; min-width: 16px; }
 #ldtt .pip { display: flex; gap: 2px; } #ldtt .pip u { display: block; width: 8px; height: 12px; background: #3a3a3a; box-shadow: 0 0 0 1px #000; }
 #ldtt.c16 .pip u { width: 5px; } #ldtt.c16 .pip { gap: 1px; }
 #ldtt .giua { padding: 2px 14px 3px; border-left: 1px solid #5a4a26; border-right: 1px solid #5a4a26; background: rgba(40,28,8,.55); min-width: 74px; }
-#ldtt .gio { font: 22px/24px var(--font-co); color: #ffd54a; letter-spacing: 1px; }
+#ldtt .gio { font: 22px/24px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: #ffd54a; letter-spacing: 1px; }
 #ldtt .pha { font-size: 12px; line-height: 13px; color: #c9b27a; }
 #ldtt .phu { margin-top: 2px; font-size: 12px; line-height: 15px; color: #c9b27a; }
 #ldtt .k { max-width: 460px; margin: 0 auto; overflow: hidden; text-overflow: ellipsis; font-size: 12px; line-height: 15px; }
@@ -2060,7 +2060,7 @@ body.dt.dt-ngang #phtt:not(.b2) { top: max(70px, var(--ld-day, 0px)); }
 #jxwin .ldk-ben { margin: 3px 0 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 1px 1px 0 #000; }
 #jxwin .ldk-r { display: flex; justify-content: space-between; gap: 6px; padding: 0 4px; height: 16px; line-height: 16px; white-space: nowrap; }
 #jxwin .ldk-r span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-#jxwin .ldk-to { margin: 4px 0 2px 4px; font: 20px/22px var(--font-co); text-shadow: 1px 1px 0 #000; }
+#jxwin .ldk-to { margin: 4px 0 2px 4px; font: 20px/22px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); text-shadow: 1px 1px 0 #000; }
 #jxwin .ldk-d { padding-left: 4px; line-height: 16px; }
 #jxwin .ldk-xam { color: #8f8a7e; }
 #jxwin .ldk-dem { margin-top: 4px; color: #c9b27a; }
@@ -2080,7 +2080,7 @@ body.dt.dt-ngang #phtt:not(.b2) { top: max(70px, var(--ld-day, 0px)); }
 #ttC { position: fixed; z-index: 8; left: 50%; top: 96px; transform: translateX(-50%); width: 480px; max-width: calc(100vw - 16px); box-sizing: border-box; padding: 8px 16px 10px; text-align: center;
   background: linear-gradient(rgba(46,12,6,.96), rgba(16,9,5,.96)); border: 1px solid #a8742c; box-shadow: 0 0 0 1px #000, 0 0 22px rgba(255,70,30,.35);
   font: 13px/17px var(--jx); color: #e9e3cf; text-shadow: 1px 1px 0 #000; }
-#ttC .tieu { font: 22px/26px var(--font-co); color: #ff6a3c; letter-spacing: 4px; text-shadow: 0 0 8px rgba(255,70,30,.7), 1px 1px 0 #000; }
+#ttC .tieu { font: 22px/26px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: #ff6a3c; letter-spacing: 4px; text-shadow: 0 0 8px rgba(255,70,30,.7), 1px 1px 0 #000; }
 #ttC .ai { margin-top: 2px; color: #c9b27a; } #ttC .ai span { color: #7dd8ff; }
 #ttC .cau { margin: 8px 0 6px; padding: 6px 10px; font-size: 15px; line-height: 20px; color: #ffd54a; border-top: 1px solid #5a3a1a; border-bottom: 1px solid #5a3a1a; word-break: break-word; }
 #ttC .luat { font-size: 12px; line-height: 15px; color: #c9b27a; }
@@ -2129,7 +2129,7 @@ body.dt .poster .pt-goi { font-size: 11px; }
 /* ---------- khung Nhân vật / xem người khác (anh 17/11 — windows.js _suaNen, soiDo mẫu B): tiêu đề phủ lên chữ "Hướng dẫn hoạt động" in sẵn trong hình nền client,
    nhãn "Xếp hạng" thay chữ "Xếp hàng" in sai; trang Thuộc tính của khung xem người khác: bảng thông tin chung phủ phần chỉ số ---------- */
 #jxwin .jw-td { position: absolute; left: 61px; top: 5px; width: 196px; height: 25px; z-index: 2; pointer-events: none; background: #3c4a3e; text-align: center; white-space: nowrap;
-  font: 16px/25px var(--font-co); color: #e8f6ea; text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000; will-change: transform; }
+  font: 16px/25px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace); color: #e8f6ea; text-shadow: 1px 0 #000, -1px 0 #000, 0 1px #000, 0 -1px #000; will-change: transform; }
 #jxwin .jw-xh { position: absolute; left: 199px; top: 53px; width: 57px; height: 17px; box-sizing: border-box; padding-right: 3px; z-index: 1; pointer-events: none; text-align: right;
   font: 13px/17px var(--jx); color: rgb(201,215,163); }
 #jxwin .soi-phu { position: absolute; left: 0; top: 78px; width: 314px; height: 278px; z-index: 3; background: #151714; pointer-events: none; }
@@ -2143,26 +2143,6 @@ body.dt .poster .pt-goi { font-size: 11px; }
 #jxwin .soi-chua { display: flex; align-items: center; justify-content: center; height: 100%; padding: 4px; box-sizing: border-box; text-align: center; font: 12px/14px var(--jx); color: #8f8a78; }
 
 /* === VL_CODIEN_VOMCUNG_START === */
-@font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url(/assets/ui/fonts/vl-codien-400-vietnamese.woff2) format("woff2");
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
-@font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url(/assets/ui/fonts/vl-codien-400-latin-ext.woff2) format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
-@font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url(/assets/ui/fonts/vl-codien-400-latin.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url(/assets/ui/fonts/vl-codien-700-vietnamese.woff2) format("woff2");
-  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB; }
-@font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url(/assets/ui/fonts/vl-codien-700-latin-ext.woff2) format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
-@font-face { font-family: "VL Co Dien"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url(/assets/ui/fonts/vl-codien-700-latin.woff2) format("woff2");
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-:root { --font-co: "VL Co Dien", Georgia, "Times New Roman", serif; }
-
 /* 1. Dong bo font co kiem hiep cho man tai tai nguyen, man cho chuyen map va cac man dang nhap */
 #s-load, #s-load *,
 .zl, .zl *,
@@ -2173,23 +2153,23 @@ body.dt .poster .pt-goi { font-size: 11px; }
 #s-create, #s-create *,
 .csel, .csel *,
 .cc, .cc * {
-  font-family: var(--font-co);
+  font-family: var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
 }
 #s-load #load-msg,
 .zl-t,
 .zl-n,
 .zl-p {
-  font-family: var(--font-co) !important;
+  font-family: var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace) !important;
   font-size: 16px;
   letter-spacing: 0.4px;
 }
 .zl-nut {
-  font-family: var(--font-co) !important;
+  font-family: var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace) !important;
   font-size: 14px;
   font-weight: 700;
 }
 .ak-ky, .ak-canh, .ak-ky-cho {
-  font-family: var(--font-co) !important;
+  font-family: var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace) !important;
   letter-spacing: 0.3px;
 }
 
@@ -2300,49 +2280,13 @@ body.dt:not(.dt-ngang).dt-noi-co.dt-sap-co.dt-thap #dt .dt-nhat { top: calc(var(
 #dt .dt-ex.am b { color: #ff9c8a !important; }
 /* === VL_CHAT_SVG_EXP_END === */
 
-/* === VL_GLOBAL_FONT_EXP_START === */
-/* Dong bo font chu co "VL Co Dien" toan game (du 100% dau tieng Viet, fallback IBM Plex Mono/Georgia chong loi ky tu) */
+/* === VL_ORIG_GAME_FONT_START === */
+/* Dong bo font chu goc ban dau cua game cho toan bo man ngoai & trong game */
 :root {
-  --font-co: "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif;
-  --font: var(--font-co);
-  --jx: var(--font-co);
+  --font: "VK Sans Serif 13", "IBM Plex Mono", monospace;
+  --jx: "VK Sans Serif 13", "IBM Plex Mono", monospace;
 }
 html, body, button, input, select, textarea,
-#s-load, #s-login, #s-doimk, #s-server, #s-select, #s-create,
-.csel, .cc, .zl, #jxhud, #jxwin, #dt, .jx-menu, .jx-skpick, .jx-tip, .tt, #kat, .dv, .mn, .uhq {
-  font-family: var(--font-co);
-}
-.qch-json, pre, code {
-  font-family: "IBM Plex Mono", Consolas, monospace !important;
-}
-/* Giu co so deu (tabular-nums) cho thanh mau/mana/EXP, FPS, ping, tien de khong giat khung */
-#jxhud .jx-bar span, #jxhud .jx-lv, #jxhud .jx-rank, #dt .dt-tn b, #dt .dt-mang, #dt .dt-cap, #dt .dt-tien, .zl-p, #fps {
-  font-variant-numeric: tabular-nums;
-}
-/* Thanh kinh nghiem: hien vach do cam khi am EXP do tu vong + hieu ung nhay sang khi nhan EXP */
-#jxhud .jx-top .jx-bar.exp.am i,
-#dt .dt-ex.am i {
-  background: linear-gradient(180deg, #ff7b61, #c9331f 52%, #6e140a) !important;
-  box-shadow: 0 0 6px rgba(255, 92, 68, 0.55);
-}
-#dt .dt-ex { cursor: pointer; }
-@keyframes vlExpFlash {
-  0% { filter: brightness(1.55); box-shadow: 0 0 10px rgba(255, 224, 118, 0.9); }
-  100% { filter: brightness(1); }
-}
-#jxhud .jx-top .jx-bar.exp.exp-tang,
-#dt .dt-ex.exp-tang {
-  animation: vlExpFlash 0.45s ease-out;
-}
-/* === VL_GLOBAL_FONT_EXP_END === */
-
-/* === VL_LOGIN_FONT_FIX_START === */
-:root {
-  --font-co: "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif;
-  --font: var(--font-co);
-  --jx: var(--font-co);
-}
-html, body,
 #s-load, #s-load *,
 .zl, .zl *,
 #s-login, #s-login *,
@@ -2351,10 +2295,23 @@ html, body,
 #s-select, #s-select *,
 #s-create, #s-create *,
 .csel, .csel *,
-.cc, .cc * {
-  font-family: "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif !important;
+.cc, .cc *,
+#jxhud, #jxhud *,
+#dt, #dt *,
+#jxwin, #jxwin *:not(.qch-json):not(pre):not(code),
+.jx-menu, .jx-menu *,
+.jx-skpick, .jx-skpick *,
+.jx-tip, .jx-tip *,
+#kat, #kat *,
+.mn, .mn *,
+.dv, .dv *,
+.uhq, .uhq * {
+  font-family: var(--jx);
 }
 .qch-json, pre, code {
   font-family: "IBM Plex Mono", Consolas, monospace !important;
 }
-/* === VL_LOGIN_FONT_FIX_END === */
+#jxhud .jx-bar span, #jxhud .jx-lv, #jxhud .jx-rank, #dt .dt-tn b, #dt .dt-mang, #dt .dt-cap, #dt .dt-tien, .zl-p, #fps {
+  font-variant-numeric: tabular-nums;
+}
+/* === VL_ORIG_GAME_FONT_END === */

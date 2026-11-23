@@ -14,7 +14,7 @@ const SKIP = new Set(["Main", "Init", "Settings"]);
 const rgb = (c) => `rgb(${c.join(",")})`;
 export const shadow = (c) => { const k = rgb(c); return `1px 0 ${k},-1px 0 ${k},0 1px ${k},0 -1px ${k},1px 1px ${k},-1px -1px ${k},1px -1px ${k},-1px 1px ${k}`; };
 // cỡ chữ ini -> font client: Vn.fon chỉ có 8 pt (13 px) và 10 pt (16 px)
-const font = (f) => (f >= 16 ? '16px/16px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif' : '13px/13px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif');
+const font = (f) => (f >= 16 ? `16px/16px "VK Sans Serif 16"` : `13px/13px "VK Sans Serif 13"`) + `, "IBM Plex Mono", monospace`;
 // Khung hội thoại NPC (Talk 提示2 / Say 滚动选择界面 / Describe npc描述界面): font chữ ảnh của client — ui\ui3\vn\fontsetting.ini cỡ Font=
 // -> \font\vn\gbk_fs<cỡ>.fnt (assets/ui/hud/font/jx-asf-*.ttf). Đối chiếu ảnh client anh gửi 23/10: chữ đều nhau 7 điểm (cỡ 14),
 // dòng chữ cao đúng cỡ chữ, ngắt dòng theo ký tự (ô 377 điểm = 53 ký tự, giữ cả dấu cách), chữ có viền tối 1 điểm dù ini để
@@ -22,7 +22,7 @@ const font = (f) => (f >= 16 ? '16px/16px "VL Co Dien", "IBM Plex Mono", Georgia
 const ASF_WINS = new Set(["info2", "msgsel", "describe", "hoi"]);
 const ASF = { 12: 12, 13: 12, 14: 14, 16: 16 }; // fontsetting.ini: cỡ 13 dùng chung font 12; cỡ 10 client không có file
 export const asfPx = (f) => ASF[f] || (f >= 16 ? 16 : f >= 14 ? 14 : 12);
-const asfFont = (f) => { const n = asfPx(f); return `${n}px/${n}px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif`; };
+const asfFont = (f) => { const n = asfPx(f); return `${n}px/${n}px "JX ASF ${n}", "VK Sans Serif 13", monospace`; };
 const ASF_BORDER = [0, 0, 0]; // TẠM: viền mặc định đen (ảnh client: viền tối; màu đúng chưa đo được qua nền trong suốt)
 
 export class UiWins {

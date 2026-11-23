@@ -72,8 +72,7 @@ export class Hud {
     // thì chữ các thẻ lệch, khoảng cách không đều (anh 01/11 "bố cục text các kênh lệch")
     const T = meta.chat.tabs;
     if (!T.list.some((t) => t.label === "Đội ngũ")) T.list.splice(2, 0, { label: "Đội ngũ", type: 1, mask: 0 });
-    for (const f of meta.fonts) document.fonts.add(await new FontFace(f.family, `url(${BASE}${f.file})`).load());
-    try { await Promise.all([document.fonts.load('400 13px "VL Co Dien"', "Võ Lâm Truyền Kỳ 0123456789%"), document.fonts.load('700 16px "VL Co Dien"', "Võ Lâm Truyền Kỳ 0123456789%")]); } catch {} // nạp trước khi vẽ chữ lên canvas
+    for (const f of meta.fonts) document.fonts.add(await new FontFace(f.family, `url(${BASE}${f.file})`).load()); // nạp trước khi vẽ chữ lên canvas
     const hud = new Hud(meta);
     // biểu tượng ngũ hành cạnh tên quái (vẽ trên canvas nên nạp sẵn)
     hud.seriesImgs = ((meta.npc && meta.npc.series) || []).map((s) => { if (!s) return null; const im = new Image(); im.src = BASE + s.file; return im; });
@@ -991,7 +990,7 @@ export class Hud {
     for (const d of s.diem || []) {
       const x = Math.round(ox + d.x * k), y = Math.round(oy + d.y * k), r = d.r || 2; g.fillStyle = "#000"; g.fillRect(x - r - 1, y - r - 1, r * 2 + 3, r * 2 + 3); g.fillStyle = d.c || "#ffd94e"; g.fillRect(x - r, y - r, r * 2 + 1, r * 2 + 1);
       if (d.ten) {
-        const ty = d.duoi ? y + r + 3 : y - r - 3; g.font = '12px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif'; g.textAlign = "center"; g.textBaseline = d.duoi ? "top" : "bottom";
+        const ty = d.duoi ? y + r + 3 : y - r - 3; g.font = `12px "VK Sans Serif 12", "IBM Plex Mono", monospace`; g.textAlign = "center"; g.textBaseline = d.duoi ? "top" : "bottom";
         g.fillStyle = "#000"; for (const [a, b] of [[-1, 0], [1, 0], [0, -1], [0, 1]]) g.fillText(d.ten, x + a, ty + b);
         g.fillStyle = "#fff"; g.fillText(d.ten, x, ty);
       }

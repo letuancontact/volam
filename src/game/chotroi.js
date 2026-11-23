@@ -209,7 +209,7 @@ export class ChoTroi {
     for (const k of w.def.order) if (/^MarketGoods_/.test(k)) w.hideItem(k, true);
     // tiêu đề như Kỳ Trân Các: chữ sáng xanh xám, đậm (vẽ lặp lệch 1 điểm), viền đen
     const tieuDe = document.createElement("div");
-    Object.assign(tieuDe.style, { position: "absolute", left: "215px", top: "27px", width: "146px", height: "16px", font: '16px/16px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif', letterSpacing: "1px",
+    Object.assign(tieuDe.style, { position: "absolute", left: "215px", top: "27px", width: "146px", height: "16px", font: '16px/16px "VK Sans Serif 13", "IBM Plex Mono", monospace', letterSpacing: "1px",
       color: "rgb(170,196,185)", textAlign: "center", whiteSpace: "pre", pointerEvents: "none", textShadow: "1px 0 0 rgb(170,196,185),2px 0 #010101,-1px 0 #010101,0 1px #010101,0 -1px #010101,1px 1px #010101,1px -1px #010101,2px 1px #010101,2px -1px #010101,-1px 1px #010101,-1px -1px #010101" });
     tieuDe.textContent = "Chợ Trời";
     w.el.appendChild(tieuDe);
@@ -240,7 +240,7 @@ export class ChoTroi {
     const g = sec.MarketGoods, S = (k) => sec["MarketGoods_" + k] || {};
     const txt = (s, extra = {}) => {
       const d = document.createElement("div");
-      Object.assign(d.style, { position: "absolute", left: s.x + "px", top: s.y + "px", width: (s.w || 60) + "px", height: "13px", font: '13px/13px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif', color: rgb(s.color || [255, 255, 255]),
+      Object.assign(d.style, { position: "absolute", left: s.x + "px", top: s.y + "px", width: (s.w || 60) + "px", height: "13px", font: '13px/13px "VK Sans Serif 13", "IBM Plex Mono", monospace', color: rgb(s.color || [255, 255, 255]),
         textAlign: s.hAlign === 1 ? "center" : s.hAlign === 2 ? "right" : "left", whiteSpace: "pre", overflow: "hidden", pointerEvents: "none", ...extra });
       return d;
     };
@@ -264,7 +264,7 @@ export class ChoTroi {
     });
     // mục chưa có món: dòng chữ giữa vùng ô hàng
     const rong = document.createElement("div");
-    Object.assign(rong.style, { position: "absolute", left: "24px", top: "282px", width: "531px", textAlign: "center", font: '13px/18px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif', color: "rgb(202,230,171)", whiteSpace: "pre-line", pointerEvents: "none",
+    Object.assign(rong.style, { position: "absolute", left: "24px", top: "282px", width: "531px", textAlign: "center", font: '13px/18px "VK Sans Serif 13", "IBM Plex Mono", monospace', color: "rgb(202,230,171)", whiteSpace: "pre-line", pointerEvents: "none",
       textShadow: "1px 0 #000,-1px 0 #000,0 1px #000,0 -1px #000", display: "none" });
     w.el.appendChild(rong);
     this._rong = rong;

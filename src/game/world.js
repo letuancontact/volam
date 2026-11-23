@@ -204,7 +204,7 @@ const pick = (a) => a[Math.floor(rand() * a.length)];
 const BANG_W = 2048, BANG_H = 1024, VIEN = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [1, -1], [-1, 1], [1, 1]], DEM = 4;
 let BANG = null, NHAP = null; // BANG: { c, g, x, y, h (cao hàng đang xếp), m: Map(khóa -> { c, sx, sy, w, h, ox, oy, tw }) }; NHAP: { c, g } canvas nháp CPU
 const NAP = new Set(); // chữ đã nhờ document.fonts.load (phần font chưa nạp) — nhờ 1 lần
-const chuFont = (px) => `${px}px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif`;
+const chuFont = (px) => `${px}px "VK Sans Serif ${px}", "IBM Plex Mono", monospace`;
 function veChu(g, s, x, y, color) { g.fillStyle = "#000"; for (const [dx, dy] of VIEN) g.fillText(s, x + dx, y + dy); g.fillStyle = color; g.fillText(s, x, y); }
 function bangChu() {
   if (BANG && BANG.g.isContextLost && BANG.g.isContextLost()) BANG = null;
@@ -1866,7 +1866,7 @@ export class World {
   // bảng hiệu bày bán (chân bảng ở yDay): 3 mảnh hình client, chữ giữa
   veBangHieu(ctx, x, yDay, s) {
     const B = bhAnh(this.P); if (!B) return;
-    ctx.font = '13px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif';
+    ctx.font = `13px "VK Sans Serif 13", "IBM Plex Mono", monospace`;
     const w = Math.max(40, Math.ceil(ctx.measureText(s).width) + 10), x0 = Math.round(x - w / 2), y0 = Math.round(yDay - 20);
     ctx.drawImage(B.L, x0 - B.L.width, y0);
     ctx.drawImage(B.M, x0, y0, w, B.M.height);
@@ -1989,7 +1989,7 @@ export class World {
   }
   // tên 2 màu (boss thế giới: tiền tố + tên), giữa theo x — [[chữ, màu], …] -> tổng bề rộng
   label2(ctx, x, y, ...phan) {
-    ctx.font = '13px "VL Co Dien", "IBM Plex Mono", Georgia, "Times New Roman", serif';
+    ctx.font = `13px "VK Sans Serif 13", "IBM Plex Mono", monospace`;
     const ws = phan.map(([s]) => ctx.measureText(s).width), w = ws.reduce((a, b) => a + b, 0);
     ctx.textAlign = "left";
     let x0 = x - w / 2;
