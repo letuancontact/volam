@@ -1,13 +1,26 @@
 // Chỉ đường & Cẩm nang Tân thủ (PC + Mobile):
-//   - Bảng Cẩm nang Tân thủ (#vl-tt-modal): tự mở 1 lần cho nhân vật mới (cấp <= 5, chưa có cờ hero.chiDan.chao), mở lại bất cứ lúc nào qua nút Cẩm nang (#vl-tt-fab).
-//   - Lộ trình 8 bước tự động theo trạng thái nhân vật, mỗi bước có nút hành động làm ngay (tự chạy ra bãi, gặp Xa phu, gặp Tiếp dẫn, nhận quà, mở Võ công/Trợ Thủ...).
-//   - PC: nhóm đầu bảng Nhiệm vụ (hud.setNhiemVu) + nút nổi Cẩm nang phía trên.
-//   - Mobile: thẻ mục tiêu có nút hành động rõ ràng (#dt .dt-chidan) + nút Cẩm nang đối xứng nút Tự đánh.
+//   - Bảng Cẩm nang Tân thủ (#vl-tt-modal): kéo thả tự do trên PC, cuộn mượt không bị reset scrollTop mỗi nhịp 400ms,
+//     tự nhường lớp hiển thị (hạ z-index / tự đóng trên Mobile) khi người chơi mở cửa sổ khác để không bao giờ che nội dung.
+//   - Nút Cẩm nang (#vl-tt-fab): z-index: 3 (nằm dưới mọi cửa sổ #jxwin / .dv.qt / #hd-dt), kéo thả tự do sang góc bất kỳ.
+//   - Mobile: thẻ mục tiêu có nút hành động 1 chạm (#dt .dt-chidan), chừa khoảng cho Khóa an toàn (.dt-kat).
 const CAP_TOI = 60;
 const BA_LANG = 53;
 const XANH = [55, 231, 63], VANG = [255, 235, 120], XAM = [170, 165, 150];
+const FAB_POS_KEY = "vl_tt_fab_pos";
+const WIN_POS_KEY = "vl_tt_win_pos";
 const esc = (t) => String(t == null ? "" : t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const rgb = (c) => `rgb(${c.join(",")})`;
+
+function readPos(key) {
+  try {
+    if (typeof localStorage === "undefined") return null;
+    const j = JSON.parse(localStorage.getItem(key) || "null");
+    return j && Number.isFinite(j.x) && Number.isFinite(j.y) ? j : null;
+  } catch { return null; }
+}
+function savePos(key, x, y) {
+  try { if (typeof localStorage !== "undefined") localStorage.setItem(key, JSON.stringify({ x: Math.round(x), y: Math.round(y) })); } catch {}
+}
 
 export class TanThu {
   constructor(api) {
@@ -18,12 +31,19 @@ export class TanThu {
     this.fabEl = null;
     this.fabSig = "";
     this.modalEl = null;
+    this.modalBox = null;
     this.modalOpen = false;
+    this.modalTop = true;
+    this.modalSig = "";
+    this.modalTabRendered = "";
     this.tab = "loTrinh";
     this._heroKey = "";
     this._autoShown = new Set();
     this._autoTimer = null;
     this._escHandler = null;
+    this._docDownHandler = null;
+    this._lastWinSet = new Set();
+    this._winPosInit = false;
   }
 
   nhom() {
@@ -57,7 +77,11 @@ export class TanThu {
 
     this._veDt(B, st);
     this._veFab(B, st, w);
-    if (this.modalOpen) this._veModal(st);
+
+    if (this.modalOpen) {
+      this._kiemTraCuaSoKhac();
+      if (this.modalOpen) this._veModal(st, false);
+    }
 
     return B && {
       ten: `Tân thủ · Bước ${B.so} / ${B.tong}`,
@@ -69,6 +93,51 @@ export class TanThu {
         ]
       }]
     };
+  }
+
+  _isMobile() {
+    const D = this.api.DT && this.api.DT();
+    return !!(D && D.on);
+  }
+
+  // Quét các cửa sổ khác đang mở để Cẩm nang tự nhường chỗ (không bao giờ đè lên)
+  _dsCuaSoMo() {
+    const out = new Set();
+    if (typeof document === "undefined") return out;
+    const addVis = (sel, prefix) => {
+      document.querySelectorAll(sel).forEach((el, idx) => {
+        const st = el.style;
+        const vis = st.display !== "none" && el.offsetParent !== null;
+        if (vis) out.add(prefix + ":" + (el.id || el.dataset.win || el.className || idx));
+      });
+    };
+    addVis("#jxwin > *", "jw");
+    addVis(".dv", "dv");
+    const hd = document.getElementById("hd-dt");
+    if (hd && hd.offsetParent !== null) out.add("hd-dt");
+    const kat = document.getElementById("kat");
+    if (kat && kat.offsetParent !== null) out.add("kat");
+    const b = document.body;
+    if (b && (b.classList.contains("dt-cs") || b.classList.contains("dt-chat") || b.classList.contains("dt-luoi"))) {
+      out.add("dt-ui");
+    }
+    return out;
+  }
+
+  _kiemTraCuaSoKhac() {
+    const cur = this._dsCuaSoMo();
+    let hasNew = false;
+    for (const k of cur) if (!this._lastWinSet.has(k)) { hasNew = true; break; }
+    this._lastWinSet = cur;
+    if (hasNew) {
+      if (this._isMobile()) this._dongModal();
+      else this._setModalTop(false);
+    }
+  }
+
+  _setModalTop(on) {
+    this.modalTop = !!on;
+    if (this.modalEl) this.modalEl.classList.toggle("top", this.modalTop);
   }
 
   // đệ tử tiếp dẫn cùng hệ ở thành đang đứng, gần trước (mỗi hệ 2 phái)
@@ -262,7 +331,7 @@ export class TanThu {
       `<div class="dt-cd-ops">${actBtn}<button type="button" class="dt-cd-book" data-k="tt:mo" title="Mở Cẩm nang Tân thủ">Cẩm nang</button><i class="dt-chidan-x" data-k="tt:tat" title="Ẩn thanh nhắc">✕</i></div>`;
   }
 
-  // Nút mở nhanh Cẩm nang (cả PC & Mobile) — tự ẩn khi vào Tống Kim / Lôi Đài
+  // Nút mở nhanh Cẩm nang (cả PC & Mobile): z-index 3 (dưới cửa sổ game), kéo thả tự do sang góc bất kỳ
   _veFab(B, st, w) {
     const host = this._host(); if (!host) return;
     if (!this.fabEl) {
@@ -270,12 +339,60 @@ export class TanThu {
       el.type = "button";
       el.id = "vl-tt-fab";
       el.className = "vl-tt-fab";
-      el.addEventListener("pointerdown", (e) => e.stopPropagation());
+      const saved = readPos(FAB_POS_KEY);
+      if (saved && typeof window !== "undefined") {
+        const x = Math.max(6, Math.min(window.innerWidth - 110, saved.x));
+        const y = Math.max(6, Math.min(window.innerHeight - 34, saved.y));
+        el.style.left = x + "px";
+        el.style.top = y + "px";
+        el.style.transform = "none";
+      }
+      let drag = null, moved = false;
+      el.addEventListener("pointerdown", (e) => {
+        e.stopPropagation();
+        if (e.button && e.button !== 0) return;
+        const r = el.getBoundingClientRect();
+        drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: r.left, oy: r.top };
+        moved = false;
+        if (el.setPointerCapture) try { el.setPointerCapture(e.pointerId); } catch {}
+      });
+      el.addEventListener("pointermove", (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+        if (!moved && Math.hypot(dx, dy) > 6) moved = true;
+        if (moved && typeof window !== "undefined") {
+          const r = el.getBoundingClientRect();
+          const nx = Math.max(4, Math.min(window.innerWidth - r.width - 4, drag.ox + dx));
+          const ny = Math.max(4, Math.min(window.innerHeight - r.height - 4, drag.oy + dy));
+          el.style.left = nx + "px";
+          el.style.top = ny + "px";
+          el.style.transform = "none";
+          el.classList.add("keo");
+        }
+      });
+      const endDrag = (e) => {
+        if (!drag || e.pointerId !== drag.id) return;
+        if (moved) {
+          const r = el.getBoundingClientRect();
+          savePos(FAB_POS_KEY, r.left, r.top);
+          el.dataset.dragAt = String(Date.now());
+        }
+        el.classList.remove("keo");
+        drag = null;
+      };
+      el.addEventListener("pointerup", endDrag);
+      el.addEventListener("pointercancel", endDrag);
       el.addEventListener("touchstart", (e) => e.stopPropagation(), { passive: true });
-      el.onclick = (e) => { e.stopPropagation(); this.api.P.audio.ui("click"); this.moCamNang("loTrinh"); };
+      el.onclick = (e) => {
+        e.stopPropagation();
+        if (Date.now() - (+el.dataset.dragAt || 0) < 250) return;
+        this.api.P.audio.ui("click");
+        if (this.modalOpen && this.modalTop) this._dongModal();
+        else this.moCamNang("loTrinh");
+      };
       host.appendChild(el);
     }
-    const D = this.api.DT(), isDt = !!(D && D.on);
+    const isDt = this._isMobile();
     const hide = !!w.tk;
     this.fabEl.style.display = hide ? "none" : "";
     this.fabEl.classList.toggle("co-buoc", !!B);
@@ -285,74 +402,201 @@ export class TanThu {
     if (sig === this.fabSig) return;
     this.fabSig = sig;
     this.fabEl.innerHTML = `<i>?</i><span>${esc(label)}</span>`;
-    this.fabEl.title = "Mở Cẩm nang hướng dẫn chơi cho Tân thủ";
+    this.fabEl.title = "Bấm để mở/đóng Cẩm nang Tân thủ · Kéo giữ để di chuyển nút";
   }
 
   moCamNang(tab) {
     if (tab) this.tab = tab;
     this.modalOpen = true;
+    this.modalTop = true;
+    this.modalSig = "";
     const h = this.api.hero(), w = this.api.world();
     if (!h || !w) return;
+    this._heroKey = `${h.name || ""}:${h.slot ?? 0}`;
     const C = (h.chiDan = h.chiDan || {});
     if (!C.chao) { C.chao = 1; this.api.save(); }
-    this._veModal(this._tinhTrang(h, w, C));
+    this._lastWinSet = this._dsCuaSoMo();
+    this._veModal(this._tinhTrang(h, w, C), true);
   }
 
   _dongModal() {
     this.modalOpen = false;
-    if (this.modalEl) this.modalEl.classList.remove("on");
+    this.modalSig = "";
+    if (this.modalEl) {
+      this.modalEl.classList.remove("on");
+      this.modalEl.classList.remove("top");
+    }
     if (this._escHandler && typeof removeEventListener === "function") {
       removeEventListener("keydown", this._escHandler, true);
       this._escHandler = null;
     }
+    if (this._docDownHandler && typeof document !== "undefined") {
+      document.removeEventListener("pointerdown", this._docDownHandler, true);
+      this._docDownHandler = null;
+    }
   }
 
-  _veModal(st) {
-    const host = this._host(); if (!host) return;
-    if (!this.modalEl) {
-      const wrap = (this.modalEl = document.createElement("div"));
-      wrap.id = "vl-tt-modal";
-      wrap.className = "vl-tt-modal";
-      wrap.addEventListener("pointerdown", (e) => e.stopPropagation());
-      wrap.addEventListener("touchstart", (e) => e.stopPropagation(), { passive: true });
-      wrap.onclick = (e) => {
-        e.stopPropagation();
-        if (e.target === wrap) return this._dongModal();
-        const tabBtn = e.target.closest("[data-tab]");
-        if (tabBtn) {
-          this.api.P.audio.ui("click");
-          this.tab = tabBtn.dataset.tab;
-          const h = this.api.hero(), w = this.api.world();
-          if (h && w) this._veModal(this._tinhTrang(h, w, h.chiDan || {}));
-          return;
-        }
-        const act = e.target.closest("[data-act]");
-        if (act) {
-          const k = act.dataset.act;
-          if (k === "close") { this.api.P.audio.ui("click"); return this._dongModal(); }
-          if (k.startsWith("tt:")) {
-            const [, a, x] = k.split(":");
-            if (a !== "bat" && a !== "tat" && a !== "ok") this._dongModal();
-            this.bam(a, x);
-            const h = this.api.hero(), w = this.api.world();
-            if (this.modalOpen && h && w) this._veModal(this._tinhTrang(h, w, h.chiDan || {}));
-          }
-        }
-      };
-      host.appendChild(wrap);
+  _datViTriBox() {
+    const box = this.modalBox;
+    if (!box || typeof window === "undefined") return;
+    if (this._isMobile()) {
+      box.style.left = "";
+      box.style.top = "";
+      box.style.transform = "";
+      return;
     }
+    const bw = Math.min(620, window.innerWidth - 24);
+    const bh = Math.min(580, Math.round(window.innerHeight * 0.82));
+    const saved = readPos(WIN_POS_KEY);
+    const x = saved ? Math.max(8, Math.min(window.innerWidth - bw - 8, saved.x)) : Math.max(8, Math.round((window.innerWidth - bw) / 2));
+    const y = saved ? Math.max(8, Math.min(window.innerHeight - 120, saved.y)) : Math.max(24, Math.round((window.innerHeight - bh) / 2));
+    box.style.left = x + "px";
+    box.style.top = y + "px";
+    box.style.transform = "none";
+  }
+
+  _taoKhungModal(host) {
+    const wrap = (this.modalEl = document.createElement("div"));
+    wrap.id = "vl-tt-modal";
+    wrap.className = "vl-tt-modal";
+    wrap.innerHTML = `<div class="vtt-box" role="dialog" aria-label="Cẩm nang Tân thủ">
+      <div class="vtt-head" title="Kéo thanh này để di chuyển cửa sổ">
+        <div class="vtt-title"><b>Cẩm nang Tân thủ</b><span>Hướng dẫn khởi đầu · Kéo thanh tiêu đề để di chuyển</span></div>
+        <button type="button" class="vtt-x" data-act="close" title="Đóng (Esc)">✕</button>
+      </div>
+      <div class="vtt-tabs">
+        <button type="button" data-tab="loTrinh">Lộ trình 8 bước</button>
+        <button type="button" data-tab="dieuKhien">Điều khiển</button>
+        <button type="button" data-tab="meo">Mẹo cày nhanh</button>
+      </div>
+      <div class="vtt-body"></div>
+      <div class="vtt-foot"></div>
+    </div>`;
+
+    const box = (this.modalBox = wrap.querySelector(".vtt-box"));
+    const head = box.querySelector(".vtt-head");
+
+    // Kéo thả cửa sổ Cẩm nang trên PC bằng thanh tiêu đề
+    let drag = null;
+    head.addEventListener("pointerdown", (e) => {
+      if (this._isMobile() || (e.button && e.button !== 0)) return;
+      if (e.target.closest("[data-act='close']")) return;
+      e.stopPropagation();
+      this._setModalTop(true);
+      const r = box.getBoundingClientRect();
+      drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, ox: r.left, oy: r.top };
+      head.classList.add("keo");
+      if (head.setPointerCapture) try { head.setPointerCapture(e.pointerId); } catch {}
+    });
+    head.addEventListener("pointermove", (e) => {
+      if (!drag || e.pointerId !== drag.id || typeof window === "undefined") return;
+      const r = box.getBoundingClientRect();
+      const nx = Math.max(8, Math.min(window.innerWidth - r.width - 8, drag.ox + (e.clientX - drag.sx)));
+      const ny = Math.max(8, Math.min(window.innerHeight - 64, drag.oy + (e.clientY - drag.sy)));
+      box.style.left = nx + "px";
+      box.style.top = ny + "px";
+      box.style.transform = "none";
+    });
+    const endDrag = (e) => {
+      if (!drag || e.pointerId !== drag.id) return;
+      const r = box.getBoundingClientRect();
+      savePos(WIN_POS_KEY, r.left, r.top);
+      head.classList.remove("keo");
+      drag = null;
+    };
+    head.addEventListener("pointerup", endDrag);
+    head.addEventListener("pointercancel", endDrag);
+
+    box.addEventListener("pointerdown", (e) => { e.stopPropagation(); this._setModalTop(true); });
+    box.addEventListener("wheel", (e) => e.stopPropagation(), { passive: true });
+
+    wrap.onclick = (e) => {
+      e.stopPropagation();
+      if (e.target === wrap && this._isMobile()) return this._dongModal();
+      const tabBtn = e.target.closest("[data-tab]");
+      if (tabBtn) {
+        this.api.P.audio.ui("click");
+        this.tab = tabBtn.dataset.tab;
+        const h = this.api.hero(), w = this.api.world();
+        if (h && w) this._veModal(this._tinhTrang(h, w, h.chiDan || {}), true);
+        return;
+      }
+      const act = e.target.closest("[data-act]");
+      if (act) {
+        const k = act.dataset.act;
+        if (k === "close") { this.api.P.audio.ui("click"); return this._dongModal(); }
+        if (k.startsWith("tt:")) {
+          const [, a, x] = k.split(":");
+          if (a !== "bat" && a !== "tat" && a !== "ok") this._dongModal();
+          this.bam(a, x);
+          const h = this.api.hero(), w = this.api.world();
+          if (this.modalOpen && h && w) this._veModal(this._tinhTrang(h, w, h.chiDan || {}), true);
+        }
+      }
+    };
+
+    host.appendChild(wrap);
+  }
+
+  _veModal(st, force = false) {
+    const host = this._host(); if (!host) return;
+    if (!this.modalEl) this._taoKhungModal(host);
+
     if (!this._escHandler && typeof addEventListener === "function") {
       this._escHandler = (e) => {
-        if (e.key === "Escape" && this.modalOpen) { e.preventDefault(); e.stopPropagation(); this._dongModal(); }
+        if (e.key === "Escape" && this.modalOpen && this.modalTop) {
+          e.preventDefault(); e.stopPropagation(); this._dongModal();
+        }
       };
       addEventListener("keydown", this._escHandler, true);
     }
+    if (!this._docDownHandler && typeof document !== "undefined") {
+      this._docDownHandler = (e) => {
+        if (!this.modalOpen || !this.modalBox) return;
+        const t = e.target;
+        if (t && this.modalBox.contains(t)) return;
+        if (t && t.closest && t.closest("#jxwin, .dv, #hd-dt, #kat")) {
+          if (this._isMobile()) this._dongModal();
+          else this._setModalTop(false);
+        }
+      };
+      document.addEventListener("pointerdown", this._docDownHandler, true);
+    }
+
+    const wasOpen = this.modalEl.classList.contains("on");
     this.modalEl.classList.add("on");
+    this.modalEl.classList.toggle("top", this.modalTop);
+    if (!wasOpen || !this._winPosInit) {
+      this._winPosInit = true;
+      this._datViTriBox();
+    }
+
+    const B = st.buoc;
+    const barOn = !st.C.tat && !st.C.xong && (st.h.lvl | 0) < CAP_TOI;
+    const sig = [
+      this.tab, st.doneCount, st.tong, st.idx,
+      B ? B.so : 0, B ? B.ten : "", B ? B.tomTat : "",
+      B ? B.actLabel : "", B ? B.actKey : "", B ? B.secLabel : "", B ? B.secKey : "",
+      barOn ? 1 : 0, (st.h.lvl | 0) < CAP_TOI ? 1 : 0
+    ].join("|");
+
+    // Không ghi đè DOM khi dữ liệu chưa đổi -> giữ nguyên thanh cuộn mượt 100%
+    if (!force && sig === this.modalSig) return;
+    const sameTab = this.modalTabRendered === this.tab;
+    this.modalSig = sig;
+    this.modalTabRendered = this.tab;
+
+    const bodyEl = this.modalBox.querySelector(".vtt-body");
+    const footEl = this.modalBox.querySelector(".vtt-foot");
+    const prevScroll = sameTab && bodyEl ? bodyEl.scrollTop : 0;
+
+    this.modalBox.querySelectorAll(".vtt-tabs button").forEach((btn) => {
+      btn.classList.toggle("on", btn.dataset.tab === this.tab);
+    });
 
     const pct = Math.round((st.doneCount / st.tong) * 100);
     const ttLuat = (this.api.luat() || {}).tanThu || {};
     const utLuat = (this.api.luat() || {}).uyThac || {};
-    const B = st.buoc;
     let bodyHtml = "";
 
     if (this.tab === "loTrinh") {
@@ -425,32 +669,23 @@ export class TanThu {
       </div>`;
     }
 
-    const barOn = !st.C.tat && !st.C.xong && (st.h.lvl | 0) < CAP_TOI;
     const toggleBtn = (st.h.lvl | 0) < CAP_TOI && st.buoc
       ? (barOn
           ? '<button type="button" class="vtt-ft-btn" data-act="tt:tat">Tạm ẩn thanh nhắc</button>'
           : '<button type="button" class="vtt-ft-btn hi" data-act="tt:bat">Hiện lại thanh nhắc Tân thủ</button>')
       : "";
 
-    this.modalEl.innerHTML = `<div class="vtt-box" role="dialog" aria-label="Cẩm nang Tân thủ">
-      <div class="vtt-head">
-        <div class="vtt-title"><b>Cẩm nang Tân thủ</b><span>Hướng dẫn khởi đầu cho người mới vào Võ Lâm</span></div>
-        <button type="button" class="vtt-x" data-act="close" title="Đóng (Esc)">✕</button>
-      </div>
-      <div class="vtt-tabs">
-        <button type="button" class="${this.tab === "loTrinh" ? "on" : ""}" data-tab="loTrinh">Lộ trình 8 bước</button>
-        <button type="button" class="${this.tab === "dieuKhien" ? "on" : ""}" data-tab="dieuKhien">Điều khiển</button>
-        <button type="button" class="${this.tab === "meo" ? "on" : ""}" data-tab="meo">Mẹo cày nhanh</button>
-      </div>
-      <div class="vtt-body">${bodyHtml}</div>
-      <div class="vtt-foot">
-        <div class="vtt-ft-left">
+    if (bodyEl) {
+      bodyEl.innerHTML = bodyHtml;
+      bodyEl.scrollTop = sameTab ? prevScroll : 0;
+    }
+    if (footEl) {
+      footEl.innerHTML = `<div class="vtt-ft-left">
           ${toggleBtn}
           <button type="button" class="vtt-ft-btn" data-act="tt:st:0">Hỗ trợ chi tiết (F1)</button>
         </div>
-        <button type="button" class="vtt-ft-close" data-act="close">Đóng</button>
-      </div>
-    </div>`;
+        <button type="button" class="vtt-ft-close" data-act="close">Đóng</button>`;
+    }
   }
 
   bam(a, x) {

@@ -2355,13 +2355,13 @@ html, body, button, input, select, textarea,
 /* === VL_ORIG_GAME_FONT_END === */
 
 /* === VL_TANTHU_GUIDE_START === */
-/* Cam nang Tan thu: nut mo nhanh + the nhac Mobile co nut hanh dong + bang lo trinh 8 buoc */
+/* Cam nang Tan thu: nut keo tha z-index 3 (duoi #jxwin z-index 4) + cua so noi keo tha + cuon muot */
 #vl-tt-fab {
   position: fixed;
   left: 50%;
   top: 6px;
   transform: translateX(-50%);
-  z-index: 6;
+  z-index: 3;
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -2374,10 +2374,13 @@ html, body, button, input, select, textarea,
   font: 13px/22px var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
   text-shadow: 1px 1px 0 #000;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 226, 148, 0.2);
-  cursor: pointer;
+  cursor: grab;
   pointer-events: auto;
   white-space: nowrap;
+  user-select: none;
+  touch-action: none;
 }
+#vl-tt-fab.keo { cursor: grabbing; opacity: 0.92; }
 #vl-tt-fab:hover {
   border-color: #ffd875;
   background: linear-gradient(180deg, rgba(58, 40, 18, 0.95), rgba(22, 15, 8, 0.96));
@@ -2401,7 +2404,7 @@ html, body, button, input, select, textarea,
   box-shadow: 0 0 10px rgba(255, 206, 94, 0.45), 0 2px 10px rgba(0, 0, 0, 0.55);
 }
 
-/* Mobile doc: dat nut Cam nang goc trai top 172px doi xung nut Tu danh (phai top 172px), the nhac o 200px */
+/* Mobile doc: nut Cam nang ben trai top 172px, the nhac o 200px chua khoang cho Khoa an toan (.dt-kat right 6px) */
 body.dt:not(.dt-ngang) #vl-tt-fab {
   left: 6px;
   top: 172px;
@@ -2413,11 +2416,11 @@ body.dt:not(.dt-ngang) #vl-tt-fab {
 body.dt.dt-ngang #vl-tt-fab.dt-co-bar { display: none !important; }
 body.dt-cs #vl-tt-fab, body.dt-chat #vl-tt-fab, body.dt-luoi #vl-tt-fab { display: none !important; }
 
-/* The nhac tan thu tren Mobile: ro mat, co nut hanh dong bam 1 cham */
+/* The nhac tan thu tren Mobile: z-index 2 (khong de len cua so #jxwin hay .dt-moidoi.mo) */
 #dt .dt-chidan {
   position: absolute;
   left: 6px;
-  right: 6px;
+  right: 36px;
   top: 200px;
   box-sizing: border-box;
   display: flex;
@@ -2430,7 +2433,7 @@ body.dt-cs #vl-tt-fab, body.dt-chat #vl-tt-fab, body.dt-luoi #vl-tt-fab { displa
   border-radius: 6px;
   box-shadow: 0 3px 12px rgba(0, 0, 0, 0.65);
   pointer-events: auto;
-  z-index: 6;
+  z-index: 2;
 }
 #dt .dt-chidan .dt-cd-main {
   min-width: 0;
@@ -2511,25 +2514,21 @@ body.dt.dt-ngang #dt .dt-chidan {
   padding: 4px 24px 4px 8px;
 }
 
-/* Bang Cam nang Tan thu (#vl-tt-modal) */
+/* Bang Cam nang Tan thu (#vl-tt-modal): tren PC la cua so noi keo tha, tu nhuong lop z-index khi mo cua so khac */
 #vl-tt-modal {
   position: fixed;
   inset: 0;
-  z-index: 92;
+  z-index: 3;
   display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-  box-sizing: border-box;
-  background: rgba(5, 7, 6, 0.72);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-  pointer-events: auto;
+  pointer-events: none;
+  background: transparent;
 }
-#vl-tt-modal.on { display: flex; }
+#vl-tt-modal.on { display: block; }
+#vl-tt-modal.top { z-index: 5; }
 #vl-tt-modal .vtt-box {
-  width: min(640px, 96vw);
-  max-height: min(86vh, 660px);
+  position: fixed;
+  width: min(620px, calc(100vw - 24px));
+  max-height: min(82vh, 620px);
   display: flex;
   flex-direction: column;
   border-radius: 8px;
@@ -2538,9 +2537,31 @@ body.dt.dt-ngang #dt .dt-chidan {
   box-shadow: 0 14px 42px rgba(0, 0, 0, 0.82), inset 0 1px 0 rgba(255, 224, 146, 0.22);
   color: #e9e4d4;
   overflow: hidden;
+  pointer-events: auto;
   font-family: var(--jx, "VK Sans Serif 13", "IBM Plex Mono", monospace);
 }
+/* Mobile: can giua gon gang, tu dong dong khi mo cua so game khac */
+body.dt #vl-tt-modal {
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+  background: rgba(5, 7, 6, 0.65);
+  pointer-events: auto;
+}
+body.dt #vl-tt-modal.on { display: flex; }
+body.dt #vl-tt-modal .vtt-box {
+  position: relative;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  width: min(600px, 96vw);
+  max-height: min(86dvh, 86vh);
+}
+body.dt-cs #vl-tt-modal, body.dt-chat #vl-tt-modal, body.dt-luoi #vl-tt-modal { display: none !important; }
+
 #vl-tt-modal .vtt-head {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2548,7 +2569,12 @@ body.dt.dt-ngang #dt .dt-chidan {
   padding: 10px 14px;
   background: linear-gradient(180deg, rgba(64, 44, 16, 0.55), rgba(20, 16, 10, 0.65));
   border-bottom: 1px solid rgba(201, 154, 74, 0.45);
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
 }
+#vl-tt-modal .vtt-head.keo { cursor: grabbing; }
+body.dt #vl-tt-modal .vtt-head { cursor: default; }
 #vl-tt-modal .vtt-title { display: flex; flex-direction: column; gap: 2px; }
 #vl-tt-modal .vtt-title b {
   font-family: var(--jx16, "VK Sans Serif 16", "VK Sans Serif 13", "IBM Plex Mono", monospace);
@@ -2560,6 +2586,7 @@ body.dt.dt-ngang #dt .dt-chidan {
 }
 #vl-tt-modal .vtt-title span { font-size: 12px; color: #c7bfa8; }
 #vl-tt-modal .vtt-x {
+  flex: none;
   width: 28px;
   height: 28px;
   border-radius: 5px;
@@ -2570,6 +2597,7 @@ body.dt.dt-ngang #dt .dt-chidan {
   cursor: pointer;
 }
 #vl-tt-modal .vtt-tabs {
+  flex: none;
   display: flex;
   gap: 6px;
   padding: 8px 14px;
@@ -2594,11 +2622,19 @@ body.dt.dt-ngang #dt .dt-chidan {
 }
 #vl-tt-modal .vtt-body {
   flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
   padding: 12px 14px;
   scrollbar-width: thin;
-  scrollbar-color: #7c6234 transparent;
+  scrollbar-color: #9e7d43 rgba(255, 255, 255, 0.06);
 }
+#vl-tt-modal .vtt-body::-webkit-scrollbar { width: 7px; }
+#vl-tt-modal .vtt-body::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+#vl-tt-modal .vtt-body::-webkit-scrollbar-thumb { background: #8c6e38; border-radius: 4px; }
 #vl-tt-modal .vtt-prog { margin-bottom: 10px; }
 #vl-tt-modal .vtt-prog-txt {
   display: flex;
@@ -2753,6 +2789,7 @@ body.dt.dt-ngang #dt .dt-chidan {
 #vl-tt-modal .vtt-tip p { margin: 0; font-size: 12.5px; line-height: 17px; color: #d4dcd5; }
 
 #vl-tt-modal .vtt-foot {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2787,8 +2824,8 @@ body.dt.dt-ngang #dt .dt-chidan {
 }
 @media (max-width: 520px) {
   #dt .dt-chidan .dt-cd-book { display: none; }
-  #vl-tt-modal { padding: 6px; }
-  #vl-tt-modal .vtt-box { max-height: 92vh; }
+  body.dt #vl-tt-modal { padding: 6px; }
+  body.dt #vl-tt-modal .vtt-box { max-height: min(90dvh, 90vh); }
 }
 /* === VL_TANTHU_GUIDE_END === */
 
